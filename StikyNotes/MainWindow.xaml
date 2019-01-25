@@ -3,10 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:StikyNotes"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="None"
+         Height="450" Width="300"  MinWidth="300" MinHeight="200">
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="30" ResizeBorderThickness="5" />
+            </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Margin="2"
+                Width="30"
+                Height="30"
+                Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"
+                ToolTip="MaterialDesignFloatingActionMiniLightButton">
+                <materialDesign:PackIcon
+                    Kind="Add"
+                    Height="24"
+                    Width="24" />
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1"></StackPanel>
     </Grid>
 </Window>
