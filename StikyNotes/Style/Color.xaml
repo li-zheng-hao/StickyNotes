@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:StikyNotes">
+    <Color x:Key="ForgroundColor">#6495ED</Color>
+    <SolidColorBrush x:Key="ForgroundBrush" Color="{StaticResource ForgroundColor}" />
+
+    <Color x:Key="ForgroundColor100">#8db1f2</Color>
+    <SolidColorBrush x:Key="ForgroundBrush100" Color="{StaticResource ForgroundColor100}" />
+
+    <Color x:Key="BackgroundColor">#FFFFFF</Color>
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" /> 
+    
+    <Color x:Key="ControlColor">#000000</Color>
+    <SolidColorBrush x:Key="ControlBrush" Color="{StaticResource ControlColor}" />
+    
+
+</ResourceDictionary>

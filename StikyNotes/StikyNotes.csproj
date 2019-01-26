@@ -38,9 +38,6 @@
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net46\MahApps.Metro.dll</HintPath>
-    </Reference>
     <Reference Include="MahApps.Metro.IconPacks.Modern, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.IconPacks.Modern.2.3.0\lib\net46\MahApps.Metro.IconPacks.Modern.dll</HintPath>
     </Reference>
@@ -52,6 +49,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -73,6 +72,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Commands\RelayParamCommand.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Utils\SystemTray.cs" />
+    <Compile Include="Utils\WindowManager.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,6 +91,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Style\Color.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Font.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -109,9 +127,40 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Fonts\Lato-Black.ttf" />
+    <Resource Include="Resources\Fonts\Lato-BlackItalic.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Bold.ttf" />
+    <Resource Include="Resources\Fonts\Lato-BoldItalic.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Hairline.ttf" />
+    <Resource Include="Resources\Fonts\Lato-HairlineItalic.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Heavy.ttf" />
+    <Resource Include="Resources\Fonts\Lato-HeavyItalic.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Italic.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Light.ttf" />
+    <Resource Include="Resources\Fonts\Lato-LightItalic.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Medium.ttf" />
+    <Resource Include="Resources\Fonts\Lato-MediumItalic.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Regular.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Semibold.ttf" />
+    <Resource Include="Resources\Fonts\Lato-SemiboldItalic.ttf" />
+    <Resource Include="Resources\Fonts\Lato-Thin.ttf" />
+    <Resource Include="Resources\Fonts\Lato-ThinItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ico\MyLogo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MyLogo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
