@@ -34,6 +34,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
@@ -75,8 +79,12 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Commands\RelayParamCommand.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Utils\GenerateWindowsIndex.cs" />
+    <Compile Include="Data\ProgramDatas.cs" />
     <Compile Include="Utils\SystemTray.cs" />
     <Compile Include="Utils\WindowManager.cs" />
+    <Compile Include="Data\WindowsData.cs" />
+    <Compile Include="Utils\XMLHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
@@ -149,9 +157,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\Ico\MyLogo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

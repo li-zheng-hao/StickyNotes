@@ -18,7 +18,28 @@ namespace StikyNotes
     /// </summary>
     public partial class App : Application
     {
-        
+        /// <summary>
+        /// 这里是程序入口，在这里读取所有创建过的窗体
+        /// </summary>
+//        [STAThread]
+//        static void Main()
+//        {
+//            App app=new App();
+//            app.InitializeComponent();
+//            var programData = XMLHelper.DecodeXML<ProgramData>("Data.xml");
+//            var windowsDatas = programData.Datas;
+//            MainWindow MainWindow;
+//            if (windowsDatas.Count > 0)
+//            {
+//                for (int i = 0; i < windowsDatas.Count; i++)
+//                {
+//                    MainWindow = new MainWindow();
+//                    MainWindow.DataContext = new MainViewModel(MainWindow, windowsDatas[i]);
+//                    app.Run(MainWindow);
+//                }
+//            }
+//        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -28,16 +49,16 @@ namespace StikyNotes
         protected override void OnDeactivated(EventArgs e)
         {
             base.OnDeactivated(e);
-            System.Windows.Controls.ContextMenu  menu = this.FindResource("NotifyIconMenu") as ContextMenu;
+            System.Windows.Controls.ContextMenu menu = this.FindResource("NotifyIconMenu") as ContextMenu;
             if (menu.IsOpen == true)
             {
                 menu.IsOpen = false;
             }
-            
-        }
-        
 
-        
+        }
+
+
+
         /// <summary>
         /// 新建窗体
         /// </summary>
@@ -45,7 +66,7 @@ namespace StikyNotes
         /// <param name="e"></param>
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
-            
+
 
         }
 
@@ -66,8 +87,31 @@ namespace StikyNotes
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
+            XMLHelper.SaveObjAsXml(ProgramData.Instance, "Data.xml");
             SystemTray.Instance.DisposeNotifyIcon();
 
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            var programData = XMLHelper.DecodeXML<ProgramData>("Data.xml");
+            var windowsDatas = programData.Datas;
+            MainWindow MainWindow;
+            if (windowsDatas.Count > 0)
+            {
+                for (int i = 0; i < windowsDatas.Count; i++)
+                {
+                    MainWindow = new MainWindow();
+                    MainWindow.DataContext = new MainViewModel(MainWindow, windowsDatas[i]);
+                    MainWindow.Show();
+                }
+            }
+            else
+            {
+                MainWindow = new MainWindow();
+                MainWindow.DataContext = new MainViewModel(MainWindow, new WindowsData());
+                MainWindow.Show();
+            }
         }
     }
 }

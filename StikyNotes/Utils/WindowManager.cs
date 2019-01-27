@@ -9,22 +9,22 @@ namespace StikyNotes
     /// <summary>
     /// 用来管理所有打开了的窗体
     /// </summary>
-    public class WindowManager
+    public class WindowsManager
     {
         public List<MainWindow> Windows { get; set; }
 
         #region 单例
 
-        public static WindowManager Instance = null;
+        public static WindowsManager Instance = null;
 
-        static WindowManager()
+        static WindowsManager()
         {
-            Instance=new WindowManager();
+            Instance=new WindowsManager();
         }
         #endregion
-        private WindowManager()
+        private WindowsManager()
         {
-
+            Windows=new List<MainWindow>();
         }
 
 

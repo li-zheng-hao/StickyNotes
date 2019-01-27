@@ -37,6 +37,15 @@ namespace StikyNotes
                 NotifyIconMenu.IsOpen = true;
                 App.Current.MainWindow.Activate();
             }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                var wins=WindowsManager.Instance.Windows;
+                foreach (var i in wins)
+                {
+                    i.Activate();
+                }
+            }
         }
 
         /// <summary>

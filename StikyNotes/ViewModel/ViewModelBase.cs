@@ -9,7 +9,7 @@ using StikyNotes.Annotations;
 
 namespace StikyNotes
 {
-    public class ViewModelBase:INotifyPropertyChanged
+    public class PropertyChangedBase:INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;

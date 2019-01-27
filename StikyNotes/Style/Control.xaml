@@ -31,10 +31,8 @@
     <!--富文本模板-->
     <Style  x:Key="RichText_Content" TargetType="{x:Type RichTextBox}">
         <Setter Property="FontFamily" Value="{StaticResource FontAwesome}"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
         <Setter Property="Padding" Value="0 5 0 0"/>
         <Setter Property="Background" Value="AliceBlue"/>
-
         <Setter Property="HorizontalAlignment" Value="Left"/>
     </Style>
 </ResourceDictionary>

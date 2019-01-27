@@ -6,9 +6,13 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Icon="MyLogo.ico"
-         Height="450" Width="300"  MinWidth="300" MinHeight="300" MaxWidth="300" 
+        Height="{Binding Datas.WindowsHeight,Mode=TwoWay}" 
+        Width="{Binding Datas.WindowsWidth,Mode=TwoWay}"  
+        MinWidth="300" 
+        MinHeight="300" 
+        MaxWidth="500" 
         BorderThickness="24"
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="Manual"
         >
     <Window.Effect>
         <DropShadowEffect BlurRadius="12" Color="DarkGray" Direction="90" ShadowDepth="1"/>
@@ -77,16 +81,23 @@
 
 
         <!--文字显示区域-->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
-            <RichTextBox  Name="rickTextBox" 
-                          
-                          Style="{DynamicResource RichText_Content}" >
-                <RichTextBox.Resources>
-                    <Style TargetType="{x:Type Paragraph}">
-                        <Setter Property="Margin" Value="0"/>
-                    </Style>
-                </RichTextBox.Resources>
-            </RichTextBox>
+        <ScrollViewer Margin="0 1 0 0" Padding="0" Name="ViewContent" Grid.Row="1" VerticalScrollBarVisibility="Hidden" Background="AliceBlue">
+            <TextBox  Name="MainTextBox"
+                Height="{Binding Path=ActualHeight,RelativeSource={
+                RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
+                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                Margin="0"
+                Text="{Binding Datas.RichTextBoxContent}"
+                VerticalAlignment="Top"
+                AcceptsReturn="True"
+                TextWrapping="Wrap"
+                FontSize="{Binding Datas.FontSize,Mode=TwoWay}"
+                VerticalScrollBarVisibility="Hidden"
+                materialDesign:HintAssist.Hint="输入 . . . "
+                materialDesign:HintAssist.FloatingScale="0.5"
+                TextBlock.LineHeight="15"
+                />
         </ScrollViewer>
+
     </Grid>
 </Window>

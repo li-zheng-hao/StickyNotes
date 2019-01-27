@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,11 +27,11 @@ namespace StikyNotes
         public MainWindow()
         {
             InitializeComponent();
-            this.Topmost = true;
-            this.DataContext=new MainViewModel(this);
             this.ShowInTaskbar = false;
         }
 
+        
+        
        
     }
 }

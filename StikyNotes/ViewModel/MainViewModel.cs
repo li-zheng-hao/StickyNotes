@@ -9,11 +9,18 @@ using System.Windows.Input;
 
 namespace StikyNotes
 {
+    [Serializable]
     public class MainViewModel
     {
         #region 属性
         private MainWindow mainWindow;
         public MainWindow MainWindow { get => mainWindow; set => mainWindow = value; }
+
+        public WindowsData Datas { get; set; }
+       
+
+
+
         #endregion
 
 
@@ -29,11 +36,14 @@ namespace StikyNotes
 
         #endregion
 
+
         #region 初始化
 
-        public MainViewModel(MainWindow mainWindow)
+        public MainViewModel(MainWindow mainWindow,WindowsData data)
         {
-            MainWindow=mainWindow;
+            MainWindow = mainWindow;
+            Datas = data;
+            WindowsManager.Instance.Windows.Add(mainWindow);
             Init();
         }
 
@@ -42,16 +52,20 @@ namespace StikyNotes
         /// </summary>
         private void Init()
         {
+            mainWindow.Left = Datas.StartUpPosition.X;
+            mainWindow.Top = Datas.StartUpPosition.Y;
+
+            ProgramData.Instance.Datas.Add(this.Datas);
             mainWindow.MouseDown += MainWindow_MouseDown;
             mainWindow.DeleteButton.Click += DeleteButton_Click;
             mainWindow.AddButton.Click += AddButton_Click;
-
+            mainWindow.Closed += MainWindow_Closed;
 
             #region 增大字体命令
-            IncreaseFontCommand=new RoutedCommand();
+            IncreaseFontCommand = new RoutedCommand();
             KeyGesture IncreaseFontCommandGesture = new KeyGesture(
                 Key.Up, ModifierKeys.Control | ModifierKeys.Alt);
-            CommandBinding IncreaseBinding=new CommandBinding();
+            CommandBinding IncreaseBinding = new CommandBinding();
             IncreaseBinding.Command = IncreaseFontCommand;
             IncreaseBinding.CanExecute += IncreaseBinding_CanExecute;
             IncreaseBinding.Executed += IncreaseBinding_Executed;
@@ -75,32 +89,36 @@ namespace StikyNotes
 
         }
 
-        #endregion
 
+
+        #endregion
 
 
         #region 命令实现
         private void DecreaseBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            mainWindow.rickTextBox.FontSize -=2;
+            if (mainWindow.MainTextBox.FontSize >8)
+                mainWindow.MainTextBox.FontSize -= 2;
         }
 
         private void DecreaseBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !(mainWindow.rickTextBox.FontSize < 6);
+            e.CanExecute = true;
         }
 
         private void IncreaseBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            mainWindow.rickTextBox.FontSize += 2;
+            if(mainWindow.MainTextBox.FontSize<24)
+            mainWindow.MainTextBox.FontSize += 2;
         }
 
         private void IncreaseBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !(mainWindow.rickTextBox.FontSize > 48);
+            e.CanExecute = true;
         }
 
         #endregion
+
 
         #region 窗体事件
         /// <summary>
@@ -111,6 +129,8 @@ namespace StikyNotes
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var newWin = new MainWindow();
+            newWin.DataContext=new MainViewModel(newWin,new WindowsData());
+            WindowsManager.Instance.Windows.Add(newWin);
             newWin.Show();
             newWin.Activate();
         }
@@ -137,6 +157,16 @@ namespace StikyNotes
             }
         }
 
+        /// <summary>
+        /// 窗体关闭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            WindowsManager.Instance.Windows.Remove(mainWindow);
+            Datas.StartUpPosition=new Point(mainWindow.Left,mainWindow.Top);
+        }
         #endregion
 
     }
