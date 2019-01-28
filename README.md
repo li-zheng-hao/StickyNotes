@@ -6,3 +6,6 @@
 
 程序截图:</br>
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/MainWindow.png)</br>
+![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/about.png)</br>
+![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/setting.png)</br>
+![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/taskbar.png)</br>
