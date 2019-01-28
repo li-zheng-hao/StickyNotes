@@ -21,13 +21,21 @@ namespace StikyNotes
         /// <returns></returns>
         public static bool SaveObjAsXml<T>(T obj,string fileName)
         {
-            
+            try
+            {
                 FileStream fs = new FileStream(fileName, FileMode.Create);
                 XmlSerializer xs = new XmlSerializer(typeof(T));
                 xs.Serialize(fs, obj);
                 fs.Close();
-                
+
                 return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+              
 
 
            
@@ -45,6 +53,8 @@ namespace StikyNotes
         {
             try
             {
+                if (File.Exists(fileName)==false)
+                    return default(T);
                 FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
                 XmlSerializer xs = new XmlSerializer(typeof(T));
                 T obj = (T)xs.Deserialize(fs);
@@ -52,7 +62,7 @@ namespace StikyNotes
             }catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return default(T);
+                throw;
             }
             
         }

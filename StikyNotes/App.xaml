@@ -1,20 +1,21 @@
-﻿<Application x:Class="StikyNotes.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:StikyNotes"
-            Startup="Application_Startup">
+﻿<Application
+    x:Class="StikyNotes.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:StikyNotes"
+    Startup="Application_Startup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary  Source="Style/Color.xaml"/>
-                <ResourceDictionary  Source="Style/Font.xaml"/>
-                <ResourceDictionary  Source="Style/Control.xaml"/>
+                <ResourceDictionary Source="Style/Color.xaml" />
+                <ResourceDictionary Source="Style/Font.xaml" />
+                <ResourceDictionary Source="Style/Control.xaml" />
 
-             
-                
-                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />-->
-                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />-->
-                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />-->
+
+
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />-->
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />-->
 
@@ -26,10 +27,14 @@
             </ResourceDictionary.MergedDictionaries>
 
             <ContextMenu x:Key="NotifyIconMenu" StaysOpen="False">
-                <MenuItem Header="新建"   
-                          Name="MenuOpen"  Click="MenuOpen_Click"/>
-                <MenuItem Header="退出" 
-                          Name="MenuExit" Click="MenuExit_Click" />
+                <MenuItem
+                    Name="MenuOpen"
+                    Click="MenuOpen_Click"
+                    Header="新建" />
+                <MenuItem
+                    Name="MenuExit"
+                    Click="MenuExit_Click"
+                    Header="退出" />
             </ContextMenu>
         </ResourceDictionary>
     </Application.Resources>

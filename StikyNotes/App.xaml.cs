@@ -18,30 +18,18 @@ namespace StikyNotes
     /// </summary>
     public partial class App : Application
     {
-        /// <summary>
-        /// 这里是程序入口，在这里读取所有创建过的窗体
-        /// </summary>
-//        [STAThread]
-//        static void Main()
-//        {
-//            App app=new App();
-//            app.InitializeComponent();
-//            var programData = XMLHelper.DecodeXML<ProgramData>("Data.xml");
-//            var windowsDatas = programData.Datas;
-//            MainWindow MainWindow;
-//            if (windowsDatas.Count > 0)
-//            {
-//                for (int i = 0; i < windowsDatas.Count; i++)
-//                {
-//                    MainWindow = new MainWindow();
-//                    MainWindow.DataContext = new MainViewModel(MainWindow, windowsDatas[i]);
-//                    app.Run(MainWindow);
-//                }
-//            }
-//        }
-
+        System.Threading.Mutex mutex;
         protected override void OnStartup(StartupEventArgs e)
         {
+            bool ret;
+            mutex = new System.Threading.Mutex(true, "StikyNotesAPP", out ret);
+
+            if (!ret)
+            {
+                MessageBox.Show("程序已经运行了");
+                Environment.Exit(0);
+            }
+
             base.OnStartup(e);
             var systemtray = SystemTray.Instance;
         }
@@ -67,7 +55,10 @@ namespace StikyNotes
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
 
-
+            var MainWindow = new MainWindow();
+            MainWindow.DataContext = new MainViewModel(MainWindow, new WindowsData());
+            WindowsManager.Instance.Windows.Add(MainWindow);
+            MainWindow.Show();
         }
 
         /// <summary>
@@ -95,20 +86,33 @@ namespace StikyNotes
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             var programData = XMLHelper.DecodeXML<ProgramData>("Data.xml");
-            var windowsDatas = programData.Datas;
-            MainWindow MainWindow;
-            if (windowsDatas.Count > 0)
+            if (programData != null)
             {
-                for (int i = 0; i < windowsDatas.Count; i++)
+                var windowsDatas = programData.Datas;
+                ProgramData.Instance.IsWindowTopMost = programData.IsWindowTopMost;
+                ProgramData.Instance.IsStartUpWithSystem = programData.IsStartUpWithSystem;
+                MainWindow MainWindow;
+                //有创建过的窗口
+                if (windowsDatas.Count > 0)
+                {
+                    for (int i = 0; i < windowsDatas.Count; i++)
+                    {
+                        MainWindow = new MainWindow();
+                        MainWindow.DataContext = new MainViewModel(MainWindow, windowsDatas[i]);
+                        MainWindow.Show();
+                    }
+                }
+                else//以前的窗口都被删掉了
                 {
                     MainWindow = new MainWindow();
-                    MainWindow.DataContext = new MainViewModel(MainWindow, windowsDatas[i]);
+                    MainWindow.DataContext = new MainViewModel(MainWindow, new WindowsData());
                     MainWindow.Show();
                 }
             }
+            //没有创建过的窗口
             else
             {
-                MainWindow = new MainWindow();
+                var MainWindow = new MainWindow();
                 MainWindow.DataContext = new MainViewModel(MainWindow, new WindowsData());
                 MainWindow.Show();
             }

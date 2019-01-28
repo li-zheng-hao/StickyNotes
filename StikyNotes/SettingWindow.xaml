@@ -1,0 +1,57 @@
+﻿<Controls:MetroWindow
+    x:Class="StikyNotes.SettingWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:StikyNotes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="200"
+    Height="300"
+    BorderBrush="{StaticResource ForgroundBrush}"
+    FontFamily="{StaticResource LatoBold}"
+    GlowBrush="{StaticResource ForgroundBrush}"
+    ShowInTaskbar="False"
+    ShowMaxRestoreButton="False"
+    ShowMinButton="False"
+    ShowTitleBar="False"
+    WindowStartupLocation="CenterOwner"
+    WindowTitleBrush="{StaticResource ForgroundBrush}"
+    mc:Ignorable="d">
+    <Window.Effect>
+        <DropShadowEffect
+            BlurRadius="12"
+            Direction="90"
+            ShadowDepth="1"
+            Color="DarkGray" />
+    </Window.Effect>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+
+        <Controls:ToggleSwitch
+            Grid.Row="1"
+            Margin="3"
+            Header="           窗 体 置 顶 "
+            HeaderFontFamily="{StaticResource LatoBold}"
+            IsChecked="{Binding IsWindowTopMost}"
+            IsCheckedChanged="ToggleSwitch_IsCheckedChanged"
+            OffLabel="Off"
+            OnLabel="On" />
+        <Controls:ToggleSwitch
+            Grid.Row="2"
+            Margin="3"
+            Header="           开 机 启 动"
+            HeaderFontFamily="{StaticResource LatoBold}"
+            IsChecked="{Binding IsStartUpWithSystem}"
+            IsCheckedChanged="ToggleSwitch_IsCheckedChanged_1"
+            OffLabel="Off"
+            OnLabel="On" />
+
+    </Grid>
+</Controls:MetroWindow>

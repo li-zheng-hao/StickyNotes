@@ -17,7 +17,7 @@ namespace StikyNotes
         public MainWindow MainWindow { get => mainWindow; set => mainWindow = value; }
 
         public WindowsData Datas { get; set; }
-       
+
 
 
 
@@ -39,7 +39,7 @@ namespace StikyNotes
 
         #region 初始化
 
-        public MainViewModel(MainWindow mainWindow,WindowsData data)
+        public MainViewModel(MainWindow mainWindow, WindowsData data)
         {
             MainWindow = mainWindow;
             Datas = data;
@@ -52,14 +52,21 @@ namespace StikyNotes
         /// </summary>
         private void Init()
         {
+            #region 窗体按钮绑定以及数据初始化
+
             mainWindow.Left = Datas.StartUpPosition.X;
             mainWindow.Top = Datas.StartUpPosition.Y;
-
+            mainWindow.Topmost = ProgramData.Instance.IsWindowTopMost;
             ProgramData.Instance.Datas.Add(this.Datas);
             mainWindow.MouseDown += MainWindow_MouseDown;
             mainWindow.DeleteButton.Click += DeleteButton_Click;
             mainWindow.AddButton.Click += AddButton_Click;
             mainWindow.Closed += MainWindow_Closed;
+            mainWindow.SettingButton.Click += SettingButton_Click;
+            mainWindow.AboutButton.Click += AboutButton_Click;
+
+            #endregion
+
 
             #region 增大字体命令
             IncreaseFontCommand = new RoutedCommand();
@@ -90,14 +97,13 @@ namespace StikyNotes
         }
 
 
-
         #endregion
 
 
         #region 命令实现
         private void DecreaseBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (mainWindow.MainTextBox.FontSize >8)
+            if (mainWindow.MainTextBox.FontSize > 8)
                 mainWindow.MainTextBox.FontSize -= 2;
         }
 
@@ -108,8 +114,8 @@ namespace StikyNotes
 
         private void IncreaseBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if(mainWindow.MainTextBox.FontSize<24)
-            mainWindow.MainTextBox.FontSize += 2;
+            if (mainWindow.MainTextBox.FontSize < 24)
+                mainWindow.MainTextBox.FontSize += 2;
         }
 
         private void IncreaseBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -129,7 +135,7 @@ namespace StikyNotes
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var newWin = new MainWindow();
-            newWin.DataContext=new MainViewModel(newWin,new WindowsData());
+            newWin.DataContext = new MainViewModel(newWin, new WindowsData());
             WindowsManager.Instance.Windows.Add(newWin);
             newWin.Show();
             newWin.Activate();
@@ -141,6 +147,8 @@ namespace StikyNotes
         /// <param name="e"></param>
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            if (ProgramData.Instance.Datas.Contains(this.Datas))
+                ProgramData.Instance.Datas.Remove(this.Datas);
             mainWindow.Close();
         }
         /// <summary>
@@ -165,8 +173,32 @@ namespace StikyNotes
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             WindowsManager.Instance.Windows.Remove(mainWindow);
-            Datas.StartUpPosition=new Point(mainWindow.Left,mainWindow.Top);
+            Datas.StartUpPosition = new Point(mainWindow.Left, mainWindow.Top);
         }
+
+        /// <summary>
+        /// 关于按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            AboutWindow win = new AboutWindow();
+            win.Show();
+        }
+
+        /// <summary>
+        /// 设置按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingWindow win = new SettingWindow();
+            win.Show();
+        }
+
+
         #endregion
 
     }

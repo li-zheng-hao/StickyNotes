@@ -1,102 +1,138 @@
-﻿<Window x:Class="StikyNotes.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        Icon="MyLogo.ico"
-        Height="{Binding Datas.WindowsHeight,Mode=TwoWay}" 
-        Width="{Binding Datas.WindowsWidth,Mode=TwoWay}"  
-        MinWidth="300" 
-        MinHeight="300" 
-        MaxWidth="500" 
-        BorderThickness="24"
-        WindowStartupLocation="Manual"
-        >
+﻿<Window
+    x:Class="StikyNotes.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
+    Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
+    MinWidth="300"
+    MinHeight="300"
+    MaxWidth="500"
+    AllowsTransparency="True"
+    BorderThickness="24"
+    Icon="MyLogo.ico"
+    WindowStartupLocation="Manual"
+    WindowStyle="None">
     <Window.Effect>
-        <DropShadowEffect BlurRadius="12" Color="DarkGray" Direction="90" ShadowDepth="1"/>
+        <DropShadowEffect
+            BlurRadius="12"
+            Direction="90"
+            ShadowDepth="1"
+            Color="DarkGray" />
     </Window.Effect>
     <Window.Style>
         <Style TargetType="Window">
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
-                    <WindowChrome ResizeBorderThickness="24" CaptionHeight="0" CornerRadius="24"/>
+                    <WindowChrome
+                        CaptionHeight="0"
+                        CornerRadius="24"
+                        ResizeBorderThickness="24" />
                 </Setter.Value>
             </Setter>
         </Style>
     </Window.Style>
     <Grid>
-        <!--菜单栏阴影效果-->
+        <!--  菜单栏阴影效果  -->
         <Grid.Effect>
-            <DropShadowEffect ShadowDepth="-4" BlurRadius="10" Color="Gray"/>
+            <DropShadowEffect
+                BlurRadius="10"
+                ShadowDepth="-4"
+                Color="Gray" />
         </Grid.Effect>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Name="Menu"  Grid.Row="0" Background="{DynamicResource ForgroundBrush}">
+        <Grid
+            Name="Menu"
+            Grid.Row="0"
+            Background="{DynamicResource ForgroundBrush}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <!--增加按钮-->
-            <Button Name="AddButton" Grid.Column="0"
-                    HorizontalAlignment="Left" 
-            Style="{StaticResource Button_Menu}" ToolTip="New">
+            <!--  增加按钮  -->
+            <Button
+                Name="AddButton"
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Style="{StaticResource Button_Menu}"
+                ToolTip="New">
                 <materialDesign:PackIcon
-                Kind="LibraryAdd"
-                Height="18"
-                Width="18"/>
+                    Width="18"
+                    Height="18"
+                    Kind="LibraryAdd" />
             </Button>
-            <!--软件名称-->
-            <Label Grid.Column="1" Name="SoftWareName" FontFamily="{StaticResource LatoRegular}"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"  Opacity="0.6"  >Stiky Notes</Label>
+            <!--  软件名称  -->
+            <Label
+                Name="SoftWareName"
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource LatoRegular}"
+                FontSize="18"
+                Opacity="0.6">
+                Stiky Notes
+            </Label>
 
-            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <!--更多设置按钮-->
-                <materialDesign:PopupBox Grid.Column="2" HorizontalAlignment="Right"
-                                         PlacementMode="BottomAndAlignCentres">
-                    <ListView Margin="5" MinWidth="80"  x:Name="Click">
-                        <ListViewItem>
-                            设置
-                        </ListViewItem>
-                        <ListViewItem >
-                            关于
-                        </ListViewItem>
-                    </ListView>
+            <StackPanel
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <!--  更多设置按钮  -->
+                <materialDesign:PopupBox
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    PlacementMode="BottomAndAlignCentres">
+
+                    <StackPanel>
+                        <Button Name="SettingButton" Content="设置" />
+                        <Button Name="AboutButton" Content="关于" />
+
+                    </StackPanel>
+
                 </materialDesign:PopupBox>
-                <!--删除按钮 -->
-                <Button  Name="DeleteButton" Grid.Column="3"
-                         ToolTip="Exit" HorizontalAlignment="Right"
-                         Style="{StaticResource Button_Menu}"
-                         >
+                <!--  删除按钮  -->
+                <Button
+                    Name="DeleteButton"
+                    Grid.Column="3"
+                    HorizontalAlignment="Right"
+                    Style="{StaticResource Button_Menu}"
+                    ToolTip="Exit">
                     <iconPacks:Modern
-                        Kind="Delete"
+                        Width="18"
                         Height="18"
-                        Width="18"  />
+                        Kind="Delete" />
                 </Button>
             </StackPanel>
         </Grid>
 
 
-        <!--文字显示区域-->
-        <ScrollViewer Margin="0 1 0 0" Padding="0" Name="ViewContent" Grid.Row="1" VerticalScrollBarVisibility="Hidden" Background="AliceBlue">
-            <TextBox  Name="MainTextBox"
-                Height="{Binding Path=ActualHeight,RelativeSource={
-                RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
-                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+        <!--  文字显示区域  -->
+        <ScrollViewer
+            Name="ViewContent"
+            Grid.Row="1"
+            Margin="0,1,0,0"
+            Padding="0"
+            Background="AliceBlue"
+            VerticalScrollBarVisibility="Hidden">
+            <TextBox
+                Name="MainTextBox"
+                Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
                 Margin="0"
-                Text="{Binding Datas.RichTextBoxContent}"
                 VerticalAlignment="Top"
-                AcceptsReturn="True"
-                TextWrapping="Wrap"
-                FontSize="{Binding Datas.FontSize,Mode=TwoWay}"
-                VerticalScrollBarVisibility="Hidden"
-                materialDesign:HintAssist.Hint="输入 . . . "
                 materialDesign:HintAssist.FloatingScale="0.5"
+                materialDesign:HintAssist.Hint="输入 . . . "
+                AcceptsReturn="True"
+                FontSize="{Binding Datas.FontSize, Mode=TwoWay}"
+                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                Text="{Binding Datas.RichTextBoxContent}"
                 TextBlock.LineHeight="15"
-                />
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Hidden" />
         </ScrollViewer>
 
     </Grid>

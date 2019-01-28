@@ -1,0 +1,63 @@
+﻿<Controls:MetroWindow
+    x:Class="StikyNotes.AboutWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:StikyNotes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="200"
+    Height="300"
+    BorderBrush="{StaticResource ForgroundBrush}"
+    FontFamily="{StaticResource LatoBold}"
+    GlowBrush="{StaticResource ForgroundBrush}"
+    ShowInTaskbar="False"
+    ShowMaxRestoreButton="False"
+    ShowMinButton="False"
+    ShowTitleBar="False"
+    WindowStartupLocation="CenterOwner"
+
+    WindowTitleBrush="{StaticResource ForgroundBrush}"
+    mc:Ignorable="d">
+
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="2">
+            <Border
+                Margin="0,0,0,5"
+                BorderBrush="Black"
+                BorderThickness="0,5,0,0">
+                <StackPanel>
+                    <Label Margin="5" FontFamily="Microsoft YaHei UI" FontWeight="Bold">关于快捷键</Label>
+                    <Label FontFamily="{StaticResource FontAwesome}">增加字体大小 Ctrl+Alt+↑</Label>
+                    <Label FontFamily="{StaticResource FontAwesome}">减少字体大小 Ctrl+Alt+↓</Label>
+                </StackPanel>
+            </Border>
+
+
+            <Border BorderBrush="Black" BorderThickness="0,5,0,0">
+                <StackPanel>
+                    <Label Margin="5" FontFamily="Microsoft YaHei UI" FontWeight="Bold">项目地址</Label>
+                    <Label FontFamily="{StaticResource FontAwesome}">
+                        <Hyperlink Click="Hyperlink_Click" NavigateUri="https://github.com/li-zheng-hao/StikyNotes">
+                            <TextBlock Text="Github地址" TextWrapping="Wrap" />
+                        </Hyperlink>
+                    </Label>
+                    <Label FontFamily="{StaticResource FontAwesome}">
+                        <TextBlock Text="后续更新都会在上面发布，好用的话点个Star吧~" TextWrapping="Wrap" />
+                    </Label>
+
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+    </Grid>
+</Controls:MetroWindow>

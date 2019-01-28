@@ -35,7 +35,7 @@ namespace StikyNotes
             {
                 System.Windows.Controls.ContextMenu NotifyIconMenu = (System.Windows.Controls.ContextMenu)App.Current.FindResource("NotifyIconMenu");
                 NotifyIconMenu.IsOpen = true;
-                App.Current.MainWindow.Activate();
+                App.Current.MainWindow?.Activate();
             }
 
             if (e.Button == MouseButtons.Left)
