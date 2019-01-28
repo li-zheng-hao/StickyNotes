@@ -16,7 +16,6 @@
     ShowMinButton="False"
     ShowTitleBar="False"
     WindowStartupLocation="CenterOwner"
-
     WindowTitleBrush="{StaticResource ForgroundBrush}"
     mc:Ignorable="d">
 
@@ -36,7 +35,12 @@
                 BorderBrush="Black"
                 BorderThickness="0,5,0,0">
                 <StackPanel>
-                    <Label Margin="5" FontFamily="Microsoft YaHei UI" FontWeight="Bold">关于快捷键</Label>
+                    <Label
+                        Margin="5"
+                        FontFamily="Microsoft YaHei UI"
+                        FontWeight="Bold">
+                        关于快捷键
+                    </Label>
                     <Label FontFamily="{StaticResource FontAwesome}">增加字体大小 Ctrl+Alt+↑</Label>
                     <Label FontFamily="{StaticResource FontAwesome}">减少字体大小 Ctrl+Alt+↓</Label>
                 </StackPanel>
@@ -45,7 +49,12 @@
 
             <Border BorderBrush="Black" BorderThickness="0,5,0,0">
                 <StackPanel>
-                    <Label Margin="5" FontFamily="Microsoft YaHei UI" FontWeight="Bold">项目地址</Label>
+                    <Label
+                        Margin="5"
+                        FontFamily="Microsoft YaHei UI"
+                        FontWeight="Bold">
+                        项目地址
+                    </Label>
                     <Label FontFamily="{StaticResource FontAwesome}">
                         <Hyperlink Click="Hyperlink_Click" NavigateUri="https://github.com/li-zheng-hao/StikyNotes">
                             <TextBlock Text="Github地址" TextWrapping="Wrap" />

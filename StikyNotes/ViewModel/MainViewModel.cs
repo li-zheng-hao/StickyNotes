@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MaterialDesignThemes.Wpf;
 
 namespace StikyNotes
 {
@@ -145,7 +148,7 @@ namespace StikyNotes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        private  void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (ProgramData.Instance.Datas.Contains(this.Datas))
                 ProgramData.Instance.Datas.Remove(this.Datas);

@@ -60,11 +60,12 @@
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="New">
+                ToolTip="新增一条便签">
                 <materialDesign:PackIcon
                     Width="18"
                     Height="18"
                     Kind="LibraryAdd" />
+
             </Button>
             <!--  软件名称  -->
             <Label
@@ -95,18 +96,22 @@
                     </StackPanel>
 
                 </materialDesign:PopupBox>
+
+
                 <!--  删除按钮  -->
                 <Button
                     Name="DeleteButton"
                     Grid.Column="3"
                     HorizontalAlignment="Right"
                     Style="{StaticResource Button_Menu}"
-                    ToolTip="Exit">
+                    ToolTip="删除此便签">
+
                     <iconPacks:Modern
                         Width="18"
                         Height="18"
                         Kind="Delete" />
                 </Button>
+
             </StackPanel>
         </Grid>
 

@@ -54,7 +54,6 @@ namespace StikyNotes
         /// <param name="e"></param>
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
-
             var MainWindow = new MainWindow();
             MainWindow.DataContext = new MainViewModel(MainWindow, new WindowsData());
             WindowsManager.Instance.Windows.Add(MainWindow);
