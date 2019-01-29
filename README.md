@@ -1,11 +1,13 @@
 # StikyNotes
 一个便捷的Windows桌面便利贴/A convenitent Windows Notes 
 
+仿照了Win10自带的便签,以后再也不用担心win10bug或者重装系统导致便签数据丢失了。
+
 ## 安装
 点击其中的压缩包下载，解压直接用即可：
 [点击此处打开下载页面](https://github.com/li-zheng-hao/StikyNotes/releases)
 
-仿照了Win10自带的便签,以后再也不用担心win10bug或者重装系统导致便签数据丢失了。
+
 ## 一些特性</br>
 
 1、支持字体放大和缩小</br>
