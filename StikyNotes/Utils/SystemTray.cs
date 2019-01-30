@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+//using System.Windows.Forms;
 using System.Windows.Navigation;
+using Application = System.Windows.Application;
 
 namespace StikyNotes
 {
@@ -24,7 +27,8 @@ namespace StikyNotes
         private SystemTray()
         {
             Ni = new System.Windows.Forms.NotifyIcon();
-            Ni.Icon = new System.Drawing.Icon("MyLogo.ico");
+            Stream iconStream = Application.GetResourceStream(new Uri("pack://application:,,,/StikyNotes;component/MyLogo.ico")).Stream;
+            Ni.Icon = new System.Drawing.Icon(iconStream);
             Ni.Visible = true;
             Ni.MouseClick += Ni_MouseClick;
         }

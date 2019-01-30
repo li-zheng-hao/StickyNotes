@@ -179,9 +179,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="MyLogo.ico">
+    <Resource Include="MyLogo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

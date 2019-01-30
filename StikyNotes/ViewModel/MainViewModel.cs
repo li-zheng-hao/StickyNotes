@@ -45,9 +45,15 @@ namespace StikyNotes
         public MainViewModel(MainWindow mainWindow, WindowsData data)
         {
             MainWindow = mainWindow;
+            MainWindow.Deactivated += MainWindow_Deactivated;
             Datas = data;
             WindowsManager.Instance.Windows.Add(mainWindow);
             Init();
+        }
+
+        private void MainWindow_Deactivated(object sender, EventArgs e)
+        {
+            XMLHelper.SaveObjAsXml(ProgramData.Instance, "StikyNotesData.xml");
         }
 
         /// <summary>
@@ -69,7 +75,6 @@ namespace StikyNotes
             mainWindow.AboutButton.Click += AboutButton_Click;
 
             #endregion
-
 
             #region 增大字体命令
             IncreaseFontCommand = new RoutedCommand();
@@ -97,6 +102,11 @@ namespace StikyNotes
             mainWindow.CommandBindings.Add(DecreaseBinding);
             #endregion
 
+        }
+
+        private void Datas_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            XMLHelper.SaveObjAsXml(ProgramData.Instance, "StikyNotesData.xml");
         }
 
 
@@ -177,6 +187,8 @@ namespace StikyNotes
         {
             WindowsManager.Instance.Windows.Remove(mainWindow);
             Datas.StartUpPosition = new Point(mainWindow.Left, mainWindow.Top);
+            if(WindowsManager.Instance.Windows.Count==0)
+                Application.Current.Shutdown();
         }
 
         /// <summary>

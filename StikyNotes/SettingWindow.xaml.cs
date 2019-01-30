@@ -51,11 +51,28 @@ namespace StikyNotes
         private void ToggleSwitch_IsCheckedChanged_1(object sender, EventArgs e)
         {
             var btn = sender as ToggleSwitch;
-            Microsoft.Win32.RegistryKey key =
-                Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
-                    (bool)btn.IsChecked);
-            Assembly curAssembly = Assembly.GetExecutingAssembly();
-            key.SetValue(curAssembly.GetName().Name, curAssembly.Location);
+            if (btn.IsChecked == true)
+            {
+                Microsoft.Win32.RegistryKey key =
+                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+                        true);
+
+                Assembly curAssembly = Assembly.GetExecutingAssembly();
+                key.SetValue(curAssembly.GetName().Name, curAssembly.Location);
+            }
+            else
+            {
+                Microsoft.Win32.RegistryKey key =
+                    Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+                        true);
+                Assembly curAssembly = Assembly.GetExecutingAssembly();
+                if (key.GetValue(curAssembly.GetName().Name) !=null)
+                {
+                    key.DeleteValue(curAssembly.GetName().Name);
+                }
+            }
+
+            XMLHelper.SaveObjAsXml(ProgramData.Instance, "StikyNotesData.xml");
         }
     }
 }

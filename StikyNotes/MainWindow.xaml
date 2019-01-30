@@ -134,7 +134,7 @@
                 AcceptsReturn="True"
                 FontSize="{Binding Datas.FontSize, Mode=TwoWay}"
                 Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                Text="{Binding Datas.RichTextBoxContent}"
+                Text="{Binding Datas.RichTextBoxContent, UpdateSourceTrigger=PropertyChanged}"
                 TextBlock.LineHeight="15"
                 TextWrapping="Wrap"
                 VerticalScrollBarVisibility="Hidden" />

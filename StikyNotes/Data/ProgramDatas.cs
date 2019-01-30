@@ -9,7 +9,7 @@ namespace StikyNotes
     [Serializable]
     public class ProgramData
     { 
-      
+        
         public List<WindowsData> Datas { get;set;}
 
         /// <summary>
@@ -18,6 +18,7 @@ namespace StikyNotes
         public bool IsWindowTopMost { get; set; }
 
         public static ProgramData Instance=null;
+
 
         /// <summary>
         /// 是否开机自启动

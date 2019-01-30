@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Forms;
-using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MessageBox = System.Windows.MessageBox;
 
@@ -34,6 +26,10 @@ namespace StikyNotes
             var systemtray = SystemTray.Instance;
         }
 
+      
+
+       
+
         protected override void OnDeactivated(EventArgs e)
         {
             base.OnDeactivated(e);
@@ -43,9 +39,11 @@ namespace StikyNotes
                 menu.IsOpen = false;
             }
 
+            
+
         }
 
-
+       
 
         /// <summary>
         /// 新建窗体
@@ -76,15 +74,15 @@ namespace StikyNotes
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            base.OnExit(e);
-            XMLHelper.SaveObjAsXml(ProgramData.Instance, "Data.xml");
             SystemTray.Instance.DisposeNotifyIcon();
-
+            base.OnExit(e);
         }
+
+
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var programData = XMLHelper.DecodeXML<ProgramData>("Data.xml");
+            var programData = XMLHelper.DecodeXML<ProgramData>("StikyNotesData.xml");
             if (programData != null)
             {
                 var windowsDatas = programData.Datas;
