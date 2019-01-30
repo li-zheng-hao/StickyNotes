@@ -11,13 +11,8 @@ using MessageBox = System.Windows.MessageBox;
 namespace StikyNotes
 {
     [XmlRoot]
-    public class WindowsData:PropertyChangedBase
+    public class WindowsData
     {
-        [XmlElement("WindowsIndex")]
-        /// <summary>
-        /// Windows窗体索引
-        /// </summary>
-        public int WindowsIndex{get;set; }
 
         [XmlElement("FontSize")]
         private double fontSize=14;
@@ -34,58 +29,23 @@ namespace StikyNotes
         }
 
 
-        private Point startUpPosition;
-        [XmlElement("LeftTopWinPosition")]
-        public Point StartUpPosition
-        {
-            get { return startUpPosition; }
-            set
-            {
-                startUpPosition = value;
-               
-                OnPropertyChanged("StartUpPosition");
-            }
-        }
-        
+        [XmlElement("LeftTopWinPosition")] public Point StartUpPosition;
+
 
         /// <summary>
         /// 窗体宽度
         /// </summary>
-        private int windowsWidth;
-        public int WindowsWidth
-        {
-            get { return windowsWidth; }
-            set { windowsWidth = value;OnPropertyChanged("WindowsWidth"); }
-        }
+        public int WindowsWidth;
 
-        private int windowsHeight;
-        public int WindowsHeight
-        {
-            get { return windowsHeight; }
-            set
-            {
-                windowsHeight = value;
-                OnPropertyChanged("WindowsHeight");
-            }
-        }
+        public int WindowsHeight;
 
 
         private string richTextBoxContent;
 
-        [XmlElement("UserInputNotes")]
-        public string RichTextBoxContent
-        {
-            get { return richTextBoxContent; }
-            set
-            {
-                richTextBoxContent = value;
-                OnPropertyChanged("RichTextBoxContent");
-            }
-        }
+        [XmlElement("UserInputNotes")] 
+        public string RichTextBoxContent;
         public WindowsData()
         {
-//            MessageBox.Show("新的窗体数据加载了");
-            WindowsIndex = GenerateWindowsIndex.Generate();
             WindowsWidth = 350;
             WindowsHeight = 450;
             double screenHeight = SystemParameters.FullPrimaryScreenHeight;
