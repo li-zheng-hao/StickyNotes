@@ -12,6 +12,7 @@
     AllowsTransparency="True"
     BorderThickness="24"
     Icon="MyLogo.ico"
+    ShowInTaskbar="False"
     WindowStartupLocation="Manual"
     WindowStyle="None">
     <Window.Effect>
