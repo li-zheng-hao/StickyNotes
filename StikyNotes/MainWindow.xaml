@@ -4,35 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Name="Window"
     Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
-    MinWidth="300"
-    MinHeight="300"
-    MaxWidth="500"
-    AllowsTransparency="True"
-    BorderThickness="24"
-    Icon="MyLogo.ico"
-    WindowStartupLocation="Manual"
-    WindowStyle="None">
-    <Window.Effect>
-        <DropShadowEffect
-            BlurRadius="12"
-            Direction="90"
-            ShadowDepth="1"
-            Color="DarkGray" />
-    </Window.Effect>
-    <Window.Style>
-        <Style TargetType="Window">
-            <Setter Property="WindowChrome.WindowChrome">
-                <Setter.Value>
-                    <WindowChrome
-                        CaptionHeight="0"
-                        CornerRadius="24"
-                        ResizeBorderThickness="24" />
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Style>
+    DataContext="{Binding Main, Source={StaticResource Locator}}"
+    Style="{StaticResource MainWindow}"
+    WindowStartupLocation="Manual">
+
     <Grid>
         <!--  菜单栏阴影效果  -->
         <Grid.Effect>
@@ -59,6 +37,7 @@
                 Name="AddButton"
                 Grid.Column="0"
                 HorizontalAlignment="Left"
+                Command="{Binding NewWindowCommand}"
                 Style="{StaticResource Button_Menu}"
                 ToolTip="新增一条便签">
                 <materialDesign:PackIcon
@@ -71,11 +50,7 @@
             <Label
                 Name="SoftWareName"
                 Grid.Column="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontFamily="{StaticResource LatoRegular}"
-                FontSize="18"
-                Opacity="0.6">
+                Style="{StaticResource TitleLabelStyle}">
                 Stiky Notes
             </Label>
 
@@ -103,6 +78,8 @@
                     Name="DeleteButton"
                     Grid.Column="3"
                     HorizontalAlignment="Right"
+                    Command="{Binding DeletePaWindowCommand}"
+                    CommandParameter="{Binding ElementName=Window}"
                     Style="{StaticResource Button_Menu}"
                     ToolTip="删除此便签">
 

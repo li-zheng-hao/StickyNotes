@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using StikyNotes.Annotations;
 
 namespace StikyNotes
 {
     [Serializable]
     public class ProgramData
     { 
-        
-        public List<WindowsData> Datas { get;set;}
+        public List<WindowsData> Datas { get; set; }
 
         /// <summary>
         /// 窗体是否置顶
@@ -18,7 +20,6 @@ namespace StikyNotes
         public bool IsWindowTopMost { get; set; }
 
         public static ProgramData Instance=null;
-
 
         /// <summary>
         /// 是否开机自启动
@@ -32,5 +33,7 @@ namespace StikyNotes
             Instance.IsWindowTopMost = false;
             Instance.IsStartUpWithSystem = false;
         }
+
+       
     }
 }

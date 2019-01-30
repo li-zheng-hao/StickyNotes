@@ -100,16 +100,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Commands\RelayParamCommand.cs" />
+    <Compile Include="Data\ConstData.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\ProgramDatas.cs" />
     <Compile Include="Utils\SystemTray.cs" />
-    <Compile Include="Utils\WindowManager.cs" />
     <Compile Include="Data\WindowsData.cs" />
+    <Compile Include="Utils\WindowsManager.cs" />
     <Compile Include="Utils\XMLHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="SettingWindow.xaml.cs">
@@ -145,6 +144,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Label.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

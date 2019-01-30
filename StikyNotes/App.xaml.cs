@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MessageBox = System.Windows.MessageBox;
@@ -26,10 +27,6 @@ namespace StikyNotes
             var systemtray = SystemTray.Instance;
         }
 
-      
-
-       
-
         protected override void OnDeactivated(EventArgs e)
         {
             base.OnDeactivated(e);
@@ -38,12 +35,7 @@ namespace StikyNotes
             {
                 menu.IsOpen = false;
             }
-
-            
-
         }
-
-       
 
         /// <summary>
         /// 新建窗体
@@ -53,8 +45,7 @@ namespace StikyNotes
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
             var MainWindow = new MainWindow();
-            MainWindow.DataContext = new MainViewModel(MainWindow, new WindowsData());
-            WindowsManager.Instance.Windows.Add(MainWindow);
+            
             MainWindow.Show();
         }
 
@@ -74,15 +65,19 @@ namespace StikyNotes
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
+            XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveDataName);
             SystemTray.Instance.DisposeNotifyIcon();
             base.OnExit(e);
         }
 
-
-
+        /// <summary>
+        /// 程序开始时读取数据，创建窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var programData = XMLHelper.DecodeXML<ProgramData>("StikyNotesData.xml");
+            var programData = XMLHelper.DecodeXML<ProgramData>(ConstData.SaveDataName);
             if (programData != null)
             {
                 var windowsDatas = programData.Datas;
@@ -95,23 +90,27 @@ namespace StikyNotes
                     for (int i = 0; i < windowsDatas.Count; i++)
                     {
                         MainWindow = new MainWindow();
-                        MainWindow.DataContext = new MainViewModel(MainWindow, windowsDatas[i]);
+                        var content = MainWindow.DataContext as MainViewModel;
+                        content.Datas = windowsDatas[i];
                         MainWindow.Show();
+                        WindowsManager.Instance.Windows.Add(MainWindow);
                     }
                 }
                 else//以前的窗口都被删掉了
                 {
                     MainWindow = new MainWindow();
-                    MainWindow.DataContext = new MainViewModel(MainWindow, new WindowsData());
                     MainWindow.Show();
+                    WindowsManager.Instance.Windows.Add(MainWindow);
+
                 }
             }
             //没有创建过的窗口
             else
             {
                 var MainWindow = new MainWindow();
-                MainWindow.DataContext = new MainViewModel(MainWindow, new WindowsData());
                 MainWindow.Show();
+                WindowsManager.Instance.Windows.Add(MainWindow);
+
             }
         }
     }
