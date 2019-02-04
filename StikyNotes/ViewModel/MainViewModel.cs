@@ -1,4 +1,6 @@
 using System;
+using System.Windows;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -16,17 +18,20 @@ namespace StikyNotes
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel
     {
         /// <summary>
         /// 窗体数据
         /// </summary>
         public WindowsData Datas { get; set; }
-
         #region 命令
         public RelayCommand NewWindowCommand { get; private set; }
+        public RelayCommand OpenSettingCommand { get; private set; }
+        public RelayCommand OpenAboutCommand { get; private set; }
+        public RelayCommand AddFontSizeCommand { get; private set; }
+        public RelayCommand ReduceFontSizeCommand { get; private set; }
+        public RelayCommand<object> MoveWindowCommand { get; private set; }
         public RelayCommand<MainWindow> DeletePaWindowCommand { get; private set; }
-
         #endregion
 
         /// <summary>
@@ -34,11 +39,63 @@ namespace StikyNotes
         /// </summary>
         public MainViewModel()
         {
-            Datas=new WindowsData();
-            ProgramData.Instance.Datas.Add(Datas);
-            NewWindowCommand=new RelayCommand(NewWindowMethod);
+            NewWindowCommand = new RelayCommand(NewWindowMethod);
+            OpenSettingCommand = new RelayCommand(OpenSettingMethod);
+            OpenAboutCommand = new RelayCommand(OpenAboutMethod);
             DeletePaWindowCommand = new RelayCommand<MainWindow>(DeleteWindowMethod);
-            
+            MoveWindowCommand = new RelayCommand<object>(MoveWindowMethod);
+            AddFontSizeCommand = new RelayCommand(AddFontSizeMethod);
+            ReduceFontSizeCommand = new RelayCommand(ReduceFontSizeMethod);
+        }
+
+        /// <summary>
+        /// 打开相关窗口
+        /// </summary>
+        private void OpenAboutMethod()
+        {
+            var win=new AboutWindow();
+            win.Show();
+        }
+
+        /// <summary>
+        /// 减少字体
+        /// </summary>
+        private void ReduceFontSizeMethod()
+        {
+            if (Datas.FontSize > 8)
+            {
+                Datas.FontSize -= 2;
+            }
+        }
+        /// <summary>
+        /// 放大字体
+        /// </summary>
+        private void AddFontSizeMethod()
+        {
+            if (Datas.FontSize < 32)
+            {
+                Datas.FontSize += 2;
+            }
+        }
+
+        private void OpenSettingMethod()
+        {
+            var win = new SettingWindow();
+            var vm=new SettingViewModel();
+            win.DataContext = vm;
+            win.Show();
+        }
+
+        /// <summary>
+        /// 移动窗体
+        /// </summary>
+        /// <param name="e">当前的Window</param>
+        private void MoveWindowMethod(object e)
+        {
+            var win = e as MainWindow;
+            win.DragMove();
+            //            var newPos=win.PointFromScreen(new Point(0, 0));
+            //            Datas.StartUpPosition = newPos;
         }
 
         /// <summary>
@@ -46,8 +103,12 @@ namespace StikyNotes
         /// </summary>
         void NewWindowMethod()
         {
-            MainWindow win=new MainWindow();
+            MainWindow win = new MainWindow();
+            var vm = new MainViewModel();
+            vm.Datas = new WindowsData();
+            win.DataContext = vm;
             win.Show();
+            ProgramData.Instance.Datas.Add(vm.Datas);
             WindowsManager.Instance.Windows.Add(win);
 
         }
@@ -57,8 +118,8 @@ namespace StikyNotes
         /// </summary>
         void DeleteWindowMethod(MainWindow obj)
         {
-            var win=obj as MainWindow;
-            if(WindowsManager.Instance.Windows.Contains(win))
+            var win = obj as MainWindow;
+            if (WindowsManager.Instance.Windows.Contains(win))
             {
                 WindowsManager.Instance.Windows.Remove(win);
                 ProgramData.Instance.Datas.Remove(Datas);

@@ -1,0 +1,99 @@
+﻿<Controls:MetroWindow
+    x:Class="StikyNotes.SettingWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:command="http://www.galasoft.ch/mvvmlight"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:StikyNotes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="200"
+    Height="280"
+    BorderBrush="{StaticResource ForgroundBrush}"
+    FontFamily="{StaticResource LatoBold}"
+    GlowBrush="{StaticResource ForgroundBrush}"
+    ShowInTaskbar="False"
+    ShowMaxRestoreButton="False"
+    ShowMinButton="False"
+    ShowTitleBar="False"
+    Topmost="True"
+    WindowStartupLocation="CenterOwner"
+    WindowTitleBrush="{StaticResource ForgroundBrush}"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <local:ThemeConverter x:Key="ThemeConverter" />
+    </Window.Resources>
+    <Window.Effect>
+        <DropShadowEffect
+            BlurRadius="12"
+            Direction="90"
+            ShadowDepth="1"
+            Color="DarkGray" />
+    </Window.Effect>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+
+        <Controls:ToggleSwitch
+            Name="IsTopMostBtn"
+            Grid.Row="1"
+            Margin="3"
+            CheckChangedCommand="{Binding IsTopMostChangedCommand}"
+            CheckChangedCommandParameter="{Binding Path=IsChecked, ElementName=IsTopMostBtn}"
+            Header="           窗 体 置 顶 "
+            HeaderFontFamily="{StaticResource LatoBold}"
+            IsChecked="{Binding Datas.IsWindowTopMost, Mode=TwoWay}"
+            OffLabel="Off"
+            OnLabel="On" />
+        <Controls:ToggleSwitch
+            Name="IsStartUpWithSystemBtn"
+            Grid.Row="2"
+            Margin="3"
+            CheckChangedCommand="{Binding IsStartUpWithSystemChangedCommand}"
+            CheckChangedCommandParameter="{Binding Path=IsChecked, ElementName=IsStartUpWithSystemBtn}"
+            Header="           开 机 启 动"
+            HeaderFontFamily="{StaticResource LatoBold}"
+            IsChecked="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
+            OffLabel="Off"
+            OnLabel="On" />
+        <StackPanel Grid.Row="3">
+            <Label
+                Margin="0,0,15,0"
+                HorizontalAlignment="Center"
+                FontFamily="{StaticResource LatoBold}"
+                FontSize="17">
+                主 题 颜 色
+            </Label>
+            <ComboBox
+                Margin="1,10,1,3"
+                Controls:TextBoxHelper.ClearTextButton="True"
+                BorderThickness="1"
+                SelectedIndex="{Binding Datas.CurrenTheme, Converter={StaticResource ThemeConverter}, Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <command:EventToCommand Command="{Binding SelectionChangedCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBoxItem
+                    Padding="5"
+                    Background="#6495ED"
+                    Content=" 蓝色" />
+                <ComboBoxItem
+                    Padding="5"
+                    Background="#757575"
+                    Content=" 灰色" />
+                <ComboBoxItem
+                    Padding="5"
+                    Background="#ffd180"
+                    Content=" 橘黄色" />
+            </ComboBox>
+        </StackPanel>
+    </Grid>
+</Controls:MetroWindow>

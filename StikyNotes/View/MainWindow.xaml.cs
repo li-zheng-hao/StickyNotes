@@ -28,5 +28,7 @@ namespace StikyNotes
         {
             InitializeComponent();
         }
+
+       
     }
 }

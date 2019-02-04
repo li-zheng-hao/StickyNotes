@@ -42,6 +42,7 @@ namespace StikyNotes.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<SettingViewModel>();
         }
 
         public MainViewModel Main
@@ -51,7 +52,11 @@ namespace StikyNotes.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public SettingViewModel Setting
+        {
+            get { return ServiceLocator.Current.GetInstance<SettingViewModel>(); }
+        }
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

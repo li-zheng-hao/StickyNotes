@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:StikyNotes"
     d1p1:Ignorable="d"
     Startup="Application_Startup">
+    <!--  Startup="Application_Startup"  -->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,6 +17,7 @@
                 <ResourceDictionary Source="Style/Control.xaml" />
                 <ResourceDictionary Source="Style/Window.xaml" />
                 <ResourceDictionary Source="Style/Label.xaml" />
+                <ResourceDictionary Source="Style/Themes/Blue.xaml" />
 
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

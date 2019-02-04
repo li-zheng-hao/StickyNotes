@@ -1,0 +1,8 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:StikyNotes">
+    <SolidColorBrush x:Key="ForgroundBrush" Color="{StaticResource ForgroundColorOrange}" />
+    <SolidColorBrush x:Key="ForgroundBrush100" Color="{StaticResource ForgroundColorOrange100}" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColorOrange}" />
+</ResourceDictionary>

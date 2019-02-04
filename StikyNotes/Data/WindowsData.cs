@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using GalaSoft.MvvmLight.Messaging;
 using StikyNotes.Annotations;
 using MessageBox = System.Windows.MessageBox;
 
@@ -25,12 +26,23 @@ namespace StikyNotes
         /// <summary>
         /// 窗体启动左上角位置
         /// </summary>
-        public Point StartUpPosition { get; set; }
+        public double StartUpPositionTop { get; set; }
+        public double StartUpPositionLeft { get; set; }
+
 
         /// <summary>
         /// 窗体宽度
         /// </summary>
         public int WindowsWidth { get; set; }
+//        {
+//            get { return windowsWidth; }
+//            set
+//            {
+//                windowsWidth = value;
+//                OnPropertyChanged();
+//            }
+//
+//        }
 
         /// <summary>
         /// 窗体高度
@@ -49,10 +61,12 @@ namespace StikyNotes
         {
             WindowsWidth = 300;
             WindowsHeight = 300;
+            FontSize = 14;
             double screenHeight = SystemParameters.FullPrimaryScreenHeight;
             double screenWidth = SystemParameters.FullPrimaryScreenWidth;
-            StartUpPosition =new Point((screenWidth - WindowsWidth)/2,(screenHeight - WindowsHeight)/2);
-            RichTextBoxContent = "测试是否读取到后台数据";
+            StartUpPositionLeft = (screenWidth - WindowsWidth)/ 2;
+            StartUpPositionTop = (screenHeight - WindowsHeight) / 2;
+            RichTextBoxContent = string.Empty;
         }
 
 
@@ -62,6 +76,7 @@ namespace StikyNotes
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Messenger.Default.Send<SaveMessage>(new SaveMessage());
         }
     }
 }
