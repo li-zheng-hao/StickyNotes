@@ -10,16 +10,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="200"
     Height="280"
-    BorderBrush="{StaticResource ForgroundBrush}"
+    BorderBrush="{DynamicResource ForgroundBrush}"
     FontFamily="{StaticResource LatoBold}"
-    GlowBrush="{StaticResource ForgroundBrush}"
+    GlowBrush="{DynamicResource ForgroundBrush}"
     ShowInTaskbar="False"
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
     ShowTitleBar="False"
     Topmost="True"
     WindowStartupLocation="CenterOwner"
-    WindowTitleBrush="{StaticResource ForgroundBrush}"
+    WindowTitleBrush="{DynamicResource ForgroundBrush}"
     mc:Ignorable="d">
     <Window.Resources>
         <local:ThemeConverter x:Key="ThemeConverter" />
@@ -84,15 +84,15 @@
                 <ComboBoxItem
                     Padding="5"
                     Background="#6495ED"
-                    Content=" 蓝色" />
+                    Content="蓝色" />
                 <ComboBoxItem
                     Padding="5"
                     Background="#757575"
-                    Content=" 灰色" />
+                    Content="灰色" />
                 <ComboBoxItem
                     Padding="5"
                     Background="#ffd180"
-                    Content=" 橘黄色" />
+                    Content="橘黄色" />
             </ComboBox>
         </StackPanel>
     </Grid>
