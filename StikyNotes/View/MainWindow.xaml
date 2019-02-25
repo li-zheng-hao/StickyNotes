@@ -12,7 +12,8 @@
     Left="{Binding Datas.StartUpPositionLeft, Mode=TwoWay}"
     Style="{StaticResource MainWindow}"
     Top="{Binding Datas.StartUpPositionTop, Mode=TwoWay}"
-    WindowStartupLocation="Manual">
+    WindowStartupLocation="Manual"
+    Topmost="{Binding ProgramData.IsWindowTopMost,Mode=TwoWay}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseDown">
             <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=Window}" />

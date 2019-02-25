@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace StikyNotes
 {
-
+    
     public enum Themes
     {
         Blue,
@@ -36,6 +36,7 @@ namespace StikyNotes
                     || merged.Source.ToString().Contains(nameof(Themes.Blue)))
                 {
                     mergedDictionaries.Remove(merged);
+                    
                     break;
                 }
             }

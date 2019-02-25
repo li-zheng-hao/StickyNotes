@@ -132,6 +132,7 @@
     <Compile Include="Data\ConstData.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utils\ThemeAssist.cs" />
+    <Compile Include="Utils\TimerUtil.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>

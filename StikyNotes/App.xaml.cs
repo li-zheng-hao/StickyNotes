@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
+using StikyNotes.Utils;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MessageBox = System.Windows.MessageBox;
 
@@ -17,6 +18,8 @@ namespace StikyNotes
         System.Threading.Mutex mutex;
 
         public bool IsInited { get; set; } = true;
+
+        public TimerUtil TimerUtil;
 
         /// <summary>
         /// 程序启动
@@ -67,6 +70,8 @@ namespace StikyNotes
             }
 
             IsInited = false;
+            TimerUtil=new TimerUtil(SaveDataAction);
+
         }
 
        
@@ -128,18 +133,26 @@ namespace StikyNotes
            OnStartup(null);
         }
 
+        [System.Obsolete("方法已经弃用，改成使用定时器，每过一段时间自动保存")]
         /// <summary>
         /// 接收到了保存数据的消息
         /// </summary>
         /// <param name="message"></param>
         private void SaveDataMessage(SaveMessage message)
         {
+//            if (!IsInited)
+//            {
+//                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
+//            }
+        }
+
+        public void SaveDataAction()
+        {
             if (!IsInited)
             {
                 XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
             }
         }
-
         /// <summary>
         /// 打开一个空的窗体
         /// </summary>

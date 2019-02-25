@@ -24,6 +24,8 @@ namespace StikyNotes
         /// ´°ÌåÊý¾Ý
         /// </summary>
         public WindowsData Datas { get; set; }
+
+        public ProgramData ProgramData { get; set; }
         #region ÃüÁî
         public RelayCommand NewWindowCommand { get; private set; }
         public RelayCommand OpenSettingCommand { get; private set; }
@@ -46,6 +48,7 @@ namespace StikyNotes
             MoveWindowCommand = new RelayCommand<object>(MoveWindowMethod);
             AddFontSizeCommand = new RelayCommand(AddFontSizeMethod);
             ReduceFontSizeCommand = new RelayCommand(ReduceFontSizeMethod);
+            ProgramData=ProgramData.Instance;
         }
 
         /// <summary>

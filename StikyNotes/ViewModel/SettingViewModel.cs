@@ -27,6 +27,7 @@ namespace StikyNotes
             IsTopMostChangedCommand=new RelayCommand<bool>(IsTopMostChangedMethod);
             IsStartUpWithSystemChangedCommand=new RelayCommand<bool>(IsStartUpWithSystemChangedMethod);
             SelectionChangedCommand=new RelayCommand<SelectionChangedEventArgs>(SelectionChangedMethod);
+
         }
 
         /// <summary>
