@@ -13,6 +13,8 @@
     Style="{StaticResource MainWindow}"
     Top="{Binding Datas.StartUpPositionTop, Mode=TwoWay}"
     WindowStartupLocation="Manual"
+    MaxHeight="800"
+    MaxWidth="800"
     Topmost="{Binding ProgramData.IsWindowTopMost,Mode=TwoWay}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseDown">
