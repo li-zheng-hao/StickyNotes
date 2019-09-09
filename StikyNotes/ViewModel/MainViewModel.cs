@@ -96,7 +96,10 @@ namespace StikyNotes
         private void MoveWindowMethod(object e)
         {
             var win = e as MainWindow;
+            win.ResizeMode = ResizeMode.NoResize;
             win.DragMove();
+            win.ResizeMode = ResizeMode.CanResize;
+
             //            var newPos=win.PointFromScreen(new Point(0, 0));
             //            Datas.StartUpPosition = newPos;
         }
