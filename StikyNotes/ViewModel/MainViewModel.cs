@@ -1,220 +1,137 @@
-Ôªøusing System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using System.Windows;
 using System.Windows.Input;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using MaterialDesignThemes.Wpf;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace StikyNotes
 {
-    [Serializable]
+    /// <summary>
+    /// This class contains properties that the main View can data bind to.
+    /// <para>
+    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
+    /// </para>
+    /// <para>
+    /// You can also use Blend to data bind with the tool's support.
+    /// </para>
+    /// <para>
+    /// See http://www.galasoft.ch/mvvm
+    /// </para>
+    /// </summary>
     public class MainViewModel
     {
-        #region Â±ûÊÄß
-        private MainWindow mainWindow;
-        public MainWindow MainWindow { get => mainWindow; set => mainWindow = value; }
-
+        /// <summary>
+        /// ¥∞ÃÂ ˝æ›
+        /// </summary>
         public WindowsData Datas { get; set; }
 
-
-
-
+        public ProgramData ProgramData { get; set; }
+        #region √¸¡Ó
+        public RelayCommand NewWindowCommand { get; private set; }
+        public RelayCommand OpenSettingCommand { get; private set; }
+        public RelayCommand OpenAboutCommand { get; private set; }
+        public RelayCommand AddFontSizeCommand { get; private set; }
+        public RelayCommand ReduceFontSizeCommand { get; private set; }
+        public RelayCommand<object> MoveWindowCommand { get; private set; }
+        public RelayCommand<MainWindow> DeletePaWindowCommand { get; private set; }
         #endregion
 
-
-        #region ÂëΩ‰ª§
         /// <summary>
-        /// Â¢ûÂ§ßÂ≠ó‰Ωì
+        /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        private RoutedCommand IncreaseFontCommand { get; set; }
-        /// <summary>
-        /// ÂáèÂ∞èÂ≠ó‰Ωì
-        /// </summary>
-        private RoutedCommand DecreaseFontCommand { get; set; }
-
-        #endregion
-
-
-        #region ÂàùÂßãÂåñ
-
-        public MainViewModel(MainWindow mainWindow, WindowsData data)
+        public MainViewModel()
         {
-            MainWindow = mainWindow;
-            MainWindow.Deactivated += MainWindow_Deactivated;
-            Datas = data;
-            WindowsManager.Instance.Windows.Add(mainWindow);
-            Init();
-        }
-
-        private void MainWindow_Deactivated(object sender, EventArgs e)
-        {
-            XMLHelper.SaveObjAsXml(ProgramData.Instance, "StikyNotesData.xml");
+            NewWindowCommand = new RelayCommand(NewWindowMethod);
+            OpenSettingCommand = new RelayCommand(OpenSettingMethod);
+            OpenAboutCommand = new RelayCommand(OpenAboutMethod);
+            DeletePaWindowCommand = new RelayCommand<MainWindow>(DeleteWindowMethod);
+            MoveWindowCommand = new RelayCommand<object>(MoveWindowMethod);
+            AddFontSizeCommand = new RelayCommand(AddFontSizeMethod);
+            ReduceFontSizeCommand = new RelayCommand(ReduceFontSizeMethod);
+            ProgramData=ProgramData.Instance;
         }
 
         /// <summary>
-        /// ‰∏Ä‰∫õÂàùÂßãÂåñÊ≠•È™§
+        /// ¥Úø™œ‡πÿ¥∞ø⁄
         /// </summary>
-        private void Init()
+        private void OpenAboutMethod()
         {
-            #region Á™ó‰ΩìÊåâÈíÆÁªëÂÆö‰ª•ÂèäÊï∞ÊçÆÂàùÂßãÂåñ
-
-            mainWindow.Left = Datas.StartUpPosition.X;
-            mainWindow.Top = Datas.StartUpPosition.Y;
-            mainWindow.Topmost = ProgramData.Instance.IsWindowTopMost;
-            ProgramData.Instance.Datas.Add(this.Datas);
-            mainWindow.MouseDown += MainWindow_MouseDown;
-            mainWindow.DeleteButton.Click += DeleteButton_Click;
-            mainWindow.AddButton.Click += AddButton_Click;
-            mainWindow.Closed += MainWindow_Closed;
-            mainWindow.SettingButton.Click += SettingButton_Click;
-            mainWindow.AboutButton.Click += AboutButton_Click;
-
-            #endregion
-
-            #region Â¢ûÂ§ßÂ≠ó‰ΩìÂëΩ‰ª§
-            IncreaseFontCommand = new RoutedCommand();
-            KeyGesture IncreaseFontCommandGesture = new KeyGesture(
-                Key.Up, ModifierKeys.Control | ModifierKeys.Alt);
-            CommandBinding IncreaseBinding = new CommandBinding();
-            IncreaseBinding.Command = IncreaseFontCommand;
-            IncreaseBinding.CanExecute += IncreaseBinding_CanExecute;
-            IncreaseBinding.Executed += IncreaseBinding_Executed;
-            IncreaseFontCommand.InputGestures.Add(IncreaseFontCommandGesture);
-            mainWindow.CommandBindings.Add(IncreaseBinding);
-
-            #endregion
-
-            #region ÂáèÂ∞èÂ≠ó‰Ωì
-            DecreaseFontCommand = new RoutedCommand();
-            KeyGesture DecreaseFontCommandGesture = new KeyGesture(
-                Key.Down, ModifierKeys.Control | ModifierKeys.Alt);
-            CommandBinding DecreaseBinding = new CommandBinding();
-            DecreaseBinding.Command = DecreaseFontCommand;
-            DecreaseBinding.CanExecute += DecreaseBinding_CanExecute; ;
-            DecreaseBinding.Executed += DecreaseBinding_Executed;
-            DecreaseFontCommand.InputGestures.Add(DecreaseFontCommandGesture);
-
-            mainWindow.CommandBindings.Add(DecreaseBinding);
-            #endregion
-
+            var win=new AboutWindow();
+            win.Show();
         }
 
-        private void Datas_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            XMLHelper.SaveObjAsXml(ProgramData.Instance, "StikyNotesData.xml");
-        }
-
-
-        #endregion
-
-
-        #region ÂëΩ‰ª§ÂÆûÁé∞
-        private void DecreaseBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (mainWindow.MainTextBox.FontSize > 8)
-                mainWindow.MainTextBox.FontSize -= 2;
-        }
-
-        private void DecreaseBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void IncreaseBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (mainWindow.MainTextBox.FontSize < 24)
-                mainWindow.MainTextBox.FontSize += 2;
-        }
-
-        private void IncreaseBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        #endregion
-
-
-        #region Á™ó‰Ωì‰∫ã‰ª∂
         /// <summary>
-        /// Ê∑ªÂä†Êñ∞Á™óÂè£
+        /// ºı…Ÿ◊÷ÃÂ
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void ReduceFontSizeMethod()
         {
-            var newWin = new MainWindow();
-            newWin.DataContext = new MainViewModel(newWin, new WindowsData());
-            WindowsManager.Instance.Windows.Add(newWin);
-            newWin.Show();
-            newWin.Activate();
-        }
-        /// <summary>
-        /// Âà†Èô§ÂΩìÂâçÁ™óÂè£
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private  void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (ProgramData.Instance.Datas.Contains(this.Datas))
-                ProgramData.Instance.Datas.Remove(this.Datas);
-            mainWindow.Close();
-        }
-        /// <summary>
-        /// ÊãñÂä®Á™óÂè£
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-            if (e.Source.Equals(mainWindow.Menu) || e.Source.Equals(mainWindow.SoftWareName))
+            if (Datas.FontSize > 8)
             {
-                mainWindow.DragMove();
+                Datas.FontSize -= 2;
+            }
+        }
+        /// <summary>
+        /// ∑≈¥Û◊÷ÃÂ
+        /// </summary>
+        private void AddFontSizeMethod()
+        {
+            if (Datas.FontSize < 32)
+            {
+                Datas.FontSize += 2;
             }
         }
 
-        /// <summary>
-        /// Á™ó‰ΩìÂÖ≥Èó≠
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MainWindow_Closed(object sender, EventArgs e)
+        private void OpenSettingMethod()
         {
-            WindowsManager.Instance.Windows.Remove(mainWindow);
-            Datas.StartUpPosition = new Point(mainWindow.Left, mainWindow.Top);
-            if(WindowsManager.Instance.Windows.Count==0)
-                Application.Current.Shutdown();
-        }
-
-        /// <summary>
-        /// ÂÖ≥‰∫éÊåâÈíÆ
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            AboutWindow win = new AboutWindow();
+            var win = new SettingWindow();
+            var vm=new SettingViewModel();
+            win.DataContext = vm;
             win.Show();
         }
 
         /// <summary>
-        /// ËÆæÁΩÆÊåâÈíÆ
+        /// “∆∂Ø¥∞ÃÂ
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SettingButton_Click(object sender, RoutedEventArgs e)
+        /// <param name="e">µ±«∞µƒWindow</param>
+        private void MoveWindowMethod(object e)
         {
-            SettingWindow win = new SettingWindow();
-            win.Show();
+            var win = e as MainWindow;
+            win.ResizeMode = ResizeMode.NoResize;
+            win.DragMove();
+            win.ResizeMode = ResizeMode.CanResize;
+
+            //            var newPos=win.PointFromScreen(new Point(0, 0));
+            //            Datas.StartUpPosition = newPos;
         }
 
+        /// <summary>
+        /// –¬Ω®¥∞ÃÂ
+        /// </summary>
+        void NewWindowMethod()
+        {
+            MainWindow win = new MainWindow();
+            var vm = new MainViewModel();
+            vm.Datas = new WindowsData();
+            win.DataContext = vm;
+            win.Show();
+            ProgramData.Instance.Datas.Add(vm.Datas);
+            WindowsManager.Instance.Windows.Add(win);
 
-        #endregion
+        }
+
+        /// <summary>
+        /// …æ≥˝¥∞ÃÂ
+        /// </summary>
+        void DeleteWindowMethod(MainWindow obj)
+        {
+            var win = obj as MainWindow;
+            if (WindowsManager.Instance.Windows.Contains(win))
+            {
+                WindowsManager.Instance.Windows.Remove(win);
+                ProgramData.Instance.Datas.Remove(Datas);
+            }
+            win.Close();
+        }
 
     }
 }

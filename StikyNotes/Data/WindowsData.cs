@@ -1,96 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using GalaSoft.MvvmLight.Messaging;
+using StikyNotes.Annotations;
 using MessageBox = System.Windows.MessageBox;
 
 namespace StikyNotes
 {
     [XmlRoot]
-    public class WindowsData:PropertyChangedBase
+    public class WindowsData:INotifyPropertyChanged
     {
-        [XmlElement("WindowsIndex")]
-        /// <summary>
-        /// Windows窗体索引
-        /// </summary>
-        public int WindowsIndex{get;set; }
 
-        [XmlElement("FontSize")]
-        private double fontSize=14;
         /// <summary>
         /// 窗体字体
         /// </summary>
-        public double FontSize
-        {
-            get { return fontSize;}
-            set
-            {
-                fontSize=value;
-            }
-        }
+        public double FontSize { get; set; }
+       
+        /// <summary>
+        /// 窗体启动左上角位置
+        /// </summary>
+        public double StartUpPositionTop { get; set; }
+        public double StartUpPositionLeft { get; set; }
 
-
-        private Point startUpPosition;
-        [XmlElement("LeftTopWinPosition")]
-        public Point StartUpPosition
-        {
-            get { return startUpPosition; }
-            set
-            {
-                startUpPosition = value;
-               
-                OnPropertyChanged("StartUpPosition");
-            }
-        }
-        
 
         /// <summary>
         /// 窗体宽度
         /// </summary>
-        private int windowsWidth;
-        public int WindowsWidth
-        {
-            get { return windowsWidth; }
-            set { windowsWidth = value;OnPropertyChanged("WindowsWidth"); }
-        }
+        public int WindowsWidth { get; set; }
+//        {
+//            get { return windowsWidth; }
+//            set
+//            {
+//                windowsWidth = value;
+//                OnPropertyChanged();
+//            }
+//
+//        }
 
-        private int windowsHeight;
-        public int WindowsHeight
-        {
-            get { return windowsHeight; }
-            set
-            {
-                windowsHeight = value;
-                OnPropertyChanged("WindowsHeight");
-            }
-        }
+        /// <summary>
+        /// 窗体高度
+        /// </summary>
+        public int WindowsHeight { get; set; }
 
+        /// <summary>
+        /// 文本框内容
+        /// </summary>
+        public string RichTextBoxContent { get; set; }
 
-        private string richTextBoxContent;
-
-        [XmlElement("UserInputNotes")]
-        public string RichTextBoxContent
-        {
-            get { return richTextBoxContent; }
-            set
-            {
-                richTextBoxContent = value;
-                OnPropertyChanged("RichTextBoxContent");
-            }
-        }
+        /// <summary>
+        /// 默认初始化数据
+        /// </summary>
         public WindowsData()
         {
-//            MessageBox.Show("新的窗体数据加载了");
-            WindowsIndex = GenerateWindowsIndex.Generate();
-            WindowsWidth = 350;
-            WindowsHeight = 450;
+            WindowsWidth = 300;
+            WindowsHeight = 300;
+            FontSize = 14;
             double screenHeight = SystemParameters.FullPrimaryScreenHeight;
             double screenWidth = SystemParameters.FullPrimaryScreenWidth;
-            StartUpPosition =new Point((screenWidth - WindowsWidth)/2,(screenHeight - WindowsHeight)/2);
+            StartUpPositionLeft = (screenWidth - WindowsWidth)/ 2;
+            StartUpPositionTop = (screenHeight - WindowsHeight) / 2;
+            RichTextBoxContent = string.Empty;
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Messenger.Default.Send<SaveMessage>(new SaveMessage());
         }
     }
 }

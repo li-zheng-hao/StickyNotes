@@ -1,14 +1,14 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:StikyNotes"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
-    
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
     <FontFamily x:Key="LatoThin">pack://application;,,,/Resources/Fonts/#Lato Thin</FontFamily>
     <FontFamily x:Key="LatoRegular">pack://application;,,,/Resources/Fonts/#Lato Regular</FontFamily>
     <FontFamily x:Key="LatoBold">pack://application;,,,/Resources/Fonts/#Lato Black</FontFamily>
     <FontFamily x:Key="FontAwesome">pack://application;,,,/Resources/Fonts/#FontAwesome</FontFamily>
 
-    
+
     <system:Double x:Key="FontSizeSmaller">10</system:Double>
     <system:Double x:Key="FontSizeSmall">12</system:Double>
     <system:Double x:Key="FontSizeRegular">14</system:Double>
@@ -16,8 +16,8 @@
     <system:Double x:Key="FontSizeXLarge">24</system:Double>
     <system:Double x:Key="FontSizeXXLarge">30</system:Double>
 
-    
-    
+
+
     <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
     <system:String x:Key="FontAwesomeUserIcon">&#xf007;</system:String>
     <system:String x:Key="FontAwesomePictureIcon">&#xf1c5;</system:String>

@@ -2,38 +2,30 @@
     x:Class="StikyNotes.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:command="http://www.galasoft.ch/mvvmlight"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Name="Window"
     Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
-    MinWidth="300"
-    MinHeight="300"
-    MaxWidth="500"
-    AllowsTransparency="True"
-    BorderThickness="24"
-    Icon="MyLogo.ico"
-    ShowInTaskbar="False"
+    Left="{Binding Datas.StartUpPositionLeft, Mode=TwoWay}"
+    Style="{StaticResource MainWindow}"
+    Top="{Binding Datas.StartUpPositionTop, Mode=TwoWay}"
     WindowStartupLocation="Manual"
-    WindowStyle="None">
-    <Window.Effect>
-        <DropShadowEffect
-            BlurRadius="12"
-            Direction="90"
-            ShadowDepth="1"
-            Color="DarkGray" />
-    </Window.Effect>
-    <Window.Style>
-        <Style TargetType="Window">
-            <Setter Property="WindowChrome.WindowChrome">
-                <Setter.Value>
-                    <WindowChrome
-                        CaptionHeight="0"
-                        CornerRadius="24"
-                        ResizeBorderThickness="24" />
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Style>
+    MaxHeight="800"
+    MaxWidth="800"
+    Topmost="{Binding ProgramData.IsWindowTopMost,Mode=TwoWay}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDown">
+            <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=Window}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding AddFontSizeCommand}" Gesture="Control+Alt+Up" />
+        <KeyBinding Command="{Binding ReduceFontSizeCommand}" Gesture="Control+Alt+Down" />
+    </Window.InputBindings>
+
     <Grid>
         <!--  菜单栏阴影效果  -->
         <Grid.Effect>
@@ -60,6 +52,7 @@
                 Name="AddButton"
                 Grid.Column="0"
                 HorizontalAlignment="Left"
+                Command="{Binding NewWindowCommand}"
                 Style="{StaticResource Button_Menu}"
                 ToolTip="新增一条便签">
                 <materialDesign:PackIcon
@@ -72,11 +65,7 @@
             <Label
                 Name="SoftWareName"
                 Grid.Column="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontFamily="{StaticResource LatoRegular}"
-                FontSize="18"
-                Opacity="0.6">
+                Style="{StaticResource TitleLabelStyle}">
                 Stiky Notes
             </Label>
 
@@ -91,8 +80,14 @@
                     PlacementMode="BottomAndAlignCentres">
 
                     <StackPanel>
-                        <Button Name="SettingButton" Content="设置" />
-                        <Button Name="AboutButton" Content="关于" />
+                        <Button
+                            Name="SettingButton"
+                            Command="{Binding OpenSettingCommand}"
+                            Content="设置" />
+                        <Button
+                            Name="AboutButton"
+                            Command="{Binding OpenAboutCommand}"
+                            Content="关于" />
 
                     </StackPanel>
 
@@ -104,6 +99,8 @@
                     Name="DeleteButton"
                     Grid.Column="3"
                     HorizontalAlignment="Right"
+                    Command="{Binding DeletePaWindowCommand}"
+                    CommandParameter="{Binding ElementName=Window}"
                     Style="{StaticResource Button_Menu}"
                     ToolTip="删除此便签">
 
@@ -123,7 +120,7 @@
             Grid.Row="1"
             Margin="0,1,0,0"
             Padding="0"
-            Background="AliceBlue"
+            Background="{DynamicResource BackgroundBrush}"
             VerticalScrollBarVisibility="Hidden">
             <TextBox
                 Name="MainTextBox"

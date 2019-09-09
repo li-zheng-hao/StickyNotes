@@ -1,29 +1,38 @@
-﻿<Application
+<Application
     x:Class="StikyNotes.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:StikyNotes"
+    d1p1:Ignorable="d"
     Startup="Application_Startup">
+    <!--  Startup="Application_Startup"  -->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!--  加上自己的一些Style  -->
                 <ResourceDictionary Source="Style/Color.xaml" />
                 <ResourceDictionary Source="Style/Font.xaml" />
                 <ResourceDictionary Source="Style/Control.xaml" />
-
-
+                <ResourceDictionary Source="Style/Window.xaml" />
+                <ResourceDictionary Source="Style/Label.xaml" />
+                <ResourceDictionary Source="Style/Themes/Blue.xaml" />
 
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />-->
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />-->
-
-
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Grey.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightBlue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightBlue.xaml">
+                    <vm:ViewModelLocator
+                        xmlns:vm="clr-namespace:StikyNotes.ViewModel"
+                        x:Key="Locator"
+                        d:IsDataSource="True" />
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
             <ContextMenu x:Key="NotifyIconMenu" StaysOpen="False">

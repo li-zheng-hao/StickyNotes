@@ -1,17 +1,28 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:StikyNotes">
-    <Color x:Key="ForgroundColor">#6495ED</Color>
-    <SolidColorBrush x:Key="ForgroundBrush" Color="{StaticResource ForgroundColor}" />
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:StikyNotes">
 
-    <Color x:Key="ForgroundColor100">#8db1f2</Color>
-    <SolidColorBrush x:Key="ForgroundBrush100" Color="{StaticResource ForgroundColor100}" />
+    <!--  蓝色主题  -->
+    <Color x:Key="ForgroundColorBlue">#6495ED</Color>
+    <Color x:Key="ForgroundColorBlue100">#6495CA</Color>
+    <Color x:Key="BackgroundColorBlue">#F0F8FF</Color>
 
-    <Color x:Key="BackgroundColor">#FFFFFF</Color>
-    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" /> 
-    
-    <Color x:Key="ControlColor">#000000</Color>
-    <SolidColorBrush x:Key="ControlBrush" Color="{StaticResource ControlColor}" />
-    
+    <!--  灰色主题  -->
+    <Color x:Key="BackgroundColorGray">#fafafa</Color>
+    <Color x:Key="ForgroundColorGray">#757575</Color>
+    <Color x:Key="ForgroundColorGray100">#DDFFFFFF</Color>
+
+
+    <!--  橘黄色主题  -->
+    <Color x:Key="BackgroundColorOrange">#fff3e0</Color>
+    <Color x:Key="ForgroundColorOrange100">#ffe0b2</Color>
+    <Color x:Key="ForgroundColorOrange">#ffd180</Color>
+
+    <!-- <Color x:Key="Primary400">#ffa726</Color> -->
+
+    <!-- <Color x:Key="Primary800Foreground">#FFFFFFFF</Color> -->
+
+
 
 </ResourceDictionary>
