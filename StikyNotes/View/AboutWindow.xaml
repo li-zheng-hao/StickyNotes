@@ -63,6 +63,9 @@
                     <Label FontFamily="{StaticResource FontAwesome}">
                         <TextBlock Text="后续更新都会在上面发布，好用的话点个Star吧~" TextWrapping="Wrap" />
                     </Label>
+                    <Label FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Right">
+                        <TextBlock Text="版本信息: v2.2.1" TextWrapping="Wrap" />
+                    </Label>
 
                 </StackPanel>
             </Border>
