@@ -22,7 +22,7 @@ namespace StikyNotes
         /// </summary>
         public bool IsWindowTopMost { get; set; }
 
-        private static ProgramData instance=new ProgramData();
+        private static ProgramData instance = new ProgramData();
 
         public static ProgramData Instance
         {

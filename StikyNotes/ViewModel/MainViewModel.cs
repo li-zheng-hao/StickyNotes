@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -25,6 +26,11 @@ namespace StikyNotes
         /// </summary>
         public WindowsData Datas { get; set; }
 
+        /// <summary>
+        /// 定时器检测是否位于窗体边缘
+        /// </summary>
+        DispatcherTimer timer;
+
         public ProgramData ProgramData { get; set; }
         #region 命令
         public RelayCommand NewWindowCommand { get; private set; }
@@ -33,6 +39,7 @@ namespace StikyNotes
         public RelayCommand AddFontSizeCommand { get; private set; }
         public RelayCommand ReduceFontSizeCommand { get; private set; }
         public RelayCommand<object> MoveWindowCommand { get; private set; }
+
         public RelayCommand<MainWindow> DeletePaWindowCommand { get; private set; }
         #endregion
 
@@ -41,6 +48,11 @@ namespace StikyNotes
         /// </summary>
         public MainViewModel()
         {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Tick += HideWindowDetect;
+            timer.Start();
+
             NewWindowCommand = new RelayCommand(NewWindowMethod);
             OpenSettingCommand = new RelayCommand(OpenSettingMethod);
             OpenAboutCommand = new RelayCommand(OpenAboutMethod);
@@ -51,6 +63,14 @@ namespace StikyNotes
             ProgramData=ProgramData.Instance;
         }
 
+        private void HideWindowDetect(object sender, EventArgs e)
+        {
+            
+        }
+
+
+
+       
         /// <summary>
         /// 打开相关窗口
         /// </summary>

@@ -6,6 +6,7 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:utils="clr-namespace:StikyNotes.Utils"
     Name="Window"
     Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
@@ -25,13 +26,16 @@
         <KeyBinding Command="{Binding AddFontSizeCommand}" Gesture="Control+Alt+Up" />
         <KeyBinding Command="{Binding ReduceFontSizeCommand}" Gesture="Control+Alt+Down" />
     </Window.InputBindings>
-
+    <!--<i:Interaction.Behaviors>-->
+        <!--<utils:WndHideBehavior />-->
+    <!--</i:Interaction.Behaviors>-->
+    
     <Grid>
         <!--  菜单栏阴影效果  -->
         <Grid.Effect>
             <DropShadowEffect
                 BlurRadius="10"
-                ShadowDepth="-4"
+                ShadowDepth="-3"
                 Color="Gray" />
         </Grid.Effect>
         <Grid.RowDefinitions>
@@ -128,7 +132,7 @@
                 Margin="0"
                 VerticalAlignment="Top"
                 materialDesign:HintAssist.FloatingScale="0.5"
-                materialDesign:HintAssist.Hint="输入 . . . "
+                materialDesign:HintAssist.Hint="记 录 . . . "
                 AcceptsReturn="True"
                 FontSize="{Binding Datas.FontSize, Mode=TwoWay}"
                 Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
