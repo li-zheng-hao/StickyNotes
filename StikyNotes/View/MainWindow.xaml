@@ -18,7 +18,7 @@
     MaxWidth="800"
     Topmost="{Binding ProgramData.IsWindowTopMost,Mode=TwoWay}">
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseDown">
+        <i:EventTrigger EventName="MouseLeftButtonDown">
             <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=Window}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>

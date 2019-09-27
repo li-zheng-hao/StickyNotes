@@ -18,6 +18,11 @@
 
 ## 2.3 ⚡功能新增 2019年9月28日
 1、增加了靠上边缘隐藏的功能。
+
+2、新增版本说明。
+
+3、修复了右键点击菜单栏异常退出的bug。
+
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/feature1.gif)</br>
 
 ## 2.2 Bug修复 2019年3月12日
