@@ -16,6 +16,10 @@
 4、可以调节每个便签的大小</br>
 5、所有的调整都会自动保存，下次启动时所有的配置都按照之前的设置</br>
 
+## 2.3 ⚡功能新增 2019年9月28日
+1、增加了靠上边缘隐藏的功能。
+![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/feature1.gif)</br>
+
 ## 2.2 Bug修复 2019年3月12日
 1、修复了拖动右上角最大化无法缩小的bug。
 
