@@ -16,17 +16,17 @@ Click above link to download zip file.
 1、支持字体放大和缩小。</br></br>
 Font size can be resize.
 2、支持开机自启动。</br></br>
-Auto startup.
+Auto startup.</br>
 3、窗口置顶。</br></br>
-Support window topmost mode.
+Support window topmost mode.</br>
 4、可以调节每个便签的大小。</br></br>
-Resize window size respectively.
+Resize window size respectively.</br>
 5、所有的调整都会自动保存，下次启动时所有的配置都按照之前的设置。</br></br>
-Auto save all data.
+Auto save all data.</br>
 6、窗体靠上边缘自动吸附隐藏，鼠标上移显示。</br></br>
-Auto hide at the top edge of screen.
+Auto hide at the top edge of screen.</br>
 7、支持多个窗体主题。</br></br>
-Support beautiful themes.
+Support beautiful themes.</br>
 
 ## 2.3 ⚡功能更新 2019年9月28日
 1、增加了靠上边缘隐藏的功能。
