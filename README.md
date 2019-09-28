@@ -14,7 +14,7 @@ Click above link to download zip file.
 ## 一些特性 Features</br>
 
 1、支持字体放大和缩小。</br></br>
-Font size can be resize.
+Font size can be resize.</br>
 2、支持开机自启动。</br></br>
 Auto startup.</br>
 3、窗口置顶。</br></br>
