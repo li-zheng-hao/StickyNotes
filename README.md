@@ -1,15 +1,15 @@
 # StikyNotes
-一个便捷的Windows桌面便利贴</br>
-A convenitent Windows Notes </br>
-仿照了Win10自带的便签,以后再也不用担心win10bug或者重装系统导致便签数据丢失了,最重要的是可以置顶以及边缘吸附了！</br>
-It imitates the Win10's StikyNotes, you don't need to worry about win10 bug or reinstall the system which led to the loss of notes data,the most important is that it can set as topmost and hide at the edge of screen.
+一个便捷的Windows桌面便利贴</br></br>
+A convenitent Windows Notes </br></br>
+仿照了Win10自带的便签,以后再也不用担心win10bug或者重装系统导致便签数据丢失了,最重要的是可以置顶以及边缘吸附了！</br></br>
+It imitates the Win10's StikyNotes, you don't need to worry about win10 bug or reinstall the system which led to the loss of notes data,the most important is that it can set as topmost and hide at the edge of screen.</br>
 
-## 安装
+## 安装 Installation
 点击其中的压缩包下载，解压直接用即可：
 [点击此处打开下载页面](https://github.com/li-zheng-hao/StikyNotes/releases)
 
 
-## 一些特性</br>
+## 一些特性 Features</br>
 
 1、支持字体放大和缩小</br>
 2、支持开机自启动</br>
