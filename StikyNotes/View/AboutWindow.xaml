@@ -39,10 +39,10 @@
                         Margin="5"
                         FontFamily="Microsoft YaHei UI"
                         FontWeight="Bold">
-                        关于快捷键
+                        关于
                     </Label>
-                    <Label FontFamily="{StaticResource FontAwesome}">增加字体大小 Ctrl+Alt+↑</Label>
-                    <Label FontFamily="{StaticResource FontAwesome}">减少字体大小 Ctrl+Alt+↓</Label>
+                    <TextBlock Margin="5" TextWrapping="WrapWithOverflow" FontFamily="{StaticResource FontAwesome}">使用过程中出现什么bug或者你有什么好的建议，欢迎在github链接中提issue.</TextBlock>
+                    <!--<Label FontFamily="{StaticResource FontAwesome}">减少字体大小 Ctrl+Alt+↓</Label>-->
                 </StackPanel>
             </Border>
 

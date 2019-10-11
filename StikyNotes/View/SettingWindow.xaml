@@ -51,8 +51,8 @@
             Header="           窗 体 置 顶 "
             HeaderFontFamily="{StaticResource LatoBold}"
             IsChecked="{Binding Datas.IsWindowTopMost, Mode=TwoWay}"
-            OffLabel="Off"
-            OnLabel="On" />
+            OffLabel="OFF"
+            OnLabel="ON" />
         <Controls:ToggleSwitch
             Name="IsStartUpWithSystemBtn"
             Grid.Row="2"
@@ -62,8 +62,8 @@
             Header="           开 机 启 动"
             HeaderFontFamily="{StaticResource LatoBold}"
             IsChecked="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
-            OffLabel="Off"
-            OnLabel="On" />
+            OffLabel="OFF"
+            OnLabel="ON" />
         <StackPanel Grid.Row="3">
             <Label
                 Margin="0,0,15,0"
@@ -102,16 +102,48 @@
                 HorizontalAlignment="Center"
                 FontFamily="{StaticResource LatoBold}"
                 FontSize="17">
-                全局快捷键
+                快捷键
             </Label>
-            <Grid Height="30">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" >显示所有便签</Label>
+                <ComboBox HorizontalAlignment="Right" Margin="5 0 0 0" Grid.Column="1">
+                    <ComboBoxItem Padding="5" IsSelected="True">Ctrl</ComboBoxItem>
+                    <ComboBoxItem Padding="5">Ctrl+Alt</ComboBoxItem>
+                    <ComboBoxItem Padding="5">Ctrl+Shift</ComboBoxItem>
+                </ComboBox>
+                <ComboBox  HorizontalAlignment="Right" Margin="5 0 0 0" Grid.Column="2">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <ComboBoxItem Padding="5" Content="{Binding ShortCut}"></ComboBoxItem>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                   
+                </ComboBox>
+                
+            </Grid>
+            <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0">显示所有便签</Label>
-                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">Ctrl+Q</TextBlock>
+                <Label Grid.Column="0">放大字体</Label>
+                
+                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">Ctrl+Alt+Up</TextBlock>
             </Grid>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">缩小字体</Label>
+                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">Ctrl+Alt+Down</TextBlock>
+            </Grid>
+
         </StackPanel>
     </Grid>
 </Controls:MetroWindow>

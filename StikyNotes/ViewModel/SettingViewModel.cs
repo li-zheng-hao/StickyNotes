@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MahApps.Metro.Controls;
+using StikyNotes.Utils.HotKeyUtil;
 using ComboBoxItem = System.Windows.Controls.ComboBoxItem;
 
 namespace StikyNotes
@@ -16,6 +17,7 @@ namespace StikyNotes
     {
         public ProgramData Datas { get; set; }
 
+        public  EKey ShortCut { get; set; }
         public RelayCommand<bool> IsTopMostChangedCommand { get; set; }
 
         public RelayCommand<bool> IsStartUpWithSystemChangedCommand { get; set; }
@@ -23,6 +25,7 @@ namespace StikyNotes
 
         public SettingViewModel()
         {
+            ShortCut = new EKey();
             Datas=ProgramData.Instance;
             IsTopMostChangedCommand=new RelayCommand<bool>(IsTopMostChangedMethod);
             IsStartUpWithSystemChangedCommand=new RelayCommand<bool>(IsStartUpWithSystemChangedMethod);

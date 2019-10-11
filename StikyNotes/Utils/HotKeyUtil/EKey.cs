@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace StikyNotes.Utils.HotKeyUtil
 {
-    namespace GlobalHotKeyDemo
-    {
-        /// <summary>
-        /// 自定义按键枚举
-        /// </summary>
-        public enum EKey
+
+    /// <summary>
+    /// 自定义按键枚举
+    /// </summary>
+    public enum EKey
         {
             Space = 32,
             Left = 37,
@@ -57,5 +56,5 @@ namespace StikyNotes.Utils.HotKeyUtil
             F11 = 122,
             F12 = 123,
         }
-    }
+    
 }
