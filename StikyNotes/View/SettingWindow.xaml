@@ -85,15 +85,15 @@
                 <ComboBoxItem
                     Padding="5"
                     Background="#6495ED"
-                    Content="蓝色" />
+                    Content="   蓝色" />
                 <ComboBoxItem
-                    Padding="5"
+                     Padding="5"
                     Background="#757575"
-                    Content="灰色" />
+                    Content="   灰色" />
                 <ComboBoxItem
-                    Padding="5"
+                     Padding="5"
                     Background="#ffd180"
-                    Content="橘黄色" />
+                    Content="   橘黄色" />
             </ComboBox>
         </StackPanel>
         <StackPanel Grid.Row="4">
