@@ -131,6 +131,12 @@
     <Compile Include="Converter\ThemeConverter.cs" />
     <Compile Include="Data\ConstData.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Utils\HotKeyUtil\EHotKeySetting.cs" />
+    <Compile Include="Utils\HotKeyUtil\EKey.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeyHelper.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeyMananger.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeyModel.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeySettingManager.cs" />
     <Compile Include="Utils\ThemeAssist.cs" />
     <Compile Include="Utils\TimerUtil.cs" />
     <Compile Include="Utils\WindowHide.cs" />

@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:StikyNotes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="200"
-    Height="280"
+    Height="350"
     BorderBrush="{DynamicResource ForgroundBrush}"
     FontFamily="{StaticResource LatoBold}"
     GlowBrush="{DynamicResource ForgroundBrush}"
@@ -34,6 +34,7 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -94,6 +95,23 @@
                     Background="#ffd180"
                     Content="橘黄色" />
             </ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Row="4">
+            <Label
+                Margin="0,0,15,0"
+                HorizontalAlignment="Center"
+                FontFamily="{StaticResource LatoBold}"
+                FontSize="17">
+                全局快捷键
+            </Label>
+            <Grid Height="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">显示所有便签</Label>
+                <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">Ctrl+Q</TextBlock>
+            </Grid>
         </StackPanel>
     </Grid>
 </Controls:MetroWindow>

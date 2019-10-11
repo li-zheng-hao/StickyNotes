@@ -34,7 +34,7 @@
         <!--  菜单栏阴影效果  -->
         <Grid.Effect>
             <DropShadowEffect
-                BlurRadius="10"
+                BlurRadius="5"
                 ShadowDepth="-3"
                 Color="Gray" />
         </Grid.Effect>

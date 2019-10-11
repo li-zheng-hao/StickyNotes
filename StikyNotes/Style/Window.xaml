@@ -14,7 +14,7 @@
                 <WindowChrome
                     CaptionHeight="0"
                     CornerRadius="24"
-                    ResizeBorderThickness="24" />
+                    ResizeBorderThickness="12" />
             </Setter.Value>
         </Setter>
         <Setter Property="Effect">
