@@ -7,19 +7,20 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:utils="clr-namespace:StikyNotes.Utils"
-    Name="Window"
+    x:Name="loaded"
     Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
+    MaxWidth="800"
+    MaxHeight="800"
     Left="{Binding Datas.StartUpPositionLeft, Mode=TwoWay}"
+    Loaded="Window_Loaded"
     Style="{StaticResource MainWindow}"
     Top="{Binding Datas.StartUpPositionTop, Mode=TwoWay}"
-    WindowStartupLocation="Manual"
-    MaxHeight="800"
-    MaxWidth="800"
-    Topmost="{Binding ProgramData.IsWindowTopMost,Mode=TwoWay}">
+    Topmost="{Binding ProgramData.IsWindowTopMost, Mode=TwoWay}"
+    WindowStartupLocation="Manual">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
-            <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=Window}" />
+            <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=loaded}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.InputBindings>
@@ -27,9 +28,9 @@
         <KeyBinding Command="{Binding ReduceFontSizeCommand}" Gesture="Control+Alt+Down" />
     </Window.InputBindings>
     <!--<i:Interaction.Behaviors>-->
-        <!--<utils:WndHideBehavior />-->
+    <!--<utils:WndHideBehavior />-->
     <!--</i:Interaction.Behaviors>-->
-    
+
     <Grid>
         <!--  菜单栏阴影效果  -->
         <Grid.Effect>
@@ -104,7 +105,7 @@
                     Grid.Column="3"
                     HorizontalAlignment="Right"
                     Command="{Binding DeletePaWindowCommand}"
-                    CommandParameter="{Binding ElementName=Window}"
+                    CommandParameter="{Binding ElementName=loaded}"
                     Style="{StaticResource Button_Menu}"
                     ToolTip="删除此便签">
 

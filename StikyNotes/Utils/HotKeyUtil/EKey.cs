@@ -10,6 +10,7 @@ namespace StikyNotes.Utils.HotKeyUtil
     /// <summary>
     /// 自定义按键枚举
     /// </summary>
+    [Serializable]
     public enum EKey
         {
             Space = 32,

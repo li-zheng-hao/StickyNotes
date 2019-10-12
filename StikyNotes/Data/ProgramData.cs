@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
 using StikyNotes.Annotations;
+using StikyNotes.Utils.HotKeyUtil;
 
 namespace StikyNotes
 {
@@ -28,6 +29,10 @@ namespace StikyNotes
         {
             get { return instance; }
         }
+        /// <summary>
+        /// 显示所有窗体的快捷键
+        /// </summary>
+        public HotKeyModel ShowAllHotKey{ get; set; }
 
         /// <summary>
         /// 窗体主题颜色
@@ -39,6 +44,7 @@ namespace StikyNotes
         /// </summary>
         public bool IsStartUpWithSystem { get; set; }
 
+        
 
         private ProgramData()
         {
@@ -48,6 +54,8 @@ namespace StikyNotes
             IsStartUpWithSystem = false;
             Datas.CollectionChanged += Datas_CollectionChanged;
             CurrenTheme = Themes.Blue;
+            ShowAllHotKey = new HotKeyModel()
+                {IsSelectAlt = false, IsSelectCtrl = true, IsSelectShift = false, IsUsable = true,SelectKey=EKey.Q,Name=EHotKeySetting.ShowAllWindow.ToString()};
         }
 
        

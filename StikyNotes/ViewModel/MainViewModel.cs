@@ -101,10 +101,13 @@ namespace StikyNotes
             }
         }
 
+        /// <summary>
+        /// 打开设置窗口
+        /// </summary>
         private void OpenSettingMethod()
         {
             var win = new SettingWindow();
-            var vm=new SettingViewModel();
+            var vm=new SettingViewModel(win);
             win.DataContext = vm;
             win.Show();
         }
@@ -136,7 +139,7 @@ namespace StikyNotes
             win.Show();
             ProgramData.Instance.Datas.Add(vm.Datas);
             WindowsManager.Instance.Windows.Add(win);
-
+            
         }
 
         /// <summary>
