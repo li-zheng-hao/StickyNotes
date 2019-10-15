@@ -120,6 +120,7 @@
                     HorizontalContentAlignment="Center"
                     IsReadOnly="True"
                     Text="{Binding ShowAllHotKey, Converter={StaticResource ShowAllHotKeyConverter}, Mode=OneWay}">
+
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="KeyUp">
                             <command:EventToCommand Command="{Binding ShowAllHotKeyChangedCommand}" PassEventArgsToCommand="True" />

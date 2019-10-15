@@ -23,15 +23,7 @@ namespace StikyNotes.Utils.HotKeyUtil
         public ObservableCollection<HotKeyModel> LoadDefaultHotKey()
         {
             var hotKeyList = new ObservableCollection<HotKeyModel>();
-            hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.全屏.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = false, IsSelectShift = false, SelectKey = EKey.Q });
-            //hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.截图.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.Z });
-            //hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.播放.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.Space });
-            //hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.前进.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.D });
-            //hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.后退.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.A });
-            //hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.保存.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.B });
-            //hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.打开.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.X });
-            //hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.新建.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.H });
-            //hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.删除.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = true, IsSelectShift = false, SelectKey = EKey.G });
+            hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.ShowAllWindow.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = false, IsSelectShift = false, SelectKey = EKey.Q });
             return hotKeyList;
         }
 

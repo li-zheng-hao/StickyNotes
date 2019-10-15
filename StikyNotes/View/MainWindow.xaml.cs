@@ -110,8 +110,8 @@ namespace StikyNotes
             string failList = HotKeyHelper.RegisterGlobalHotKey(list, m_Hwnd, out m_HotKeySettings);
             if (string.IsNullOrEmpty(failList))
                 return true;
-            MessageBoxResult mbResult = System.Windows.MessageBox.Show(string.Format("无法注册下列快捷键\n\r{0}是否要改变这些快捷键？", failList), "提示", MessageBoxButton.YesNo);
-            return true;
+            System.Windows.MessageBox.Show(string.Format("无法注册下列快捷键\n\r{0}是否要改变这些快捷键？", failList), "提示", MessageBoxButton.YesNo);
+            return false;
         }
 
         /// <summary>
@@ -125,52 +125,17 @@ namespace StikyNotes
         /// <returns>返回句柄</returns>
         private IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wideParam, IntPtr longParam, ref bool handled)
         {
-            var hotkeySetting = new EHotKeySetting();
             switch (msg)
             {
                 case HotKeyManager.WM_HOTKEY:
                     int sid = wideParam.ToInt32();
-                    if (sid == m_HotKeySettings[EHotKeySetting.全屏])
+                    if (sid == m_HotKeySettings[EHotKeySetting.ShowAllWindow])
                     {
-                        hotkeySetting = EHotKeySetting.全屏;
-                        //TODO 执行全屏操作
+                        this.Activate();
                     }
-                    else if (sid == m_HotKeySettings[EHotKeySetting.截图])
-                    {
-                        hotkeySetting = EHotKeySetting.截图;
-                        //TODO 执行截图操作
-                    }
-                    else if (sid == m_HotKeySettings[EHotKeySetting.播放])
-                    {
-                        hotkeySetting = EHotKeySetting.播放;
-                        //TODO ......
-                    }
-                    else if (sid == m_HotKeySettings[EHotKeySetting.前进])
-                    {
-                        hotkeySetting = EHotKeySetting.前进;
-                    }
-                    else if (sid == m_HotKeySettings[EHotKeySetting.后退])
-                    {
-                        hotkeySetting = EHotKeySetting.后退;
-                    }
-                    else if (sid == m_HotKeySettings[EHotKeySetting.保存])
-                    {
-                        hotkeySetting = EHotKeySetting.保存;
-                    }
-                    else if (sid == m_HotKeySettings[EHotKeySetting.打开])
-                    {
-                        hotkeySetting = EHotKeySetting.打开;
-                    }
-                    else if (sid == m_HotKeySettings[EHotKeySetting.新建])
-                    {
-                        hotkeySetting = EHotKeySetting.新建;
-                    }
-                    else if (sid == m_HotKeySettings[EHotKeySetting.删除])
-                    {
-                        hotkeySetting = EHotKeySetting.删除;
-                    }
+                    
                     //System.Windows.MessageBox.Show(string.Format("触发【{0}】快捷键", hotkeySetting));
-                    this.Activate();
+                   
                     handled = true;
                     break;
             }

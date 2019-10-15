@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -21,21 +22,12 @@ using ComboBoxItem = System.Windows.Controls.ComboBoxItem;
 
 namespace StikyNotes
 {
-    public class SettingViewModel :INotifyPropertyChanged
+    public class SettingViewModel
     {
         public ProgramData Datas { get; set; }
 
-        private HotKeyModel _ShowAllHotKey;
-        public HotKeyModel ShowAllHotKey
-        {
-            set
-            {
-                _ShowAllHotKey = value;
+        public HotKeyModel ShowAllHotKey { get; set; }
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ShowAllHotKey"));
-            }
-            get { return _ShowAllHotKey; }
-        }
         public SettingWindow SettingWin { get; set; }
 
         public RelayCommand<bool> IsTopMostChangedCommand { get; set; }
@@ -49,13 +41,19 @@ namespace StikyNotes
         {
             SettingWin = win;
             Datas = ProgramData.Instance;
-            ShowAllHotKey = ProgramData.Instance.ShowAllHotKey;
+//            ShowAllHotKey = ProgramData.Instance.ShowAllHotKey;
+            ShowAllHotKey = new HotKeyModel()
+            {
+                Name = EHotKeySetting.ShowAllWindow.ToString(), SelectKey = EKey.Q, IsSelectAlt = false,
+                IsSelectCtrl = true, IsSelectShift = false, IsUsable = true
+            };
 
             IsTopMostChangedCommand = new RelayCommand<bool>(IsTopMostChangedMethod);
             IsStartUpWithSystemChangedCommand = new RelayCommand<bool>(IsStartUpWithSystemChangedMethod);
             SelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(SelectionChangedMethod);
             ShowAllHotKeyChangedCommand = new RelayCommand<KeyEventArgs>(ShowAllShortCutChangedMethod);
         }
+
 
         private void ShowAllShortCutChangedMethod(KeyEventArgs e)
         {
@@ -87,12 +85,11 @@ namespace StikyNotes
                 }
             }
 
-            var OldHotKey = ShowAllHotKey;
-            HotKeyModel newModel = ShowAllHotKey;
-            newModel.IsSelectAlt = useAlt;
-            newModel.IsSelectCtrl = useCtrl;
-            newModel.IsSelectShift = useShift;
-            newModel.SelectKey = useKey;
+//            var OldHotKey = ShowAllHotKey;
+            ShowAllHotKey.IsSelectAlt = useAlt;
+            ShowAllHotKey.IsSelectCtrl = useCtrl;
+            ShowAllHotKey.IsSelectShift = useShift;
+            ShowAllHotKey.SelectKey = useKey;
             ProgramData.Instance.ShowAllHotKey = ShowAllHotKey;
             var hotKeyList = new ObservableCollection<HotKeyModel>
             {
@@ -101,18 +98,22 @@ namespace StikyNotes
             if (!HotKeySettingsManager.Instance.RegisterGlobalHotKey(hotKeyList))
             {
                 MessageBox.Show("快捷键注册失败，可能与其他软件存在冲突");
-                ShowAllHotKey = OldHotKey;
+//                ShowAllHotKey = OldHotKey;
             }
 
-
+            if (SettingWin.ShowAllTB.Text.ToString() != ShowAllHotKey.ToString())
+            {
+                BindingExpression b = SettingWin.ShowAllTB.GetBindingExpression(TextBox.TextProperty);
+                b.UpdateTarget();
+            }
+            //暂时不用这个，先解决bug
+            //            SettingWin.ShowAllTB.Text = ShowAllHotKey.ToString();
+            
             //清楚当前快捷键
             //todo
             //检测输入的快捷键是否可用
             //todo
             //将更新的快捷键输入文本框
-           
-
-
         }
 
         /// <summary>
@@ -189,15 +190,6 @@ namespace StikyNotes
             }
 
             Datas.IsWindowTopMost = !param;
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
