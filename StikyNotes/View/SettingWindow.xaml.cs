@@ -80,5 +80,6 @@ namespace StikyNotes
         //                MessageBox.Show("快捷键注册失败，可能与其他软件存在冲突");
         //        
         //        }
+        
     }
 }

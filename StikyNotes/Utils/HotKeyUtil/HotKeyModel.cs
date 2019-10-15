@@ -38,20 +38,12 @@ namespace StikyNotes.Utils.HotKeyUtil
         public bool IsSelectAlt { get; set; }
 
 
-        private EKey _SelectKey;
 
         /// <summary>
         /// 选中的按键
         /// </summary>
-        public EKey SelectKey
-        {
-            get { return _SelectKey; }
-            set
-            {
-                _SelectKey = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectKey"));
-            }
-        }
+        public EKey SelectKey { get; set; }
+      
 
 
         /// <summary>
@@ -77,6 +69,11 @@ namespace StikyNotes.Utils.HotKeyUtil
             return showText;
         }
 
-        
+
+        [NotifyPropertyChangedInvocator]
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

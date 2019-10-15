@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -25,17 +26,8 @@ namespace StikyNotes
     {
         public ProgramData Datas { get; set; }
 
-        private HotKeyModel _ShowAllHotKey;
-        public HotKeyModel ShowAllHotKey
-        {
-            set
-            {
-                _ShowAllHotKey = value;
+        public HotKeyModel ShowAllHotKey { get; set; }
 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ShowAllHotKey"));
-            }
-            get { return _ShowAllHotKey; }
-        }
         public SettingWindow SettingWin { get; set; }
 
         public RelayCommand<bool> IsTopMostChangedCommand { get; set; }
@@ -113,7 +105,13 @@ namespace StikyNotes
            
 
 
+            IsTopMostChangedCommand = new RelayCommand<bool>(IsTopMostChangedMethod);
+            IsStartUpWithSystemChangedCommand = new RelayCommand<bool>(IsStartUpWithSystemChangedMethod);
+            SelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(SelectionChangedMethod);
+            ShowAllHotKeyChangedCommand = new RelayCommand<KeyEventArgs>(ShowAllShortCutChangedMethod);
         }
+
+
 
         /// <summary>
         /// 选择主题发生改变

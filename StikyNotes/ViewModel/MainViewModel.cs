@@ -101,6 +101,9 @@ namespace StikyNotes
             }
         }
 
+        /// <summary>
+        /// 打开设置窗口
+        /// </summary>
         private void OpenSettingMethod()
         {
             var win = new SettingWindow();
