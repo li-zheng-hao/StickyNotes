@@ -23,7 +23,7 @@ namespace StikyNotes.Utils.HotKeyUtil
         public ObservableCollection<HotKeyModel> LoadDefaultHotKey()
         {
             var hotKeyList = new ObservableCollection<HotKeyModel>();
-            hotKeyList.Add(new HotKeyModel { Name = EHotKeySetting.ShowAllWindow.ToString(), IsUsable = true, IsSelectCtrl = true, IsSelectAlt = false, IsSelectShift = false, SelectKey = EKey.Q });
+            //hotKeyList.Add(ProgramData.Instance.ShowAllHotKey);
             return hotKeyList;
         }
 

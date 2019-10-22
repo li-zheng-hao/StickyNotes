@@ -13,7 +13,6 @@
     MaxWidth="800"
     MaxHeight="800"
     Left="{Binding Datas.StartUpPositionLeft, Mode=TwoWay}"
-    Loaded="Window_Loaded"
     Style="{StaticResource MainWindow}"
     Top="{Binding Datas.StartUpPositionTop, Mode=TwoWay}"
     Topmost="{Binding ProgramData.IsWindowTopMost, Mode=TwoWay}"

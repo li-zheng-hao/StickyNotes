@@ -22,11 +22,11 @@ using ComboBoxItem = System.Windows.Controls.ComboBoxItem;
 
 namespace StikyNotes
 {
-    public class SettingViewModel :INotifyPropertyChanged
+    public class SettingViewModel 
     {
         public ProgramData Datas { get; set; }
 
-        public HotKeyModel ShowAllHotKey { get; set; }
+        //public HotKeyModel ShowAllHotKey { get; set; }
 
         public SettingWindow SettingWin { get; set; }
 
@@ -35,81 +35,80 @@ namespace StikyNotes
         public RelayCommand<bool> IsStartUpWithSystemChangedCommand { get; set; }
 
         public RelayCommand<SelectionChangedEventArgs> SelectionChangedCommand { get; set; }
-        public RelayCommand<KeyEventArgs> ShowAllHotKeyChangedCommand { get; set; }
+        //public RelayCommand<KeyEventArgs> ShowAllHotKeyChangedCommand { get; set; }
 
         public SettingViewModel(SettingWindow win)
         {
             SettingWin = win;
             Datas = ProgramData.Instance;
-            ShowAllHotKey = ProgramData.Instance.ShowAllHotKey;
+            //ShowAllHotKey = ProgramData.Instance.ShowAllHotKey;
 
             IsTopMostChangedCommand = new RelayCommand<bool>(IsTopMostChangedMethod);
             IsStartUpWithSystemChangedCommand = new RelayCommand<bool>(IsStartUpWithSystemChangedMethod);
             SelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(SelectionChangedMethod);
-            ShowAllHotKeyChangedCommand = new RelayCommand<KeyEventArgs>(ShowAllShortCutChangedMethod);
+            //ShowAllHotKeyChangedCommand = new RelayCommand<KeyEventArgs>(ShowAllShortCutChangedMethod);
         }
 
-        private void ShowAllShortCutChangedMethod(KeyEventArgs e)
-        {
-            if (e.Key == Key.LeftAlt || e.Key == Key.RightAlt)
-            {
-                return;
-            }
+        //private void ShowAllShortCutChangedMethod(KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.LeftAlt || e.Key == Key.RightAlt)
+        //    {
+        //        return;
+        //    }
 
-            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
-            {
-                return;
-            }
+        //    if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+        //    {
+        //        return;
+        //    }
 
-            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
-            {
-                return;
-            }
+        //    if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+        //    {
+        //        return;
+        //    }
 
-            bool useCtrl = (e.KeyboardDevice.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
-            bool useAlt = (e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
-            bool useShift = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
-            EKey useKey = EKey.Q;
-            foreach (int v in Enum.GetValues(typeof(EKey)))
-            {
-                string keyName = Enum.GetName(typeof(EKey), v);
-                if (e.Key.ToString() == keyName)
-                {
-                    useKey = (EKey) v;
-                }
-            }
+        //    bool useCtrl = (e.KeyboardDevice.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
+        //    bool useAlt = (e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
+        //    bool useShift = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+        //    EKey useKey = EKey.Q;
+        //    foreach (int v in Enum.GetValues(typeof(EKey)))
+        //    {
+        //        string keyName = Enum.GetName(typeof(EKey), v);
+        //        if (e.Key.ToString() == keyName)
+        //        {
+        //            useKey = (EKey) v;
+        //        }
+        //    }
 
-            var OldHotKey = ShowAllHotKey;
-            HotKeyModel newModel = ShowAllHotKey;
-            newModel.IsSelectAlt = useAlt;
-            newModel.IsSelectCtrl = useCtrl;
-            newModel.IsSelectShift = useShift;
-            newModel.SelectKey = useKey;
-            ProgramData.Instance.ShowAllHotKey = ShowAllHotKey;
-            var hotKeyList = new ObservableCollection<HotKeyModel>
-            {
-                ShowAllHotKey
-            };
-            if (!HotKeySettingsManager.Instance.RegisterGlobalHotKey(hotKeyList))
-            {
-                MessageBox.Show("快捷键注册失败，可能与其他软件存在冲突");
-                ShowAllHotKey = OldHotKey;
-            }
+        //    var OldHotKey = ShowAllHotKey;
+        //    HotKeyModel newModel = ShowAllHotKey;
+        //    newModel.IsSelectAlt = useAlt;
+        //    newModel.IsSelectCtrl = useCtrl;
+        //    newModel.IsSelectShift = useShift;
+        //    newModel.SelectKey = useKey;
+        //    ProgramData.Instance.ShowAllHotKey = ShowAllHotKey;
+
+        //    var hotKeyList = new ObservableCollection<HotKeyModel>
+        //    {
+        //        ShowAllHotKey
+        //    };
+        //    if (!HotKeySettingsManager.Instance.RegisterGlobalHotKey(hotKeyList))
+        //    {
+        //        MessageBox.Show("快捷键注册失败，可能与其他软件存在冲突");
+        //        ShowAllHotKey = OldHotKey;
+        //    }
+
+        //    ShowAllHotKey = newModel;
+        //    this.SettingWin.ShowAllTB.Text = ShowAllHotKey.ToString();
+        //    //清楚当前快捷键
+        //    //todo
+        //    //检测输入的快捷键是否可用
+        //    //todo
+        //    //将更新的快捷键输入文本框
 
 
-            //清楚当前快捷键
-            //todo
-            //检测输入的快捷键是否可用
-            //todo
-            //将更新的快捷键输入文本框
-           
 
 
-            IsTopMostChangedCommand = new RelayCommand<bool>(IsTopMostChangedMethod);
-            IsStartUpWithSystemChangedCommand = new RelayCommand<bool>(IsStartUpWithSystemChangedMethod);
-            SelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(SelectionChangedMethod);
-            ShowAllHotKeyChangedCommand = new RelayCommand<KeyEventArgs>(ShowAllShortCutChangedMethod);
-        }
+        //}
 
 
 
@@ -190,12 +189,6 @@ namespace StikyNotes
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }

@@ -32,7 +32,7 @@ namespace StikyNotes
         /// <summary>
         /// 显示所有窗体的快捷键
         /// </summary>
-        public HotKeyModel ShowAllHotKey{ get; set; }
+        //public HotKeyModel ShowAllHotKey{ get; set; }
 
         /// <summary>
         /// 窗体主题颜色
@@ -54,8 +54,8 @@ namespace StikyNotes
             IsStartUpWithSystem = false;
             Datas.CollectionChanged += Datas_CollectionChanged;
             CurrenTheme = Themes.Blue;
-            ShowAllHotKey = new HotKeyModel()
-                {IsSelectAlt = false, IsSelectCtrl = true, IsSelectShift = false, IsUsable = true,SelectKey=EKey.Q,Name=EHotKeySetting.ShowAllWindow.ToString()};
+            //ShowAllHotKey = new HotKeyModel()
+            //{ IsSelectAlt = false, IsSelectCtrl = true, IsSelectShift = false, IsUsable = true,SelectKey=EKey.Q,Name=EHotKeySetting.ShowAllWindow.ToString()};
         }
 
        
@@ -68,7 +68,7 @@ namespace StikyNotes
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             Messenger.Default.Send<SaveMessage>(new SaveMessage());
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

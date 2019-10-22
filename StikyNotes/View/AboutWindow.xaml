@@ -41,7 +41,12 @@
                         FontWeight="Bold">
                         关于
                     </Label>
-                    <TextBlock Margin="5" TextWrapping="WrapWithOverflow" FontFamily="{StaticResource FontAwesome}">使用过程中出现什么bug或者你有什么好的建议，欢迎在github链接中提issue.</TextBlock>
+                    <TextBlock
+                        Margin="5"
+                        FontFamily="{StaticResource FontAwesome}"
+                        TextWrapping="WrapWithOverflow">
+                        使用过程中出现什么bug或者你有什么好的建议，欢迎在github链接中提issue.
+                    </TextBlock>
                     <!--<Label FontFamily="{StaticResource FontAwesome}">减少字体大小 Ctrl+Alt+↓</Label>-->
                 </StackPanel>
             </Border>
@@ -63,8 +68,8 @@
                     <Label FontFamily="{StaticResource FontAwesome}">
                         <TextBlock Text="后续更新都会在上面发布，好用的话点个Star吧~" TextWrapping="Wrap" />
                     </Label>
-                    <Label FontFamily="{StaticResource FontAwesome}" HorizontalAlignment="Right">
-                        <TextBlock Text="版本信息: v2.2.1" TextWrapping="Wrap" />
+                    <Label HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesome}">
+                        <TextBlock Text="版本信息: v2.2.2" TextWrapping="Wrap" />
                     </Label>
 
                 </StackPanel>
