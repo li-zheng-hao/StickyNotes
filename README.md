@@ -34,6 +34,7 @@ Support global hotkey.</br></br>
 
 1. 小幅度调整UI界面，更加美观。
 2. 增加全局快捷键功能，显示所有便利贴。
+
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/hotkey.gif)</br>
 
 ## ⚡功能更新 2019年9月28日
