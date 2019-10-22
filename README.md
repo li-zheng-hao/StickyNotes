@@ -27,11 +27,14 @@ Auto save all data.</br></br>
 Auto hide at the top edge of screen.</br></br>
 7、支持多个窗体主题。</br>
 Support beautiful themes.</br></br>
+8、全局快捷键功能。</br>
+Support global hotkey.</br></br>
 
-## ⚡ 功能更新 2019年10月22日
+## ⚡功能更新 2019年10月22日
 
 1. 小幅度调整UI界面，更加美观。
-2. 快捷键功能正在写。
+2. 增加全局快捷键功能，显示所有便利贴。
+![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/hotkey.gif)</br>
 
 ## ⚡功能更新 2019年9月28日
 

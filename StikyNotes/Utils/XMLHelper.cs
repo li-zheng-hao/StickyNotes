@@ -34,7 +34,7 @@ namespace StikyNotes
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return false;
             }
         }
 
@@ -59,7 +59,7 @@ namespace StikyNotes
             }catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                throw;
+                return default(T);
             }
             
         }

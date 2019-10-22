@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Documents;
 
 namespace StikyNotes.Utils.HotKeyUtil
 {
@@ -23,7 +25,7 @@ namespace StikyNotes.Utils.HotKeyUtil
         public ObservableCollection<HotKeyModel> LoadDefaultHotKey()
         {
             var hotKeyList = new ObservableCollection<HotKeyModel>();
-            //hotKeyList.Add(ProgramData.Instance.ShowAllHotKey);
+            hotKeyList.Add(ProgramData.Instance.ShowAllHotKey);
             return hotKeyList;
         }
 
@@ -42,5 +44,14 @@ namespace StikyNotes.Utils.HotKeyUtil
             return false;
         }
 
+        /// <summary>
+        /// 由于多个窗体只需要注册一次快捷键，因此如果有一个窗体绑定了就不需要再注册
+        /// </summary>
+        public bool IsShowAllWindowHotKeyRegistered { get; set; } = false;
+
+        /// <summary>
+        /// 由于多个窗体只需要注册一次快捷键，但是要更改快捷键的时候也需要进行重新注册
+        /// </summary>
+        public bool IsShowAllWindowHotKeyNeedChanged { get; set; } = false;
     }
 }

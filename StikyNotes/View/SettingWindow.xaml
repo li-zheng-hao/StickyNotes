@@ -106,7 +106,7 @@
                 FontSize="17">
                 快捷键
             </Label>
-            <!--<Grid>
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -128,7 +128,7 @@
                 </TextBox>
 
 
-            </Grid>-->
+            </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />

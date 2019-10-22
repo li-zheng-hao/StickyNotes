@@ -48,7 +48,7 @@ namespace StikyNotes
                 ProgramData.Instance.IsWindowTopMost = programData.IsWindowTopMost;
                 ProgramData.Instance.IsStartUpWithSystem = programData.IsStartUpWithSystem;
                 ProgramData.Instance.CurrenTheme= programData.CurrenTheme;
-                //ProgramData.Instance.ShowAllHotKey = programData.ShowAllHotKey;
+                ProgramData.Instance.ShowAllHotKey = programData.ShowAllHotKey;
                 ThemeAssist.ChangeTheme(programData.CurrenTheme);
                 //有创建过的窗口
                 if (windowsDatas.Count > 0)
