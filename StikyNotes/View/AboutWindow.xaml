@@ -15,6 +15,7 @@
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
     ShowTitleBar="False"
+    Topmost="True"
     WindowStartupLocation="CenterOwner"
     WindowTitleBrush="{StaticResource ForgroundBrush}"
     mc:Ignorable="d">
@@ -69,7 +70,7 @@
                         <TextBlock Text="后续更新都会在上面发布，好用的话点个Star吧~" TextWrapping="Wrap" />
                     </Label>
                     <Label HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesome}">
-                        <TextBlock Text="版本信息: v2.3.0" TextWrapping="Wrap" />
+                        <TextBlock Text="版本信息: v2.3.1" TextWrapping="Wrap" />
                     </Label>
 
                 </StackPanel>
