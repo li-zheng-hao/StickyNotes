@@ -30,6 +30,10 @@ Support beautiful themes.</br></br>
 8、全局快捷键功能。</br>
 Support global hotkey.</br></br>
 
+## ✔Bug修复 2019年10月23日
+
+1. 修复[问题9](https://github.com/li-zheng-hao/StikyNotes/issues/9)中的置顶bug。
+
 ## ⚡功能更新 2019年10月22日
 
 1. 小幅度调整UI界面，更加美观。
@@ -50,11 +54,6 @@ Support global hotkey.</br></br>
 ## ✔Bug修复 2019年3月12日
 
 1、修复了拖动右上角最大化无法缩小的bug。
-
-## ⚡功能更新 2019年2月25日
-
-1、将属性改变自动触发保存改成每过5秒自动保存一次，提高程序运行效率。
-2、修复了设置成置顶之后下次运行未置顶的bug。
 
 ## ⚡功能更新
 
