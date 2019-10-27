@@ -127,11 +127,9 @@ namespace StikyNotes.Utils
                     }
                 }
             }
-            catch(Exception )
+            catch(Exception ex)
             {
-                //todo
-                Console.WriteLine("隐藏窗体模块出现异常");
-//                throw new Exception("隐藏窗体模块出现异常");
+                Logger.Log("WindowHide.cs").Error("隐藏窗体模块出现异常 "+ex.Message);
             }
            
         }

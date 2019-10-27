@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using StikyNotes.Utils;
 
 namespace StikyNotes
 {
@@ -28,11 +29,14 @@ namespace StikyNotes
                 FileStream fs = new FileStream(dir+"/"+fileName, FileMode.Create);
                 XmlSerializer xs = new XmlSerializer(typeof(T));
                 xs.Serialize(fs, obj);
+                fs.Flush();
                 fs.Close();
                 return true;
             }
             catch (Exception e)
             {
+                string errStr = "定时存储数据时发生异常,异常内容为:" + e.Message;
+                Logger.Log().Error(errStr);
                 Console.WriteLine(e);
                 return false;
             }

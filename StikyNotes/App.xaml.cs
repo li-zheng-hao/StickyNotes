@@ -37,7 +37,7 @@ namespace StikyNotes
             }
 
             //            base.OnStartup(e);
-
+            Logger.Log().Info("程序启动");
             Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
             var systemtray = SystemTray.Instance;
            
@@ -119,6 +119,7 @@ namespace StikyNotes
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
+            Logger.Log().Info("程序退出");
             XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
             SystemTray.Instance.DisposeNotifyIcon();
             base.OnExit(e);
