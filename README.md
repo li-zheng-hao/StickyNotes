@@ -30,6 +30,12 @@ Support beautiful themes.</br></br>
 8、全局快捷键功能。</br>
 Support global hotkey.</br></br>
 
+## ✔Bug修复 2019年10月27日
+
+1. 修复部分快捷键无法修改的bug。
+2. 修复了使用显示所有便利贴快捷键频率过快导致快捷键失效的bug。
+3. 增加日志插件，报错信息保存在程序根目录的log文件夹下。
+
 ## ✔Bug修复 2019年10月23日
 
 1. 修复[问题9](https://github.com/li-zheng-hao/StikyNotes/issues/9)中的置顶bug。
