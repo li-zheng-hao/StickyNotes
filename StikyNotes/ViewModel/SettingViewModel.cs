@@ -37,6 +37,11 @@ namespace StikyNotes
         public RelayCommand<SelectionChangedEventArgs> SelectionChangedCommand { get; set; }
         public RelayCommand<KeyEventArgs> ShowAllHotKeyChangedCommand { get; set; }
 
+        /// <summary>
+        /// 当输入Ctrl+A，X，C，Z，V等按键，调用此command
+        /// </summary>
+        public RelayCommand<string> ShowAllTextUsedCommand { get; set; }
+
         public SettingViewModel(SettingWindow win)
         {
             SettingWin = win;
@@ -47,45 +52,44 @@ namespace StikyNotes
             IsStartUpWithSystemChangedCommand = new RelayCommand<bool>(IsStartUpWithSystemChangedMethod);
             SelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(SelectionChangedMethod);
             ShowAllHotKeyChangedCommand = new RelayCommand<KeyEventArgs>(ShowAllShortCutChangedMethod);
+            ShowAllTextUsedCommand= new RelayCommand<string>(ShowAllTextUsedMethod);
         }
 
-        private void ShowAllShortCutChangedMethod(KeyEventArgs e)
+        private void ShowAllTextUsedMethod(string key)
         {
-            if (e.Key == Key.LeftAlt || e.Key == Key.RightAlt)
+            //使用了ctrl
+            bool useCtrl = true;
+            bool useAlt = false;
+            bool useShift = false;
+            EKey? useKey = null;
+            if (key == "X")
             {
-                return;
-            }
-
-            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+                 useKey = EKey.X;
+            }else if (key == "A")
             {
-                return;
+                useKey = EKey.A;
             }
-
-            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            else if (key == "C")
             {
-                return;
+                useKey = EKey.C;
             }
-
-            bool useCtrl = (e.KeyboardDevice.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
-            bool useAlt = (e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
-            bool useShift = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
-            EKey useKey = EKey.Q;
-            foreach (int v in Enum.GetValues(typeof(EKey)))
+            else if (key == "V")
             {
-                string keyName = Enum.GetName(typeof(EKey), v);
-                if (e.Key.ToString() == keyName)
-                {
-                    useKey = (EKey)v;
-                }
+                useKey = EKey.V;
             }
-
-            var OldHotKey = ShowAllHotKey;
-            HotKeyModel newModel = ShowAllHotKey;
+            else if (key == "Z")
+            {
+                useKey = EKey.Z;
+            }
+            var oldHotKey = ShowAllHotKey;
+            var newModel = ShowAllHotKey;
             newModel.IsSelectAlt = useAlt;
             newModel.IsSelectCtrl = useCtrl;
             newModel.IsSelectShift = useShift;
-            newModel.SelectKey = useKey;
+            if (useKey != null) newModel.SelectKey = (EKey) useKey;
 
+            if (!useCtrl && !useAlt && !useShift)
+                return;
             var hotKeyList = new ObservableCollection<HotKeyModel>
             {
                 ShowAllHotKey
@@ -94,8 +98,8 @@ namespace StikyNotes
             if (!HotKeySettingsManager.Instance.RegisterGlobalHotKey(hotKeyList))
             {
                 //todo 
-//                MessageBox.Show("快捷键注册失败，可能与其他软件存在冲突");
-                ShowAllHotKey = OldHotKey;
+                MessageBox.Show("快捷键注册失败，可能系统或其它软件存在冲突");
+                ShowAllHotKey = oldHotKey;
             }
             else
             {
@@ -104,6 +108,75 @@ namespace StikyNotes
 
                 this.SettingWin.ShowAllTB.Text = ShowAllHotKey.ToString();
             }
+
+            return;
+
+        }
+        private void ShowAllShortCutChangedMethod(KeyEventArgs e)
+        {
+            //            if (e.Key == Key.LeftAlt || e.Key == Key.RightAlt)
+            //            {
+            //                return;
+            //            }
+            //
+            //            if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl)
+            //            {
+            //                return;
+            //            }
+            //
+            //            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            //            {
+            //                return;
+            //            }
+            bool useCtrl = false;//(e.KeyboardDevice.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
+            bool useAlt = false;//(e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt;
+            bool useShift = false;//(e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+//            EKey useKey = EKey.Q;
+            foreach (int v in Enum.GetValues(typeof(EKey)))
+            {
+                string keyName = Enum.GetName(typeof(EKey), v);
+                if (e.Key.ToString() == keyName)
+                {
+                    var useKey = (EKey)v;
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                        useCtrl = true;
+                    if (Keyboard.IsKeyDown(Key.LeftShift)||Keyboard.IsKeyDown(Key.RightShift))
+                        useShift = true;
+                    if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+                        useAlt = true;
+                    var oldHotKey = ShowAllHotKey;
+                    var newModel = ShowAllHotKey;
+                    newModel.IsSelectAlt = useAlt;
+                    newModel.IsSelectCtrl = useCtrl;
+                    newModel.IsSelectShift = useShift;
+                    newModel.SelectKey = useKey;
+
+                    if (!useCtrl && !useAlt && !useShift)
+                        return;
+                    var hotKeyList = new ObservableCollection<HotKeyModel>
+                    {
+                        ShowAllHotKey
+                    };
+                    HotKeySettingsManager.Instance.IsShowAllWindowHotKeyNeedChanged = true;
+                    if (!HotKeySettingsManager.Instance.RegisterGlobalHotKey(hotKeyList))
+                    {
+                        //todo 
+                        MessageBox.Show("快捷键注册失败，可能系统或其它软件存在冲突");
+                        ShowAllHotKey = oldHotKey;
+                    }
+                    else
+                    {
+                        ShowAllHotKey = newModel;
+                        ProgramData.Instance.ShowAllHotKey = ShowAllHotKey;
+
+                        this.SettingWin.ShowAllTB.Text = ShowAllHotKey.ToString();
+                    }
+
+                    return;
+                }
+            }
+
+            
 //            HotKeySettingsManager.Instance.RegisterGlobalHotKey(hotKeyList);
 
 

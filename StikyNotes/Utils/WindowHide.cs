@@ -38,7 +38,8 @@ namespace StikyNotes.Utils
         public bool IsHide = false;
         private System.Windows.Forms.Timer timer;
         public MainWindow win;
-        
+        public bool IsWindowDestroyed = false;
+        public bool IsStoped = false;
         public WindowHide(MainWindow win)
         {
             this.win = win;
@@ -49,12 +50,12 @@ namespace StikyNotes.Utils
         }
 
         /// <summary>
-        /// 判断定时器是否停止
+        /// 判断窗体是否销毁了
         /// </summary>
         /// <returns></returns>
         public bool IsStop()
         {
-            return !timer.Enabled;
+            return IsWindowDestroyed;
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -64,7 +65,9 @@ namespace StikyNotes.Utils
                 if (!win.IsLoaded)
                 {
                     timer.Stop();
+                    IsWindowDestroyed = true;
                     timer.Enabled = false;
+                    return;
                 }
                 Win32.POINT point = new Win32.POINT();
                 Win32.GetCursorPos(out point);
@@ -140,12 +143,14 @@ namespace StikyNotes.Utils
         /// <param name="time">毫秒</param>
         public void Stop()
         {
-            timer.Enabled = false;
+            timer.Stop(); 
+            IsStoped = true;
         }
 
         public void Start()
         {
-            timer.Enabled = true;
+            IsStoped = false;
+            timer.Start();
         }
         
     }
@@ -174,18 +179,20 @@ namespace StikyNotes.Utils
         /// <param name="time"></param>
         public void StopAllHideAction(int time)
         {
-            windowHideList.RemoveAll(n=>n.IsStop());
-
+            windowHideList.RemoveAll(n=>n.IsWindowDestroyed);
             foreach (var winHide in WindowHideManager.GetInstance().windowHideList)
             {
-                winHide.Stop();
+                if (winHide.IsStoped == false)
+                {
+                    winHide.Stop();
+                }
 
                 winHide.win.Activate();
                 //                            win.Opacity = 1.0;
                 DoubleAnimation animation = new DoubleAnimation();
                 animation.From = 0.99;
                 animation.To = 1;
-                animation.Duration = new Duration(TimeSpan.FromSeconds(0.05));
+                animation.Duration = new Duration(TimeSpan.FromSeconds(0.01));
                 animation.Completed += (se, es) =>
                 {
                     winHide.win.Visibility = Visibility.Visible;
@@ -195,10 +202,19 @@ namespace StikyNotes.Utils
                 winHide.win.BeginAnimation(MainWindow.OpacityProperty, animation);
 
             }
-            timer = new System.Windows.Forms.Timer();
-            timer.Interval = time;
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            if (timer == null)
+            {
+                timer = new System.Windows.Forms.Timer();
+                timer.Interval = time;
+                timer.Tick += Timer_Tick;
+                timer.Start();
+            }
+            else
+            {
+               
+                timer.Start();
+            }
+                
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -209,6 +225,7 @@ namespace StikyNotes.Utils
             }
 
             timer.Stop();
+            timer.Enabled = false;
         }
 
        

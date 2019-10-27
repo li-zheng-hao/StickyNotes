@@ -112,6 +112,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">显示所有便签</Label>
+
                 <TextBox
                     Name="ShowAllTB"
                     Grid.Column="1"
@@ -121,10 +122,37 @@
                     IsReadOnly="True"
                     Text="{Binding ShowAllHotKey, Converter={StaticResource ShowAllHotKeyConverter}, Mode=OneWay}">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="KeyUp">
+                        <i:EventTrigger EventName="KeyDown">
                             <command:EventToCommand Command="{Binding ShowAllHotKeyChangedCommand}" PassEventArgsToCommand="True" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
+                    <TextBox.InputBindings>
+                        <KeyBinding
+                            Key="X"
+                            Command="{Binding ShowAllTextUsedCommand}"
+                            CommandParameter="X"
+                            Modifiers="Control" />
+                        <KeyBinding
+                            Key="V"
+                            Command="{Binding ShowAllTextUsedCommand}"
+                            CommandParameter="V"
+                            Modifiers="Control" />
+                        <KeyBinding
+                            Key="A"
+                            Command="{Binding ShowAllTextUsedCommand}"
+                            CommandParameter="A"
+                            Modifiers="Control" />
+                        <KeyBinding
+                            Key="C"
+                            Command="{Binding ShowAllTextUsedCommand}"
+                            CommandParameter="C"
+                            Modifiers="Control" />
+                        <KeyBinding
+                            Key="Z"
+                            Command="{Binding ShowAllTextUsedCommand}"
+                            CommandParameter="Z"
+                            Modifiers="Control" />
+                    </TextBox.InputBindings>
                 </TextBox>
 
 
