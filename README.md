@@ -1,13 +1,13 @@
 # StikyNotes
 
+![#](https://img.shields.io/badge/building-pass-brightgreen)
 ![star](https://img.shields.io/github/stars/li-zheng-hao/StikyNotes)
 ![下载量](https://img.shields.io/github/downloads/li-zheng-hao/StikyNotes/total)
 ![license](https://img.shields.io/github/license/li-zheng-hao/StikyNotes)
 
-一个便捷的Windows桌面便利贴</br></br>
-A convenitent Windows Notes </br></br>
-仿照了Win10自带的便签,以后再也不用担心win10bug或者重装系统导致便签数据丢失了,最重要的是可以置顶以及边缘吸附了！</br></br>
-It imitates the Win10's StikyNotes, you don't need to worry about win10 bug or reinstall the system which led to the loss of notes data,the most important is that it can set as topmost and hide at the edge of screen.</br>
+一个简单清爽的的Windows桌面便利贴</br></br>
+A convenitent and beautiful Windows StikyNotes Application </br></br>
+
 
 ## 安装 Installation
 
