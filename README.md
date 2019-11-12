@@ -4,6 +4,7 @@
 ![star](https://img.shields.io/github/stars/li-zheng-hao/StikyNotes)
 ![下载量](https://img.shields.io/github/downloads/li-zheng-hao/StikyNotes/total)
 ![license](https://img.shields.io/github/license/li-zheng-hao/StikyNotes)
+![version](https://img.shields.io/github/v/release/li-zheng-hao/StikyNotes)
 
 一个简单清爽的的Windows桌面便利贴</br></br>
 A convenitent and beautiful Windows StikyNotes Application </br></br>
