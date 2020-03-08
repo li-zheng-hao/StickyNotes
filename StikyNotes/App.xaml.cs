@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Threading;
 using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight.Messaging;
 using StikyNotes.Utils;
+using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MessageBox = System.Windows.MessageBox;
 
@@ -38,6 +43,10 @@ namespace StikyNotes
 
             //            base.OnStartup(e);
             Logger.Log().Info("程序启动");
+
+            /// 将全局异常保存到文件目录下
+            Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
             var systemtray = SystemTray.Instance;
            
@@ -152,7 +161,28 @@ namespace StikyNotes
         {
             if (!IsInited)
             {
-                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
+                XMLHelper.SaveObjAsXml(ProgramData.Instance,ConstData.SaveSettingDataName );
+                BackupDataAction();
+
+            }
+        }
+        public void BackupDataAction()
+        {
+            if (File.Exists(ConstData.BackUpDataName))
+            {
+                FileInfo newestData = new FileInfo(ConstData.SaveSettingDataName);
+                FileInfo backupData = new FileInfo(ConstData.BackUpDataName);
+                TimeSpan ts1 = new TimeSpan(newestData.CreationTime.Ticks);
+                TimeSpan ts2 = new TimeSpan(backupData.CreationTime.Ticks);
+                TimeSpan ts = ts1.Subtract(ts2).Duration();
+                if (ts.Hours >= 1)
+                {
+                    XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.BackUpDataName);
+                }
+            }
+            else
+            {
+                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.BackUpDataName);
             }
         }
         /// <summary>
@@ -178,7 +208,79 @@ namespace StikyNotes
             MainWindow.Show();
             WindowsManager.Instance.Windows.Add(MainWindow);
             ProgramData.Instance.Datas.Add(data);
+
+
         }
+
+
+        // <summary>
+        /// UI线程抛出全局异常事件处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            try
+            {
+                Logger.Log().Error(e.Exception.StackTrace);
+                Logger.Log().Error(e.Exception.Message);
+                MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
+                Application.Current.Shutdown();
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Log().Error(ex.StackTrace);
+                Logger.Log().Error(ex.Message);
+                MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
+                Application.Current.Shutdown();
+            }
+        }
+
+        /// <summary>
+        /// 非UI线程抛出全局异常事件处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            try
+            {
+                var exception = e.ExceptionObject as Exception;
+                if (exception != null)
+                {
+                    Logger.Log().Error(exception.StackTrace);
+                    Logger.Log().Error(exception.Message);
+                    MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
+                    Application.Current.Shutdown();
+                }
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    var exception = e.ExceptionObject as Exception;
+                    if (exception != null)
+                    {
+                        Logger.Log().Error(exception.StackTrace);
+                        Logger.Log().Error(exception.Message);
+                        MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
+                        Application.Current.Shutdown();
+
+
+                    }
+                }
+                catch (Exception exxxx)
+                {
+                    Logger.Log().Error(exxxx.StackTrace);
+                    Logger.Log().Error(exxxx.Message);
+                    MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
+                    Application.Current.Shutdown();
+
+                }
+            }
+        }
+
         #endregion
 
     }

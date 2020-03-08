@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using StikyNotes.Utils;
 
 namespace StikyNotes
 {

@@ -9,5 +9,7 @@ namespace StikyNotes
     public class ConstData
     {
         public const string SaveSettingDataName = "StikyNotesData.xml";
+        public const string BackUpDataName = "BackupData.xml";
+
     }
 }

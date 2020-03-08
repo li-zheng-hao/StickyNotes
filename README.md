@@ -9,7 +9,6 @@
 一个简单清爽的的Windows桌面便利贴</br></br>
 A convenitent and beautiful Windows StikyNotes Application </br></br>
 
-
 ## 安装 Installation
 
 点击其中的压缩包下载，解压直接用即可：
@@ -35,45 +34,19 @@ Support beautiful themes.</br></br>
 8、全局快捷键功能。</br>
 Support global hotkey.</br></br>
 
-## ✔Bug修复 2019年10月27日
+## 最新更新(历史更新请看更新日志)
 
-1. 修复部分快捷键无法修改的bug。
-2. 修复了使用显示所有便利贴快捷键频率过快导致快捷键失效的bug。
-3. 增加日志插件，报错信息保存在程序根目录的log文件夹下。
+### ⚡功能更新 2020年3月8日
 
-## ✔Bug修复 2019年10月23日
+1. 增加了在一些不正常关机或重启的情况下导致的小概率数据丢失问题。可备份1小时前的数据,如果发生数据丢失,请手动将软件目录下的BackupData.xml文件替换StikyNotesData.xml文件。
+2. 增强了日志功能，在程序出现异常时自动将异常信息保存至软件目录下的log文件夹中，方便定位问题。
 
-1. 修复[问题9](https://github.com/li-zheng-hao/StikyNotes/issues/9)中的置顶bug。
+## 程序截图
 
-## ⚡功能更新 2019年10月22日
-
-1. 小幅度调整UI界面，更加美观。
-2. 增加全局快捷键功能，显示所有便利贴。
-
-![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/hotkey.gif)</br>
-
-## ⚡功能更新 2019年9月28日
-
-1、增加了靠上边缘隐藏的功能。
-
-2、新增版本说明。
-
-3、修复了右键点击菜单栏异常退出的bug。
-
-![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/feature1.gif)</br>
-
-## ✔Bug修复 2019年3月12日
-
-1、修复了拖动右上角最大化无法缩小的bug。
-
-## ⚡功能更新
-
-1、主题颜色更改功能(目前包括了三款基础颜色)</br></br>
-
-程序截图:</br>
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/MainWindow.png)</br>
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/MainWindow2.png)</br>
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/MainWindow3.png)</br>
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/about.png)</br>
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/setting.png)</br>
 ![image](https://github.com/li-zheng-hao/StikyNotes/raw/master/Doc/taskbar.png)</br>
+
