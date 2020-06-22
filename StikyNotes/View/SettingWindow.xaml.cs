@@ -7,10 +7,14 @@ namespace StikyNotes
     /// </summary>
     public partial class SettingWindow : MetroWindow
     {
+        public SettingViewModel settingViewModel;
         public SettingWindow()
         {
             InitializeComponent();
+            settingViewModel = new SettingViewModel();
+            this.DataContext = settingViewModel;
         }
+
 
     }
 }

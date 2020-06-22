@@ -156,9 +156,6 @@
     <Compile Include="Utils\WindowsManager.cs" />
     <Compile Include="Utils\XMLHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="View\ListView.xaml.cs">
-      <DependentUpon>ListView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
@@ -172,10 +169,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Style\Themes\Gray.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

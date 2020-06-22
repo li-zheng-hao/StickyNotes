@@ -1,7 +1,7 @@
-﻿using System;
+﻿using StikyNotes.Annotations;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using StikyNotes.Annotations;
 
 namespace StikyNotes.Utils.HotKeyUtil
 {
@@ -9,14 +9,14 @@ namespace StikyNotes.Utils.HotKeyUtil
     /// 快捷键模型
     /// </summary>
     [Serializable]
-    public class HotKeyModel:INotifyPropertyChanged
+    public class HotKeyModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 设置项名称
         /// </summary>
         public string Name { get; set; }
 
-        
+
         /// <summary>
         /// 设置项快捷键是否可用
         /// </summary>
@@ -32,6 +32,7 @@ namespace StikyNotes.Utils.HotKeyUtil
         /// </summary>
         public bool IsSelectShift { get; set; }
 
+
         /// <summary>
         /// 是否勾选Alt按键
         /// </summary>
@@ -43,7 +44,7 @@ namespace StikyNotes.Utils.HotKeyUtil
         /// 选中的按键
         /// </summary>
         public EKey SelectKey { get; set; }
-      
+
 
 
         /// <summary>
@@ -63,8 +64,8 @@ namespace StikyNotes.Utils.HotKeyUtil
         {
             var showText = "";
             showText += IsSelectCtrl ? "Ctrl+" : "";
-            showText += IsSelectShift? "Shift+" : "";
-            showText += IsSelectAlt? "Alt+" : "";
+            showText += IsSelectShift ? "Shift+" : "";
+            showText += IsSelectAlt ? "Alt+" : "";
             showText += SelectKey.ToString();
             return showText;
         }
@@ -73,6 +74,7 @@ namespace StikyNotes.Utils.HotKeyUtil
         [NotifyPropertyChangedInvocator]
         public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
+            Console.WriteLine("HotKeyModel发生改变");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

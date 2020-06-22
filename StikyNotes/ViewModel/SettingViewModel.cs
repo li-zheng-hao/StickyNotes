@@ -1,8 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using StikyNotes.Annotations;
 using StikyNotes.Utils.HotKeyUtil;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,13 +13,11 @@ using ComboBoxItem = System.Windows.Controls.ComboBoxItem;
 
 namespace StikyNotes
 {
-    public class SettingViewModel
+    public class SettingViewModel : INotifyPropertyChanged
     {
         public ProgramData Datas { get; set; }
 
         public HotKeyModel ShowAllHotKey { get; set; }
-
-        public SettingWindow SettingWin { get; set; }
 
         public RelayCommand<bool> IsTopMostChangedCommand { get; set; }
 
@@ -25,22 +26,37 @@ namespace StikyNotes
         public RelayCommand<SelectionChangedEventArgs> SelectionChangedCommand { get; set; }
         public RelayCommand<KeyEventArgs> ShowAllHotKeyChangedCommand { get; set; }
 
+        #region 窗体数据
+
+        public bool IsTopMost { get; set; }
+        public string HotKeyStr { get; set; }
+        #endregion
         /// <summary>
         /// 当输入Ctrl+A，X，C，Z，V等按键，调用此command
         /// </summary>
         public RelayCommand<string> ShowAllTextUsedCommand { get; set; }
 
-        public SettingViewModel(SettingWindow win)
+        public SettingViewModel()
         {
-            SettingWin = win;
             Datas = ProgramData.Instance;
             ShowAllHotKey = ProgramData.Instance.ShowAllHotKey;
-
+            HotKeyStr = ShowAllHotKey.ToString();
             IsTopMostChangedCommand = new RelayCommand<bool>(IsTopMostChangedMethod);
             IsStartUpWithSystemChangedCommand = new RelayCommand<bool>(IsStartUpWithSystemChangedMethod);
             SelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(SelectionChangedMethod);
             ShowAllHotKeyChangedCommand = new RelayCommand<KeyEventArgs>(ShowAllShortCutChangedMethod);
             ShowAllTextUsedCommand = new RelayCommand<string>(ShowAllTextUsedMethod);
+        }
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            Console.WriteLine("属性发生了改变" + propertyName);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void ShowAllTextUsedMethod(string key)
@@ -94,8 +110,8 @@ namespace StikyNotes
             {
                 ShowAllHotKey = newModel;
                 ProgramData.Instance.ShowAllHotKey = ShowAllHotKey;
-
-                this.SettingWin.ShowAllTB.Text = ShowAllHotKey.ToString();
+                this.HotKeyStr = ShowAllHotKey.ToString();
+                //this.SettingWin.ShowAllTB.Text = ShowAllHotKey.ToString();
             }
 
             return;
@@ -119,13 +135,18 @@ namespace StikyNotes
                         useShift = true;
                     if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
                         useAlt = true;
-                    var oldHotKey = ShowAllHotKey;
-                    var newModel = ShowAllHotKey;
-                    newModel.IsSelectAlt = useAlt;
-                    newModel.IsSelectCtrl = useCtrl;
-                    newModel.IsSelectShift = useShift;
-                    newModel.SelectKey = useKey;
+                    var oldHotKey = new HotKeyModel();
+                    oldHotKey.IsSelectAlt = ShowAllHotKey.IsSelectAlt;
+                    oldHotKey.IsSelectCtrl = ShowAllHotKey.IsSelectCtrl;
+                    oldHotKey.IsSelectShift = ShowAllHotKey.IsSelectShift;
+                    oldHotKey.Name = ShowAllHotKey.Name;
+                    oldHotKey.IsUsable = ShowAllHotKey.IsUsable;
+                    oldHotKey.SelectKey = ShowAllHotKey.SelectKey;
 
+                    ShowAllHotKey.IsSelectAlt = useAlt;
+                    ShowAllHotKey.IsSelectCtrl = useCtrl;
+                    ShowAllHotKey.IsSelectShift = useShift;
+                    ShowAllHotKey.SelectKey = useKey;
                     if (!useCtrl && !useAlt && !useShift)
                         return;
                     var hotKeyList = new ObservableCollection<HotKeyModel>
@@ -141,10 +162,9 @@ namespace StikyNotes
                     }
                     else
                     {
-                        ShowAllHotKey = newModel;
                         ProgramData.Instance.ShowAllHotKey = ShowAllHotKey;
-
-                        this.SettingWin.ShowAllTB.Text = ShowAllHotKey.ToString();
+                        HotKeyStr = ShowAllHotKey.ToString();
+                        //this.SettingWin.ShowAllTB.Text = ShowAllHotKey.ToString();
                     }
 
                     return;
@@ -217,7 +237,7 @@ namespace StikyNotes
             {
                 win.Topmost = !param;
             }
-            this.SettingWin.Topmost = !param;
+            this.IsTopMost = !param;
 
 
             Datas.IsWindowTopMost = !param;

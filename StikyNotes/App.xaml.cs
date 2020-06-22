@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using StikyNotes.Utils;
+﻿using StikyNotes.Utils;
 using System;
 using System.IO;
 using System.Windows;
@@ -43,7 +42,7 @@ namespace StikyNotes
             /// 将全局异常保存到文件目录下
             Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
+            //Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
             var systemtray = SystemTray.Instance;
 
             var programData = XMLHelper.DecodeXML<ProgramData>(ConstData.SaveSettingDataName);
@@ -74,7 +73,6 @@ namespace StikyNotes
                 OpenNewWindow();
             }
             IsInited = false;
-            // 5分钟检查一次
             TimerUtil = new TimerUtil(SaveDataAction);
         }
 
@@ -126,22 +124,22 @@ namespace StikyNotes
         /// 接收到了保存数据的消息
         /// </summary>
         /// <param name="message"></param>
-        private void SaveDataMessage(SaveMessage message)
-        {
-            if (!IsInited)
-            {
-                Console.WriteLine("保存数据");
-                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
-            }
-        }
+        //private void SaveDataMessage(SaveMessage message)
+        //{
+        //    if (!IsInited)
+        //    {
+        //        XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
+        //    }
+        //}
 
         public void SaveDataAction()
         {
             if (!IsInited)
             {
+                Logger.Log().Info("存储数据" + DateTime.Now.ToString());
+                Console.WriteLine("存储数据" + DateTime.Now.ToString());
                 XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
                 BackupDataAction();
-
             }
         }
         public void BackupDataAction()
@@ -169,20 +167,16 @@ namespace StikyNotes
         private void OpenNewWindow()
         {
             var MainWindow = new MainWindow();
-            var vm = new MainViewModel();
-            MainWindow.DataContext = vm;
-            vm.Datas = new WindowsData();
+            MainWindow.viewModel.Datas = new WindowsData();
             MainWindow.Show();
-            ProgramData.Instance.Datas.Add(vm.Datas);
+            ProgramData.Instance.Datas.Add(MainWindow.viewModel.Datas);
             WindowsManager.Instance.Windows.Add(MainWindow);
         }
 
         private void OpenNewWindow(WindowsData data)
         {
             var MainWindow = new MainWindow();
-            var vm = new MainViewModel();
-            vm.Datas = data;
-            MainWindow.DataContext = vm;
+            MainWindow.viewModel.Datas = data;
             MainWindow.Show();
             WindowsManager.Instance.Windows.Add(MainWindow);
             ProgramData.Instance.Datas.Add(data);

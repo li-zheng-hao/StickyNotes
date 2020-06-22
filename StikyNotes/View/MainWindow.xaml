@@ -12,15 +12,21 @@
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
     MaxWidth="800"
     MaxHeight="800"
-    Loaded="Window_Loaded"
     Left="{Binding Datas.StartUpPositionLeft, Mode=TwoWay}"
     Style="{StaticResource MainWindow}"
     Top="{Binding Datas.StartUpPositionTop, Mode=TwoWay}"
-    Topmost="{Binding ProgramData.IsWindowTopMost, Mode=TwoWay}"
+    Topmost="{Binding Datas.IsCurrentWindowTopMost, Mode=TwoWay}"
     WindowStartupLocation="Manual">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=loaded}" />
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="ContentRendered">
+            <command:EventToCommand Command="{Binding OnContentRenderedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="SourceInitialized">
+            <command:EventToCommand Command="{Binding OnSourceInitializedCommand}" CommandParameter="{Binding ElementName=loaded}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.InputBindings>
@@ -48,9 +54,10 @@
             Grid.Row="0"
             Background="{DynamicResource ForgroundBrush}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <!--  增加按钮  -->
             <Button
@@ -64,18 +71,30 @@
                     Width="18"
                     Height="18"
                     Kind="LibraryAdd" />
-
             </Button>
+            <ToggleButton
+                x:Name="isTopMostToogle"
+                Grid.Column="1"
+                Cursor="Hand"
+                IsChecked="{Binding Datas.IsCurrentWindowTopMost, Mode=TwoWay}"
+                ToolTip="置顶">
+                <materialDesign:PackIcon
+                    Width="18"
+                    Height="18"
+                    Kind="Pin" />
+
+            </ToggleButton>
+
             <!--  软件名称  -->
             <Label
                 Name="SoftWareName"
-                Grid.Column="1"
+                Grid.Column="2"
                 Style="{StaticResource TitleLabelStyle}">
                 Stiky Notes
             </Label>
 
             <StackPanel
-                Grid.Column="2"
+                Grid.Column="3"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <!--  更多设置按钮  -->
@@ -102,7 +121,7 @@
                 <!--  删除按钮  -->
                 <Button
                     Name="DeleteButton"
-                    Grid.Column="3"
+                    Grid.Column="4"
                     HorizontalAlignment="Right"
                     Command="{Binding DeletePaWindowCommand}"
                     CommandParameter="{Binding ElementName=loaded}"

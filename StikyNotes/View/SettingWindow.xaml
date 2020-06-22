@@ -18,6 +18,7 @@
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
     ShowTitleBar="False"
+    Topmost="{Binding isTopMost}"
     WindowStartupLocation="CenterOwner"
     WindowTitleBrush="{DynamicResource ForgroundBrush}"
     mc:Ignorable="d">
@@ -120,7 +121,7 @@
                     HorizontalAlignment="Right"
                     HorizontalContentAlignment="Center"
                     IsReadOnly="True"
-                    Text="{Binding ShowAllHotKey, Converter={StaticResource ShowAllHotKeyConverter}, Mode=OneWay}">
+                    Text="{Binding HotKeyStr, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="KeyDown">
                             <command:EventToCommand Command="{Binding ShowAllHotKeyChangedCommand}" PassEventArgsToCommand="True" />
