@@ -1,27 +1,10 @@
-﻿using MaterialDesignThemes.Wpf;
-using StikyNotes.Utils;
+﻿using StikyNotes.Utils;
 using StikyNotes.Utils.HotKeyUtil;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace StikyNotes
 {
@@ -39,7 +22,7 @@ namespace StikyNotes
             InitializeComponent();
             WindowHide windowHide = new WindowHide(this);
             WindowHideManager.GetInstance().windowHideList.Add(windowHide);
-           
+
         }
         /// <summary>
         /// 当前窗口句柄
@@ -51,7 +34,7 @@ namespace StikyNotes
         /// </summary>
         private Dictionary<EHotKeySetting, int> m_HotKeySettings = new Dictionary<EHotKeySetting, int>();
 
-       
+
         /// <summary>
         /// 窗体加载完成后事件处理函数
         /// </summary>
@@ -97,7 +80,7 @@ namespace StikyNotes
             return InitHotKey(hotKeyModelList);
         }
 
-      
+
 
         /// <summary>
         /// 初始化注册快捷键
@@ -123,7 +106,7 @@ namespace StikyNotes
             {
                 return true;
             }
-           
+
         }
 
         /// <summary>
@@ -145,17 +128,17 @@ namespace StikyNotes
                     {
                         WindowHideManager.GetInstance().StopAllHideAction(2000);
 
-                       
+
                     }
-                    
-//                    System.Windows.MessageBox.Show(string.Format("触发快捷键"));
-                   
+
+                    //                    System.Windows.MessageBox.Show(string.Format("触发快捷键"));
+
                     handled = true;
                     break;
             }
             return IntPtr.Zero;
         }
 
-        
+
     }
 }

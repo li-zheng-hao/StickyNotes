@@ -1,14 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Threading;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using StikyNotes.Utils;
+using System;
+using System.IO;
+using System.Windows;
+using System.Windows.Threading;
 using Application = System.Windows.Application;
-using ContextMenu = System.Windows.Controls.ContextMenu;
 using MessageBox = System.Windows.MessageBox;
 
 namespace StikyNotes
@@ -49,14 +45,14 @@ namespace StikyNotes
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
             var systemtray = SystemTray.Instance;
-           
+
             var programData = XMLHelper.DecodeXML<ProgramData>(ConstData.SaveSettingDataName);
             if (programData != null)
             {
                 var windowsDatas = programData.Datas;
                 ProgramData.Instance.IsWindowTopMost = programData.IsWindowTopMost;
                 ProgramData.Instance.IsStartUpWithSystem = programData.IsStartUpWithSystem;
-                ProgramData.Instance.CurrenTheme= programData.CurrenTheme;
+                ProgramData.Instance.CurrenTheme = programData.CurrenTheme;
                 ProgramData.Instance.ShowAllHotKey = programData.ShowAllHotKey;
                 ThemeAssist.ChangeTheme(programData.CurrenTheme);
                 //有创建过的窗口
@@ -64,13 +60,12 @@ namespace StikyNotes
                 {
                     for (int i = 0; i < windowsDatas.Count; i++)
                     {
-                       OpenNewWindow(windowsDatas[i]);
+                        OpenNewWindow(windowsDatas[i]);
                     }
                 }
                 else//以前的窗口都被删掉了
                 {
-                   OpenNewWindow();
-
+                    OpenNewWindow();
                 }
             }
             //没有创建过的窗口
@@ -78,27 +73,10 @@ namespace StikyNotes
             {
                 OpenNewWindow();
             }
-
             IsInited = false;
-            TimerUtil=new TimerUtil(SaveDataAction);
-
+            // 5分钟检查一次
+            TimerUtil = new TimerUtil(SaveDataAction);
         }
-
-       
-
-
-
-
-
-        //        protected override void OnDeactivated(EventArgs e)
-        //        {
-        //            base.OnDeactivated(e);
-        //            System.Windows.Controls.ContextMenu menu = this.FindResource("NotifyIconMenu") as ContextMenu;
-        //            if (menu.IsOpen == true)
-        //            {
-        //                menu.IsOpen = false;
-        //            }
-        //        }
 
 
         /// <summary>
@@ -123,13 +101,13 @@ namespace StikyNotes
         }
 
         /// <summary>
-        /// 窗体退出事件
+        /// 程序退出事件
         /// </summary>
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
             Logger.Log().Info("程序退出");
-            XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
+            //XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
             SystemTray.Instance.DisposeNotifyIcon();
             base.OnExit(e);
         }
@@ -141,27 +119,27 @@ namespace StikyNotes
         /// <param name="e"></param>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-           OnStartup(null);
+            OnStartup(null);
         }
 
-        [System.Obsolete("方法已经弃用，改成使用定时器，每过一段时间自动保存")]
         /// <summary>
         /// 接收到了保存数据的消息
         /// </summary>
         /// <param name="message"></param>
         private void SaveDataMessage(SaveMessage message)
         {
-//            if (!IsInited)
-//            {
-//                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
-//            }
+            if (!IsInited)
+            {
+                Console.WriteLine("保存数据");
+                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
+            }
         }
 
         public void SaveDataAction()
         {
             if (!IsInited)
             {
-                XMLHelper.SaveObjAsXml(ProgramData.Instance,ConstData.SaveSettingDataName );
+                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
                 BackupDataAction();
 
             }
@@ -175,7 +153,7 @@ namespace StikyNotes
                 TimeSpan ts1 = new TimeSpan(newestData.CreationTime.Ticks);
                 TimeSpan ts2 = new TimeSpan(backupData.CreationTime.Ticks);
                 TimeSpan ts = ts1.Subtract(ts2).Duration();
-                if (ts.Hours >= 1)
+                if (ts.Hours >= 2)
                 {
                     XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.BackUpDataName);
                 }

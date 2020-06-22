@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Threading;
-using System.Timers;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace StikyNotes.Utils
 {
@@ -73,7 +65,7 @@ namespace StikyNotes.Utils
                 Win32.GetCursorPos(out point);
                 System.Windows.Point mousePositionInApp = Mouse.GetPosition(win);
                 System.Windows.Point mousePositionInScreenCoordinates = win.PointToScreen(mousePositionInApp);
-                Console.WriteLine("Screen:" + mousePositionInScreenCoordinates);
+                //Console.WriteLine("Screen:" + mousePositionInScreenCoordinates);
                 //Console.WriteLine(win.Width+"====="+win.ActualWidth);
                 //Console.WriteLine(win.Height);
                 //Point point = PointToScreen(System.Windows.Input.Mouse.GetPosition(this));//获取鼠标相对桌面的位置
@@ -130,11 +122,11 @@ namespace StikyNotes.Utils
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Logger.Log("WindowHide.cs").Error("隐藏窗体模块出现异常 "+ex.Message);
+                Logger.Log("WindowHide.cs").Error("隐藏窗体模块出现异常 " + ex.Message);
             }
-           
+
         }
 
         /// <summary>
@@ -143,7 +135,7 @@ namespace StikyNotes.Utils
         /// <param name="time">毫秒</param>
         public void Stop()
         {
-            timer.Stop(); 
+            timer.Stop();
             IsStoped = true;
         }
 
@@ -152,12 +144,12 @@ namespace StikyNotes.Utils
             IsStoped = false;
             timer.Start();
         }
-        
+
     }
 
     public class WindowHideManager
     {
-        private static WindowHideManager instance=new WindowHideManager();
+        private static WindowHideManager instance = new WindowHideManager();
 
         public static WindowHideManager GetInstance()
         {
@@ -166,7 +158,7 @@ namespace StikyNotes.Utils
 
         private WindowHideManager()
         {
-            windowHideList=new List<WindowHide>();
+            windowHideList = new List<WindowHide>();
 
         }
         public List<WindowHide> windowHideList;
@@ -179,7 +171,7 @@ namespace StikyNotes.Utils
         /// <param name="time"></param>
         public void StopAllHideAction(int time)
         {
-            windowHideList.RemoveAll(n=>n.IsWindowDestroyed);
+            windowHideList.RemoveAll(n => n.IsWindowDestroyed);
             foreach (var winHide in WindowHideManager.GetInstance().windowHideList)
             {
                 if (winHide.IsStoped == false)
@@ -211,10 +203,10 @@ namespace StikyNotes.Utils
             }
             else
             {
-               
+
                 timer.Start();
             }
-                
+
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -228,7 +220,7 @@ namespace StikyNotes.Utils
             timer.Enabled = false;
         }
 
-       
+
     }
 
 

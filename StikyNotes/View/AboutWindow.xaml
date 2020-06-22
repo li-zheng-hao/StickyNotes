@@ -70,7 +70,7 @@
                         <TextBlock Text="后续更新都会在上面发布，好用的话点个Star吧~" TextWrapping="Wrap" />
                     </Label>
                     <Label HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesome}">
-                        <TextBlock Text="版本信息: v2.3.3" TextWrapping="Wrap" />
+                        <TextBlock Text="版本信息: v2.3.4" TextWrapping="Wrap" />
                     </Label>
 
                 </StackPanel>
