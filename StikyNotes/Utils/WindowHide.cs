@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace StikyNotes.Utils
@@ -65,10 +67,11 @@ namespace StikyNotes.Utils
                 Win32.GetCursorPos(out point);
                 System.Windows.Point mousePositionInApp = Mouse.GetPosition(win);
                 System.Windows.Point mousePositionInScreenCoordinates = win.PointToScreen(mousePositionInApp);
-                //Console.WriteLine("Screen:" + mousePositionInScreenCoordinates);
+
+                CheckDPI(point);
+                ////Console.WriteLine("Screen:" + mousePositionInScreenCoordinates);
                 //Console.WriteLine(win.Width+"====="+win.ActualWidth);
                 //Console.WriteLine(win.Height);
-                //Point point = PointToScreen(System.Windows.Input.Mouse.GetPosition(this));//获取鼠标相对桌面的位置
                 //Console.WriteLine(win.Top);
                 //Console.WriteLine(point.X + "----" + point.Y+"宽度从"+win.Left+"到"+(win.Left+win.ActualWidth));
                 //窗体已经在上边缘了
@@ -78,7 +81,9 @@ namespace StikyNotes.Utils
                     if (IsHide)
                     {
                         //鼠标在窗体上边缘了
-                        if (point.Y <= 2)
+                        if (point.Y <= 2 &&
+                            point.X > this.win.Left &&
+                            point.X < (this.win.Left + this.win.Width))
                         {
                             Console.WriteLine("显示");
                             DoubleAnimation animation = new DoubleAnimation();
@@ -127,6 +132,34 @@ namespace StikyNotes.Utils
                 Logger.Log("WindowHide.cs").Error("隐藏窗体模块出现异常 " + ex.Message);
             }
 
+        }
+        [DllImport("gdi32.dll")]
+        static extern int GetDeviceCaps(IntPtr hdc, int nIndex);
+        public enum DeviceCap
+        {
+            VERTRES = 10,
+            DESKTOPVERTRES = 117,
+        }
+
+
+        private float getScalingFactor()
+        {
+            Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+            IntPtr desktop = g.GetHdc();
+            int LogicalScreenHeight = GetDeviceCaps(desktop, (int)DeviceCap.VERTRES);
+            int PhysicalScreenHeight = GetDeviceCaps(desktop, (int)DeviceCap.DESKTOPVERTRES);
+
+            float ScreenScalingFactor = (float)PhysicalScreenHeight / (float)LogicalScreenHeight;
+
+            return ScreenScalingFactor; // 1.25 = 125%
+        }
+        private void CheckDPI(Win32.POINT point)
+        {
+            Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
+            double dx = m.M11; // notice it's divided by 96 already
+            double dy = m.M22; // notice it's divided by 96 already
+            point.X = (int)(point.X / dx);
+            point.Y = (int)(point.Y / dy);
         }
 
         /// <summary>
