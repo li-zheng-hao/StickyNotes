@@ -16,7 +16,7 @@ namespace StikyNotes
     public partial class AboutWindow : MetroWindow
     {
         public static bool isFirstTimeOpen = true;
-        public string version { get; set; } = "v3.2.2";
+        public string version { get; set; } = "v3.2.3";
         public AboutWindow()
         {
             InitializeComponent();

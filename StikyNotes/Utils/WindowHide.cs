@@ -67,8 +67,12 @@ namespace StikyNotes.Utils
                 Win32.GetCursorPos(out point);
                 System.Windows.Point mousePositionInApp = Mouse.GetPosition(win);
                 System.Windows.Point mousePositionInScreenCoordinates = win.PointToScreen(mousePositionInApp);
+                Console.WriteLine("-------------------");
+                Console.WriteLine("鼠标 " + point.X + ":" + point.Y);
 
-                CheckDPI(point);
+                Console.WriteLine("窗体 " + this.win.Left);
+
+                point = CheckDPI(point);
                 ////Console.WriteLine("Screen:" + mousePositionInScreenCoordinates);
                 //Console.WriteLine(win.Width+"====="+win.ActualWidth);
                 //Console.WriteLine(win.Height);
@@ -153,13 +157,15 @@ namespace StikyNotes.Utils
 
             return ScreenScalingFactor; // 1.25 = 125%
         }
-        private void CheckDPI(Win32.POINT point)
+        private Win32.POINT CheckDPI(Win32.POINT point)
         {
             Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
             double dx = m.M11; // notice it's divided by 96 already
             double dy = m.M22; // notice it's divided by 96 already
             point.X = (int)(point.X / dx);
             point.Y = (int)(point.Y / dy);
+            Console.WriteLine("鼠标修改后 " + point.X + ":" + point.Y);
+            return point;
         }
 
         /// <summary>
