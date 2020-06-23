@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:StikyNotes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="200"
-    Height="300"
+    Height="250"
     BorderBrush="{StaticResource ForgroundBrush}"
     FontFamily="{StaticResource LatoBold}"
     GlowBrush="{StaticResource ForgroundBrush}"
@@ -21,7 +21,7 @@
     mc:Ignorable="d">
 
 
-    <Grid Margin="10">
+    <Grid Margin="10,10,10,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
@@ -34,12 +34,14 @@
             <Border
                 Margin="0,0,0,5"
                 BorderBrush="Black"
-                BorderThickness="0,5,0,0">
+                BorderThickness="0,3,0,0">
                 <StackPanel>
                     <Label
-                        Margin="5"
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
                         FontFamily="Microsoft YaHei UI"
-                        FontWeight="Bold">
+                        FontWeight="Bold"
+                        Loaded="Loaded">
                         关于
                     </Label>
                     <TextBlock
@@ -53,10 +55,11 @@
             </Border>
 
 
-            <Border BorderBrush="Black" BorderThickness="0,5,0,0">
+            <Border BorderBrush="Black" BorderThickness="0,3,0,0">
                 <StackPanel>
                     <Label
-                        Margin="5"
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
                         FontFamily="Microsoft YaHei UI"
                         FontWeight="Bold">
                         项目地址
@@ -69,9 +72,15 @@
                     <Label FontFamily="{StaticResource FontAwesome}">
                         <TextBlock Text="后续更新都会在上面发布，好用的话点个Star吧~" TextWrapping="Wrap" />
                     </Label>
-                    <Label HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesome}">
-                        <TextBlock Text="版本信息: v3.1.1" TextWrapping="Wrap" />
-                    </Label>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Label HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesome}">
+                            <TextBlock Text="版本信息:" TextWrapping="Wrap" />
+                        </Label>
+                        <Label HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesome}">
+                            <TextBlock Text="{Binding version}" TextWrapping="Wrap" />
+                        </Label>
+                    </StackPanel>
+
 
                 </StackPanel>
             </Border>
