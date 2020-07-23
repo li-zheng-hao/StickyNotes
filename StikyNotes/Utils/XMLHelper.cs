@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using StikyNotes.Utils;
+using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using StikyNotes.Utils;
 
 namespace StikyNotes
 {
@@ -20,21 +15,35 @@ namespace StikyNotes
         /// <param name="obj"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static bool SaveObjAsXml<T>(T obj,string fileName)
+        public static bool SaveObjAsXml<T>(T obj, string fileName)
         {
 
             var dir = Application.StartupPath;
             try
             {
-                FileStream fs = new FileStream(dir+"/"+fileName, FileMode.Create);
+                if (File.Exists(dir + "/" + fileName))
+                {
+                    File.Copy(dir + "/" + fileName, dir + "/" + "temp.xml", true);
+
+                }
+                FileStream fs = new FileStream(dir + "/" + fileName, FileMode.Create);
                 XmlSerializer xs = new XmlSerializer(typeof(T));
                 xs.Serialize(fs, obj);
                 fs.Flush();
                 fs.Close();
+                if (File.Exists(dir + "/" + fileName))
+                {
+                    File.Delete(dir + "/" + "temp.xml");
+                }
                 return true;
             }
             catch (Exception e)
             {
+                if (File.Exists(dir + "/" + "temp.xml"))
+                {
+                    File.Copy(dir + "/" + "temp.xml", dir + "/" + fileName, true);
+                    File.Delete(dir + "/" + "temp.xml");
+                }
                 string errStr = "定时存储数据时发生异常,异常内容为:" + e.Message;
                 Logger.Log().Error(errStr);
                 Console.WriteLine(e);
@@ -54,18 +63,19 @@ namespace StikyNotes
             fileName = dir + "/" + fileName;
             try
             {
-                if (File.Exists(fileName)==false)
+                if (File.Exists(fileName) == false)
                     return default(T);
                 FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
                 XmlSerializer xs = new XmlSerializer(typeof(T));
                 T obj = (T)xs.Deserialize(fs);
                 return obj;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return default(T);
             }
-            
+
         }
     }
 }
