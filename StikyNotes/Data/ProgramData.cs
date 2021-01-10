@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using StikyNotes.Annotations;
 using StikyNotes.Utils.HotKeyUtil;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace StikyNotes
 {
     [Serializable]
-    public class ProgramData:INotifyPropertyChanged
-    { 
+    public class ProgramData : INotifyPropertyChanged
+    {
         public ObservableCollection<WindowsData> Datas { get; set; }
 
         /// <summary>
         /// 窗体是否置顶
         /// </summary>
         public bool IsWindowTopMost { get; set; }
+        /// <summary>
+        /// 程序是否自动检查更新
+        /// </summary>
+        public bool IsAutoCheckUpdate { get; set; }
 
         private static ProgramData instance = new ProgramData();
 
@@ -32,7 +31,7 @@ namespace StikyNotes
         /// <summary>
         /// 显示所有窗体的快捷键
         /// </summary>
-        public HotKeyModel ShowAllHotKey{ get; set; }
+        public HotKeyModel ShowAllHotKey { get; set; }
 
         /// <summary>
         /// 窗体主题颜色
@@ -44,7 +43,7 @@ namespace StikyNotes
         /// </summary>
         public bool IsStartUpWithSystem { get; set; }
 
-        
+
 
         private ProgramData()
         {
@@ -55,12 +54,12 @@ namespace StikyNotes
             Datas.CollectionChanged += Datas_CollectionChanged;
             CurrenTheme = Themes.Blue;
             ShowAllHotKey = new HotKeyModel()
-            { IsSelectAlt = false, IsSelectCtrl = true, IsSelectShift = false, IsUsable = true,SelectKey=EKey.Q,Name=EHotKeySetting.ShowAllWindow.ToString()};
+            { IsSelectAlt = false, IsSelectCtrl = true, IsSelectShift = false, IsUsable = true, SelectKey = EKey.Q, Name = EHotKeySetting.ShowAllWindow.ToString() };
         }
 
-       
 
-        private  void Datas_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+
+        private void Datas_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             Messenger.Default.Send<SaveMessage>(new SaveMessage());
         }

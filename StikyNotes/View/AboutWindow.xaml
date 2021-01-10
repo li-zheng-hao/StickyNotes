@@ -40,8 +40,7 @@
                         Margin="0,5,0,0"
                         HorizontalAlignment="Center"
                         FontFamily="Microsoft YaHei UI"
-                        FontWeight="Bold"
-                        Loaded="Loaded">
+                        FontWeight="Bold">
                         关于
                     </Label>
                     <TextBlock

@@ -1,11 +1,15 @@
-﻿using StikyNotes.Utils;
+﻿using MahApps.Metro.Controls;
+using StikyNotes.Utils;
 using System;
 using System.IO;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
-
 namespace StikyNotes
 {
     /// <summary>
@@ -36,9 +40,7 @@ namespace StikyNotes
                 Environment.Exit(0);
             }
 
-            //            base.OnStartup(e);
             Logger.Log().Info("程序启动");
-
             /// 将全局异常保存到文件目录下
             Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -53,6 +55,7 @@ namespace StikyNotes
                 ProgramData.Instance.IsStartUpWithSystem = programData.IsStartUpWithSystem;
                 ProgramData.Instance.CurrenTheme = programData.CurrenTheme;
                 ProgramData.Instance.ShowAllHotKey = programData.ShowAllHotKey;
+                ProgramData.Instance.IsAutoCheckUpdate = programData.IsAutoCheckUpdate;
                 ThemeAssist.ChangeTheme(programData.CurrenTheme);
                 //有创建过的窗口
                 if (windowsDatas.Count > 0)
@@ -74,6 +77,67 @@ namespace StikyNotes
             }
             IsInited = false;
             TimerUtil = new TimerUtil(SaveDataAction);
+            new Task(CheckUpdate).Start();
+
+        }
+        /// <summary>
+        /// 检查程序是否要更新
+        /// </summary>
+        private void CheckUpdate()
+        {
+            ProgramData p = ProgramData.Instance;
+            if (!p.IsAutoCheckUpdate)
+                return;
+            try
+            {
+                string version = StikyNotes.Properties.Resources.Version;
+                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12; //加上这一句
+                System.Net.WebClient client = new WebClient();
+                byte[] page = client.DownloadData("https://github.com/li-zheng-hao/StikyNotes/releases/");
+                string content = System.Text.Encoding.UTF8.GetString(page);
+                string regex = @"v[0-9]\.[0-9]\.[0-9]";
+                Regex re = new Regex(regex);
+                MatchCollection matches = re.Matches(content);
+                System.Collections.IEnumerator enu = matches.GetEnumerator();
+                bool needUpdate = false;
+                while (enu.MoveNext() && enu.Current != null)
+                {
+                    Match match = (Match)(enu.Current);
+
+                    //Console.Write(match.Value + "\r\n");
+                    string result = match.Value;
+                    Console.WriteLine(match.Value);
+                    if (Convert.ToInt32(match.Value[1]) > Convert.ToInt32(version[1]))
+                    {
+                        needUpdate = true;
+                    }
+                    else if (Convert.ToInt32(match.Value[1]) == Convert.ToInt32(version[1]) && Convert.ToInt32(match.Value[3]) > Convert.ToInt32(version[3]))
+                    {
+                        needUpdate = true;
+                    }
+                    else if (Convert.ToInt32(match.Value[1]) == Convert.ToInt32(version[1]) && Convert.ToInt32(match.Value[3]) == Convert.ToInt32(version[3]) && Convert.ToInt32(match.Value[5]) > Convert.ToInt32(version[5]))
+                    {
+                        needUpdate = true;
+
+                    }
+
+                    if (needUpdate)
+                    {
+                        new Thread(() =>
+                        {
+                            this.Invoke(new Action(() =>
+                            {
+                                MessageBox.Show("发现新版本，建议去Github更新");
+                            }));
+                        }).Start();
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log().Debug("无法连接项目github官网");
+            }
         }
 
 

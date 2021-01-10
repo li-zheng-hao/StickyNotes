@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="设置"
     Width="200"
-    Height="350"
+    Height="400"
     BorderBrush="{DynamicResource ForgroundBrush}"
     FontFamily="{StaticResource LatoBold}"
     GlowBrush="{DynamicResource ForgroundBrush}"
@@ -18,7 +18,7 @@
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
     ShowTitleBar="False"
-    Topmost="{Binding isTopMost}"
+    Topmost="{Binding IsTopMost}"
     WindowStartupLocation="CenterOwner"
     WindowTitleBrush="{DynamicResource ForgroundBrush}"
     mc:Ignorable="d">
@@ -34,46 +34,57 @@
             ShadowDepth="1"
             Color="DarkGray" />
     </Window.Effect>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
 
-        </Grid.RowDefinitions>
-
-
+    <StackPanel Margin="5,20,5,5" Orientation="Vertical">
+        <Label
+            HorizontalContentAlignment="Center"
+            FontFamily="{StaticResource LatoBold}"
+            FontSize="16"
+            FontWeight="Bold">
+            所有窗体置顶
+        </Label>
         <Controls:ToggleSwitch
             Name="IsTopMostBtn"
-            Grid.Row="1"
             Margin="3"
             CheckChangedCommand="{Binding IsTopMostChangedCommand}"
             CheckChangedCommandParameter="{Binding Path=IsChecked, ElementName=IsTopMostBtn}"
-            Header="           窗 体 置 顶 "
-            HeaderFontFamily="{StaticResource LatoBold}"
             IsChecked="{Binding Datas.IsWindowTopMost, Mode=TwoWay}"
             OffLabel="OFF"
             OnLabel="ON" />
+        <Label
+            HorizontalContentAlignment="Center"
+            FontFamily="{StaticResource LatoBold}"
+            FontSize="16"
+            FontWeight="Bold">
+            开机自启动
+        </Label>
         <Controls:ToggleSwitch
             Name="IsStartUpWithSystemBtn"
-            Grid.Row="2"
             Margin="3"
             CheckChangedCommand="{Binding IsStartUpWithSystemChangedCommand}"
             CheckChangedCommandParameter="{Binding Path=IsChecked, ElementName=IsStartUpWithSystemBtn}"
-            Header="           开 机 启 动"
-            HeaderFontFamily="{StaticResource LatoBold}"
             IsChecked="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
             OffLabel="OFF"
             OnLabel="ON" />
-        <StackPanel Grid.Row="3">
+        <Label
+            HorizontalContentAlignment="Center"
+            FontFamily="{StaticResource LatoBold}"
+            FontSize="16"
+            FontWeight="Bold">
+            自动检查更新
+        </Label>
+        <Controls:ToggleSwitch
+            Name="AutoCheckUpdateBtn"
+            Margin="3"
+            IsChecked="{Binding Datas.IsAutoCheckUpdate, Mode=TwoWay}"
+            OffLabel="OFF"
+            OnLabel="ON" />
+        <StackPanel>
             <Label
-                Margin="0,0,15,0"
                 HorizontalAlignment="Center"
                 FontFamily="{StaticResource LatoBold}"
-                FontSize="17">
-                主 题 颜 色
+                FontSize="16">
+                主题颜色
             </Label>
             <ComboBox
                 Margin="1,10,1,3"
@@ -99,12 +110,11 @@
                     Content="橘黄色" />
             </ComboBox>
         </StackPanel>
-        <StackPanel Grid.Row="4">
+        <StackPanel>
             <Label
-                Margin="0,0,15,0"
                 HorizontalAlignment="Center"
                 FontFamily="{StaticResource LatoBold}"
-                FontSize="17">
+                FontSize="16">
                 快捷键
             </Label>
             <Grid>
@@ -158,37 +168,7 @@
 
 
             </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="24*" />
-                    <ColumnDefinition Width="5*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0">放大字体</Label>
-
-                <TextBlock
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Margin="0,5,0,4"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center">
-                    Ctrl+Alt+Up
-                </TextBlock>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0">缩小字体</Label>
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center">
-                    Ctrl+Alt+Down
-                </TextBlock>
-            </Grid>
 
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Controls:MetroWindow>

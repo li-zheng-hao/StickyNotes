@@ -42,10 +42,7 @@
         </i:EventTrigger>
 
     </i:Interaction.Triggers>
-    <Window.InputBindings>
-        <KeyBinding Command="{Binding AddFontSizeCommand}" Gesture="Control+Alt+Up" />
-        <KeyBinding Command="{Binding ReduceFontSizeCommand}" Gesture="Control+Alt+Down" />
-    </Window.InputBindings>
+
     <!--<i:Interaction.Behaviors>-->
     <!--<utils:WndHideBehavior />-->
     <!--</i:Interaction.Behaviors>-->

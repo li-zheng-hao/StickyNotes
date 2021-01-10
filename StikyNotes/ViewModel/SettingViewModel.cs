@@ -1,11 +1,9 @@
-﻿using GalaSoft.MvvmLight.Command;
-using StikyNotes.Annotations;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using StikyNotes.Utils.HotKeyUtil;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,7 +11,7 @@ using ComboBoxItem = System.Windows.Controls.ComboBoxItem;
 
 namespace StikyNotes
 {
-    public class SettingViewModel : INotifyPropertyChanged
+    public class SettingViewModel : ViewModelBase
     {
         public ProgramData Datas { get; set; }
 
@@ -48,16 +46,6 @@ namespace StikyNotes
             ShowAllTextUsedCommand = new RelayCommand<string>(ShowAllTextUsedMethod);
         }
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            Console.WriteLine("属性发生了改变" + propertyName);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private void ShowAllTextUsedMethod(string key)
         {
