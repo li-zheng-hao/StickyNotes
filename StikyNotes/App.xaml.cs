@@ -105,7 +105,7 @@ namespace StikyNotes
         protected override void OnExit(ExitEventArgs e)
         {
             Logger.Log().Info("程序退出");
-            //XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
+            XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
             SystemTray.Instance.DisposeNotifyIcon();
             base.OnExit(e);
         }
@@ -136,8 +136,6 @@ namespace StikyNotes
         {
             if (!IsInited)
             {
-                Logger.Log().Info("存储数据" + DateTime.Now.ToString());
-                Console.WriteLine("存储数据" + DateTime.Now.ToString());
                 XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
                 BackupDataAction();
             }
@@ -172,11 +170,15 @@ namespace StikyNotes
             ProgramData.Instance.Datas.Add(MainWindow.viewModel.Datas);
             WindowsManager.Instance.Windows.Add(MainWindow);
         }
-
+        /// <summary>
+        /// 打开之前曾经存在过的窗体
+        /// </summary>
+        /// <param name="data"></param>
         private void OpenNewWindow(WindowsData data)
         {
             var MainWindow = new MainWindow();
             MainWindow.viewModel.Datas = data;
+            MainWindow.viewModel.RestoreData(MainWindow.Document, MainWindow.viewModel.Datas.WindowID);
             MainWindow.Show();
             WindowsManager.Instance.Windows.Add(MainWindow);
             ProgramData.Instance.Datas.Add(data);

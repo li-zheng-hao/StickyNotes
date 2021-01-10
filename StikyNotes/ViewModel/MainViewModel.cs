@@ -1,10 +1,13 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using StikyNotes.Utils;
 using StikyNotes.Utils.HotKeyUtil;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Threading;
 
@@ -22,7 +25,7 @@ namespace StikyNotes
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel
+    public class MainViewModel : ViewModelBase
     {
         /// <summary>
         /// 窗体数据
@@ -42,12 +45,10 @@ namespace StikyNotes
         public RelayCommand AddFontSizeCommand { get; private set; }
         public RelayCommand ReduceFontSizeCommand { get; private set; }
         public RelayCommand<object> MoveWindowCommand { get; private set; }
-
         public RelayCommand<MainWindow> DeletePaWindowCommand { get; private set; }
-
-
         public RelayCommand OnContentRenderedCommand { get; private set; }
         public RelayCommand<MainWindow> OnSourceInitializedCommand { get; private set; }
+        public RelayCommand<object> ChangeIsFocusedPropertyCommand { get; set; }
         #endregion
 
         #region 快捷键数据
@@ -60,6 +61,7 @@ namespace StikyNotes
         /// </summary>
         private Dictionary<EHotKeySetting, int> m_HotKeySettings = new Dictionary<EHotKeySetting, int>();
         #endregion
+
 
 
         /// <summary>
@@ -81,11 +83,66 @@ namespace StikyNotes
             ReduceFontSizeCommand = new RelayCommand(ReduceFontSizeMethod);
             OnContentRenderedCommand = new RelayCommand(OnContentRenderedMethod);
             OnSourceInitializedCommand = new RelayCommand<MainWindow>(OnSourceInitializedMethod);
+            ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
             ProgramData = ProgramData.Instance;
         }
+        /// <summary>
+        /// 修改IsFocused属性
+        /// </summary>
+        /// <param name="obj"></param>
+        private void ChangeIsFocusedPropertyMethod(object obj)
+        {
+            if (obj is string)
+            {
+                Datas.IsFocused = true;
+            }
+            else
+            {
+                Datas.IsFocused = false;
+                var document = obj as FlowDocument;
+                SaveDocument(document, Datas.DocumentFileName);
 
+            }
+        }
+        /// <summary>
+        /// 将数据文件进行保存
+        /// </summary>
+        /// <param name="datasDocumentFilePath"></param>
+        private void SaveDocument(FlowDocument document, string datasDocumentFilePath)
+        {
+            TextRange range;
+            FileStream fileStream;
 
+            range = new TextRange(document.ContentStart,
+                document.ContentEnd);
+            //获取当前文件夹路径
+            string currPath = Environment.CurrentDirectory;
+            //检查是否存在文件夹
+            string subPath = currPath + "/Datas/";
+            if (false == System.IO.Directory.Exists(subPath))
+            {
+                //创建Datas文件夹
+                System.IO.Directory.CreateDirectory(subPath);
+            }
+            fileStream = new FileStream(subPath + datasDocumentFilePath, FileMode.Create);
+            range.Save(fileStream, DataFormats.XamlPackage);
 
+            fileStream.Close();
+        }
+
+        public void RestoreData(FlowDocument document, string fileName)
+        {
+            TextRange range;
+            FileStream fileStream;
+
+            range = new TextRange(document.ContentStart,
+                document.ContentEnd);
+            string currPath = Environment.CurrentDirectory;
+            string subPath = currPath + "/Datas/";
+            fileStream = new FileStream(subPath + fileName, FileMode.Open);
+            range.Load(fileStream, DataFormats.XamlPackage);
+            fileStream.Close();
+        }
         private void OnSourceInitializedMethod(MainWindow window)
         {
             HotKeySettingsManager.Instance.RegisterGlobalHotKeyEvent += Instance_RegisterGlobalHotKeyEvent;
@@ -248,13 +305,32 @@ namespace StikyNotes
         void DeleteWindowMethod(MainWindow obj)
         {
             var win = obj as MainWindow;
+            string documentFileName = string.Empty;
             if (WindowsManager.Instance.Windows.Contains(win))
             {
                 WindowsManager.Instance.Windows.Remove(win);
                 ProgramData.Instance.Datas.Remove(Datas);
+                documentFileName = Datas.DocumentFileName;
             }
             win.Close();
+            if (documentFileName != string.Empty)
+            {
+                RemoveDocumentFile(documentFileName);
+            }
         }
+        /// <summary>
+        /// 删除已经不需要的文档数据
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void RemoveDocumentFile(string fileName)
+        {
 
+            string currPath = Environment.CurrentDirectory;
+            string subPath = currPath + "/Datas/";
+            if (System.IO.File.Exists(subPath + fileName))
+            {
+                System.IO.File.Delete(subPath + fileName);
+            }
+        }
     }
 }

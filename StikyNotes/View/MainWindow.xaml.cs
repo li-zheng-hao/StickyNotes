@@ -13,12 +13,14 @@ namespace StikyNotes
         //构造函数
         public MainWindow()
         {
+
             InitializeComponent();
             viewModel = new MainViewModel();
             this.DataContext = viewModel;
             WindowHide windowHide = new WindowHide(this);
             WindowHideManager.GetInstance().windowHideList.Add(windowHide);
         }
+
 
     }
 }

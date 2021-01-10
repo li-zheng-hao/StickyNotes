@@ -67,10 +67,10 @@ namespace StikyNotes.Utils
                 Win32.GetCursorPos(out point);
                 System.Windows.Point mousePositionInApp = Mouse.GetPosition(win);
                 System.Windows.Point mousePositionInScreenCoordinates = win.PointToScreen(mousePositionInApp);
-                Console.WriteLine("-------------------");
-                Console.WriteLine("鼠标 " + point.X + ":" + point.Y);
-
-                Console.WriteLine("窗体 " + this.win.Left);
+                // Console.WriteLine("-------------------");
+                // Console.WriteLine("鼠标 " + point.X + ":" + point.Y);
+                //
+                // Console.WriteLine("窗体 " + this.win.Left);
 
                 point = CheckDPI(point);
                 ////Console.WriteLine("Screen:" + mousePositionInScreenCoordinates);
@@ -164,7 +164,7 @@ namespace StikyNotes.Utils
             double dy = m.M22; // notice it's divided by 96 already
             point.X = (int)(point.X / dx);
             point.Y = (int)(point.Y / dy);
-            Console.WriteLine("鼠标修改后 " + point.X + ":" + point.Y);
+            // Console.WriteLine("鼠标修改后 " + point.X + ":" + point.Y);
             return point;
         }
 

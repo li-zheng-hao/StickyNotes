@@ -1,4 +1,4 @@
-/*
+﻿/*
   In App.xaml:
   <Application.Resources>
       <vm:ViewModelLocator xmlns:vm="clr-namespace:StikyNotes"
@@ -41,22 +41,23 @@ namespace StikyNotes.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
-            SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<SettingViewModel>();
+            // SimpleIoc.Default.Register<MainViewModel>();
+            // SimpleIoc.Default.Register<SettingViewModel>();
+            // SimpleIoc.Default.Register<AboutWindow>();
         }
-
-        public MainViewModel Main
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
-
-        public SettingViewModel Setting
-        {
-            get { return ServiceLocator.Current.GetInstance<SettingViewModel>(); }
-        }
+        //
+        // public MainViewModel Main
+        // {
+        //     get
+        //     {
+        //         return ServiceLocator.Current.GetInstance<MainViewModel>();
+        //     }
+        // }
+        //
+        // public SettingViewModel Setting
+        // {
+        //     get { return ServiceLocator.Current.GetInstance<SettingViewModel>(); }
+        // }
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

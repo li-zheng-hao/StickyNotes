@@ -28,6 +28,19 @@
         <i:EventTrigger EventName="SourceInitialized">
             <command:EventToCommand Command="{Binding OnSourceInitializedCommand}" CommandParameter="{Binding ElementName=loaded}" />
         </i:EventTrigger>
+        <i:EventTrigger EventName="PreviewMouseDown">
+            <command:EventToCommand
+                Command="{Binding ChangeIsFocusedPropertyCommand}"
+                CommandParameter="True"
+                PassEventArgsToCommand="False" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Deactivated">
+            <command:EventToCommand
+                Command="{Binding ChangeIsFocusedPropertyCommand}"
+                CommandParameter="{Binding ElementName=Document}"
+                PassEventArgsToCommand="False" />
+        </i:EventTrigger>
+
     </i:Interaction.Triggers>
     <Window.InputBindings>
         <KeyBinding Command="{Binding AddFontSizeCommand}" Gesture="Control+Alt+Up" />
@@ -48,6 +61,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid
             Name="Menu"
@@ -142,25 +156,95 @@
         <ScrollViewer
             Name="ViewContent"
             Grid.Row="1"
-            Margin="0,1,0,0"
-            Padding="0"
             Background="{DynamicResource BackgroundBrush}"
             VerticalScrollBarVisibility="Hidden">
-            <TextBox
-                Name="MainTextBox"
+            <RichTextBox
+                Name="RichTextBox"
                 Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
-                Margin="0"
-                VerticalAlignment="Top"
-                materialDesign:HintAssist.FloatingScale="0.5"
-                materialDesign:HintAssist.Hint="记 录 . . . "
-                AcceptsReturn="True"
-                FontSize="{Binding Datas.FontSize, Mode=TwoWay}"
-                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                Text="{Binding Datas.RichTextBoxContent, UpdateSourceTrigger=PropertyChanged}"
-                TextBlock.LineHeight="15"
-                TextWrapping="Wrap"
-                VerticalScrollBarVisibility="Hidden" />
+                Padding="0,5,0,0"
+                Background="{DynamicResource BackgroundBrush}"
+                BorderThickness="0"
+                FontFamily="Microsoft YaHei"
+                FontSize="16"
+                Style="{StaticResource MetroRichTextBox}">
+                <FlowDocument
+                    Name="Document"
+                    LineHeight="5"
+                    PagePadding="10">
+                    <Paragraph>11</Paragraph>
+                </FlowDocument>
+            </RichTextBox>
         </ScrollViewer>
+        <!--  simplest form  -->
+
+        <materialDesign:Snackbar
+            x:Name="Snackbar"
+            Grid.Row="2"
+            Width="{Binding ElementName=Menu, Path=ActualWidth}"
+            MaxWidth="800"
+            Margin="0,0,0,5"
+            Padding="2"
+            HorizontalAlignment="Left"
+            Background="{DynamicResource BackgroundBrush}"
+            IsActive="{Binding Path=Datas.IsFocused, Mode=OneWay}">
+            <materialDesign:SnackbarMessage>
+                <materialDesign:SnackbarMessage.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Background="{StaticResource BackgroundBrush}"
+                            Command="EditingCommands.ToggleBold"
+                            CommandTarget="{Binding ElementName=RichTextBox}"
+                            Style="{StaticResource Button_Menu}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="FormatBold" />
+                        </Button>
+                        <Button
+                            Background="{StaticResource BackgroundBrush}"
+                            Command="EditingCommands.ToggleBullets"
+                            CommandTarget="{Binding ElementName=RichTextBox}"
+                            Style="{StaticResource Button_Menu}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="FormatListBulleted" />
+                        </Button>
+                        <Button
+                            Background="{StaticResource BackgroundBrush}"
+                            Command="EditingCommands.ToggleNumbering"
+                            CommandTarget="{Binding ElementName=RichTextBox}"
+                            Style="{StaticResource Button_Menu}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="FormatListNumbered" />
+                        </Button>
+                        <Button
+                            Background="{StaticResource BackgroundBrush}"
+                            Command="EditingCommands.IncreaseFontSize"
+                            CommandTarget="{Binding ElementName=RichTextBox}"
+                            Style="{StaticResource Button_Menu}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="FormatFontSizeIncrease" />
+                        </Button>
+                        <Button
+                            Background="{StaticResource BackgroundBrush}"
+                            Command="EditingCommands.DecreaseFontSize"
+                            CommandTarget="{Binding ElementName=RichTextBox}"
+                            Style="{StaticResource Button_Menu}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="FormatFontSizeDecrease" />
+                        </Button>
+
+                    </StackPanel>
+                </materialDesign:SnackbarMessage.Content>
+            </materialDesign:SnackbarMessage>
+        </materialDesign:Snackbar>
 
     </Grid>
 </Window>

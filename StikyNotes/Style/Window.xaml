@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:StikyNotes">
     <Style x:Key="MainWindow" TargetType="{x:Type Window}">
-        <Setter Property="MinHeight" Value="300" />
-        <Setter Property="MinWidth" Value="300" />
+        <Setter Property="MinHeight" Value="100" />
+        <Setter Property="MinWidth" Value="100" />
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="BorderThickness" Value="8" />
         <Setter Property="WindowStyle" Value="None" />
@@ -26,6 +26,6 @@
                     Color="DarkGray" />
             </Setter.Value>
         </Setter>
-       
+
     </Style>
 </ResourceDictionary>
