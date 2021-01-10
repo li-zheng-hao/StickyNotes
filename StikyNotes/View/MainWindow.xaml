@@ -170,9 +170,7 @@
                 <FlowDocument
                     Name="Document"
                     LineHeight="5"
-                    PagePadding="10">
-                    <Paragraph>11</Paragraph>
-                </FlowDocument>
+                    PagePadding="10" />
             </RichTextBox>
         </ScrollViewer>
         <!--  simplest form  -->
