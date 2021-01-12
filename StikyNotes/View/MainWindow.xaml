@@ -158,7 +158,7 @@
             <RichTextBox
                 Name="RichTextBox"
                 Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
-                Padding="0,5,0,0"
+                Padding="5"
                 Background="{DynamicResource BackgroundBrush}"
                 BorderThickness="0"
                 FontFamily="Microsoft YaHei"
@@ -177,7 +177,7 @@
             Grid.Row="2"
             Width="{Binding ElementName=Menu, Path=ActualWidth}"
             MaxWidth="800"
-            Margin="0,0,0,5"
+            Margin="0,0,0,0"
             Padding="2"
             HorizontalAlignment="Left"
             Background="{DynamicResource BackgroundBrush}"

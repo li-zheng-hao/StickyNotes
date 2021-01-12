@@ -122,7 +122,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0">显示所有便签</Label>
+                <Label Grid.Column="0">显示/隐藏所有便签</Label>
 
                 <TextBox
                     Name="ShowAllTB"

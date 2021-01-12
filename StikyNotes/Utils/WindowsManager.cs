@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace StikyNotes
 {
@@ -11,11 +7,10 @@ namespace StikyNotes
         public List<MainWindow> Windows { get; set; }
 
         public static WindowsManager Instance = null;
-
         static WindowsManager()
         {
-            Instance=new WindowsManager();
-            Instance.Windows=new List<MainWindow>();
+            Instance = new WindowsManager();
+            Instance.Windows = new List<MainWindow>();
         }
     }
 }

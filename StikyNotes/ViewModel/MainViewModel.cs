@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using StikyNotes.Utils;
 using StikyNotes.Utils.HotKeyUtil;
 using System;
 using System.Collections.Generic;
@@ -98,6 +97,7 @@ namespace StikyNotes
             }
             else
             {
+                Console.WriteLine("存储数据" + Datas.WindowID);
                 Datas.IsFocused = false;
                 var document = obj as FlowDocument;
                 SaveDocument(document, Datas.DocumentFileName);
@@ -169,16 +169,41 @@ namespace StikyNotes
             {
                 case HotKeyManager.WM_HOTKEY:
                     int sid = wideParam.ToInt32();
+                    // 按下了显示所有窗体的快捷键,执行相应逻辑
                     if (sid == m_HotKeySettings[EHotKeySetting.ShowAllWindow])
                     {
-                        WindowHideManager.GetInstance().StopAllHideAction(2000);
+                        ActivateOrHideAllNotTopMostWindow();
+                        // WindowHideManager.GetInstance().StopAllHideAction(2000);
                     }
                     handled = true;
                     break;
             }
             return IntPtr.Zero;
         }
+        /// <summary>
+        /// 显示所有窗体或者隐藏所有窗体
+        /// </summary>
+        private void ActivateOrHideAllNotTopMostWindow()
+        {
+            foreach (var window in WindowsManager.Instance.Windows)
+            {
+                if (window.viewModel.Datas.IsCurrentWindowTopMost == false)
+                {
+                    if (ProgramData.Instance.IsWindowVisible)
+                        window.Visibility = Visibility.Hidden;
+                    else
+                    {
+                        Console.WriteLine("A");
+                        window.Visibility = Visibility.Visible;
+                        window.Activate();
+                    }
 
+                }
+            }
+
+            ProgramData.Instance.IsWindowVisible = !ProgramData.Instance.IsWindowVisible;
+
+        }
 
 
         private void OnContentRenderedMethod()

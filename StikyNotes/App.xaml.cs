@@ -31,6 +31,8 @@ namespace StikyNotes
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
+            #region 是否只能运行一个APP
+
             bool ret;
             mutex = new System.Threading.Mutex(true, "StikyNotesAPP", out ret);
 
@@ -39,6 +41,8 @@ namespace StikyNotes
                 MessageBox.Show("程序已经运行了");
                 Environment.Exit(0);
             }
+            #endregion
+
 
             Logger.Log().Info("程序启动");
             /// 将全局异常保存到文件目录下

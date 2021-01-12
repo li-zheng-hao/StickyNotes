@@ -43,6 +43,7 @@ namespace StikyNotes
         /// </summary>
         public bool IsStartUpWithSystem { get; set; }
 
+        public bool IsWindowVisible { get; set; } = true;
 
 
         private ProgramData()
