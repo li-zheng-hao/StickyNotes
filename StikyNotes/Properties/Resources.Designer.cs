@@ -61,7 +61,7 @@ namespace StikyNotes.Properties {
         }
         
         /// <summary>
-        ///   查找类似 v4.2.1 的本地化字符串。
+        ///   查找类似 v4.2.2 的本地化字符串。
         /// </summary>
         public static string Version {
             get {
