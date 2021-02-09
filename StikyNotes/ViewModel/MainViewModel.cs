@@ -116,7 +116,7 @@ namespace StikyNotes
             range = new TextRange(document.ContentStart,
                 document.ContentEnd);
             //获取当前文件夹路径
-            string currPath = Environment.CurrentDirectory;
+            string currPath = System.Windows.Forms.Application.StartupPath;
             //检查是否存在文件夹
             string subPath = currPath + "/Datas/";
             if (false == System.IO.Directory.Exists(subPath))
@@ -137,7 +137,9 @@ namespace StikyNotes
 
             range = new TextRange(document.ContentStart,
                 document.ContentEnd);
-            string currPath = Environment.CurrentDirectory;
+
+            string currPath = System.Windows.Forms.Application.StartupPath;
+            //Environment.CurrentDirectory;
             string subPath = currPath + "/Datas/";
             fileStream = new FileStream(subPath + fileName, FileMode.Open);
             range.Load(fileStream, DataFormats.XamlPackage);

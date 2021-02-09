@@ -62,16 +62,23 @@
     <ApplicationIcon>MyLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B5E5134C8B3F894B0C720FD8968DBD02938C73F7</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>27CDE8CF70EFD6B5322195ECFD65BA3D8854A3C8</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>StikyNotes_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>StikyNotes_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
@@ -240,6 +247,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="StikyNotes_1_TemporaryKey.pfx" />
     <None Include="StikyNotes_TemporaryKey.pfx" />
     <Resource Include="Resources\Fonts\Lato-Black.ttf" />
     <Resource Include="Resources\Fonts\Lato-BlackItalic.ttf" />
