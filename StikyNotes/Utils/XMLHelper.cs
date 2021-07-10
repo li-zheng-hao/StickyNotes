@@ -1,6 +1,7 @@
 ﻿using StikyNotes.Utils;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -18,7 +19,8 @@ namespace StikyNotes
         public static bool SaveObjAsXml<T>(T obj, string fileName)
         {
 
-            var dir = Application.StartupPath;
+            //var dir = Application.StartupPath;
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             try
             {
                 if (File.Exists(dir + "/" + fileName))
@@ -59,8 +61,8 @@ namespace StikyNotes
         /// <returns></returns>
         public static T DecodeXML<T>(string fileName)
         {
-            var dir = Application.StartupPath;
-            fileName = dir + "/" + fileName;
+            var dir = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location);
+            fileName = dir  +"/"+ fileName;
             try
             {
                 if (File.Exists(fileName) == false)
