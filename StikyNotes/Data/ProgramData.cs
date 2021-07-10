@@ -52,6 +52,7 @@ namespace StikyNotes
             Datas = new ObservableCollection<WindowsData>();
             IsWindowTopMost = false;
             IsStartUpWithSystem = false;
+            IsAutoCheckUpdate = true;
             Datas.CollectionChanged += Datas_CollectionChanged;
             CurrenTheme = Themes.Blue;
             ShowAllHotKey = new HotKeyModel()
