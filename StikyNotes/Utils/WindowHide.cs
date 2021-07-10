@@ -134,6 +134,7 @@ namespace StikyNotes.Utils
             catch (Exception ex)
             {
                 Logger.Log("WindowHide.cs").Error("隐藏窗体模块出现异常 " + ex.Message);
+                timer.Stop();
             }
 
         }

@@ -36,6 +36,8 @@ namespace StikyNotes
         /// </summary>
         DispatcherTimer timer;
 
+        public bool IsDeleteWindowShowed { get; set; } = false;
+
         public ProgramData ProgramData { get; set; }
         #region 命令
         public RelayCommand NewWindowCommand { get; private set; }
@@ -44,7 +46,10 @@ namespace StikyNotes
         public RelayCommand AddFontSizeCommand { get; private set; }
         public RelayCommand ReduceFontSizeCommand { get; private set; }
         public RelayCommand<object> MoveWindowCommand { get; private set; }
-        public RelayCommand<MainWindow> DeletePaWindowCommand { get; private set; }
+        public RelayCommand ShowDeleteWindowCommand { get; private set; }
+
+        public RelayCommand<object> DeleteWindowCommand { get; private set; }
+
         public RelayCommand OnContentRenderedCommand { get; private set; }
         public RelayCommand<MainWindow> OnSourceInitializedCommand { get; private set; }
         public RelayCommand<object> ChangeIsFocusedPropertyCommand { get; set; }
@@ -76,7 +81,8 @@ namespace StikyNotes
             NewWindowCommand = new RelayCommand(NewWindowMethod);
             OpenSettingCommand = new RelayCommand(OpenSettingMethod);
             OpenAboutCommand = new RelayCommand(OpenAboutMethod);
-            DeletePaWindowCommand = new RelayCommand<MainWindow>(DeleteWindowMethod);
+            ShowDeleteWindowCommand = new RelayCommand(ShowDeleteWindowMethod);
+            DeleteWindowCommand=new RelayCommand<object>(DeleteWindowMethod);
             MoveWindowCommand = new RelayCommand<object>(MoveWindowMethod);
             AddFontSizeCommand = new RelayCommand(AddFontSizeMethod);
             ReduceFontSizeCommand = new RelayCommand(ReduceFontSizeMethod);
@@ -85,6 +91,35 @@ namespace StikyNotes
             ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
             ProgramData = ProgramData.Instance;
         }
+
+        private void DeleteWindowMethod(object parameter)
+        {
+            var values = (object[])parameter;
+            var btnName= (string)values[0];
+            MainWindow win = (MainWindow)values[1];
+            if (btnName == "DeleteWindowButton")
+            {
+                // 删除窗体
+                IsDeleteWindowShowed = false;
+                string documentFileName = string.Empty;
+                if (WindowsManager.Instance.Windows.Contains(win))
+                {
+                    WindowsManager.Instance.Windows.Remove(win);
+                    ProgramData.Instance.Datas.Remove(Datas);
+                    documentFileName = Datas.DocumentFileName;
+                }
+                win.Close();
+                if (documentFileName != string.Empty)
+                {
+                    RemoveDocumentFile(documentFileName);
+                }
+            }
+            else
+            {
+                IsDeleteWindowShowed = false;
+            }
+        }
+
         /// <summary>
         /// 修改IsFocused属性
         /// </summary>
@@ -329,21 +364,10 @@ namespace StikyNotes
         /// <summary>
         /// 删除窗体
         /// </summary>
-        void DeleteWindowMethod(MainWindow obj)
+        void ShowDeleteWindowMethod()
         {
-            var win = obj as MainWindow;
-            string documentFileName = string.Empty;
-            if (WindowsManager.Instance.Windows.Contains(win))
-            {
-                WindowsManager.Instance.Windows.Remove(win);
-                ProgramData.Instance.Datas.Remove(Datas);
-                documentFileName = Datas.DocumentFileName;
-            }
-            win.Close();
-            if (documentFileName != string.Empty)
-            {
-                RemoveDocumentFile(documentFileName);
-            }
+            IsDeleteWindowShowed = true;
+
         }
         /// <summary>
         /// 删除已经不需要的文档数据

@@ -7,6 +7,8 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:utils="clr-namespace:StikyNotes.Utils"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:converter="clr-namespace:StikyNotes.Converter"
     x:Name="loaded"
     Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
@@ -42,7 +44,10 @@
         </i:EventTrigger>
 
     </i:Interaction.Triggers>
-
+    <Window.Resources>
+        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converter:DeleteWindowMessageConverter x:Key="DeleteWindowMessageConverter"></converter:DeleteWindowMessageConverter>
+    </Window.Resources>
     <!--<i:Interaction.Behaviors>-->
     <!--<utils:WndHideBehavior />-->
     <!--</i:Interaction.Behaviors>-->
@@ -114,12 +119,14 @@
                     HorizontalAlignment="Right"
                     PlacementMode="BottomAndAlignCentres">
 
-                    <StackPanel>
+                    <StackPanel >
                         <Button
+                            Padding="10"
                             Name="SettingButton"
                             Command="{Binding OpenSettingCommand}"
                             Content="设置" />
                         <Button
+                            Padding="10"
                             Name="AboutButton"
                             Command="{Binding OpenAboutCommand}"
                             Content="关于" />
@@ -132,10 +139,10 @@
                 <!--  删除按钮  -->
                 <Button
                     Name="DeleteButton"
+                    Tag="DeleteButton"
                     Grid.Column="4"
                     HorizontalAlignment="Right"
-                    Command="{Binding DeletePaWindowCommand}"
-                    CommandParameter="{Binding ElementName=loaded}"
+                    Command="{Binding ShowDeleteWindowCommand}"
                     Style="{StaticResource Button_Menu}"
                     ToolTip="删除此便签">
 
@@ -144,7 +151,45 @@
                         Height="18"
                         Kind="Delete" />
                 </Button>
+                <materialDesign:DialogHost
+                    DialogTheme="Inherit">
+                    <materialDesign:DialogHost.DialogContent>
+                        <StackPanel Margin="16">
+                            <TextBlock Text="Add a new fruit."/>
 
+                            <TextBox
+                                Margin="0 8 0 0"
+                                HorizontalAlignment="Stretch"
+                                x:Name="FruitTextBox"/>
+
+                            <StackPanel
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                                <Button
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    IsDefault="True"
+                                    Margin="0 8 8 0"
+                                    Content="ACCEPT"
+                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                    <Button.CommandParameter>
+                                        <system:Boolean>True</system:Boolean>
+                                    </Button.CommandParameter>
+                                </Button>
+
+                                <Button
+                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    IsCancel="True"
+                                    Margin="0 8 8 0"
+                                    Content="CANCEL"
+                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                    <Button.CommandParameter>
+                                        <system:Boolean>False</system:Boolean>
+                                    </Button.CommandParameter>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:DialogHost.DialogContent>
+                </materialDesign:DialogHost>
             </StackPanel>
         </Grid>
 
@@ -241,5 +286,48 @@
             </materialDesign:SnackbarMessage>
         </materialDesign:Snackbar>
 
+        <Grid Name="CheckDeleteWindow" Visibility="{Binding IsDeleteWindowShowed,Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="0" ZIndex="100" Grid.RowSpan="3" Background="#7F868686">
+            <Grid  Margin="10 100 10 100"  Background="{StaticResource BackgroundBrush}">
+                <Grid.Effect>
+                    <DropShadowEffect
+                        BlurRadius="5"
+                        ShadowDepth="-3"
+                        Color="Gray" />
+                </Grid.Effect>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label FontSize="22" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"  FontFamily="/StikyNotes;component/Resources/Fonts/#Lato">是否删除当前便签?</Label>
+                <Button Name="DeleteWindowButton" Grid.Row="1" Grid.Column="0"
+                        Command="{Binding DeleteWindowCommand}"
+                        Margin="20 5 20 5" Background="{StaticResource AccentColorBrush2}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource DeleteWindowMessageConverter}">
+                            <Binding Path="Name" RelativeSource="{RelativeSource Self}" ></Binding>
+                            <Binding ElementName="loaded"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    确定
+                </Button>
+                <Button Name="CancelDeleteWindowButton"
+                        Command="{Binding DeleteWindowCommand}"
+                       
+                        Grid.Row="1" Grid.Column="1" Background="AliceBlue" Margin="20 5 20 5">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource DeleteWindowMessageConverter}">
+                            <Binding Path="Name" RelativeSource="{RelativeSource Self}"></Binding>
+                            <Binding  ElementName="loaded"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    取消
+                </Button>
+            </Grid>
+
+        </Grid>
     </Grid>
 </Window>

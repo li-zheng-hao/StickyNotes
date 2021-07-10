@@ -101,6 +101,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\boolToVisibilityConverter.cs" />
+    <Compile Include="Converter\DeleteWindowMessageConverter.cs" />
     <Compile Include="Converter\ShowAllHotKeyConverter.cs" />
     <Compile Include="Converter\ThemeConverter.cs" />
     <Compile Include="Data\ConstData.cs" />

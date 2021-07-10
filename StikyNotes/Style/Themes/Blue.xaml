@@ -5,4 +5,5 @@
     <SolidColorBrush x:Key="ForgroundBrush" Color="{StaticResource ForgroundColorBlue}" />
     <SolidColorBrush x:Key="ForgroundBrush100" Color="{StaticResource ForgroundColorBlue100}" />
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColorBlue}" />
+    <SolidColorBrush x:Key="BackgroundBrush100" Color="{StaticResource BackgroundColorBlue}" />
 </ResourceDictionary>
