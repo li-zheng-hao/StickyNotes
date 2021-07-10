@@ -11,9 +11,9 @@ A convenitent and beautiful Windows StikyNotes Application </br></br>
 
 ## 安装 Installation
 
-点击其中的压缩包下载，解压直接用即可：
+点击下载`StickyNotes.exe`及`AutoUpdateTool.exe`两个文件，放置在同一个目录下即可，双击`StickyNotes.exe`运行便签软件：
 [点击此处打开下载页面](https://github.com/li-zheng-hao/StikyNotes/releases)</br></br>
-Click above link to download zip file.
+Click to download the two files `StickyNotes.exe` and `AutoUpdateTool.exe`, and place them in the same directory. Double-click `StickyNotes.exe` to run the sticky note software.
 
 ## 一些特性 Features</br>
 
