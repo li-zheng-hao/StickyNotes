@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="StickyNotes.UserControl.CardItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StickyNotes.UserControl"
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="200" d:DesignWidth="800">
+    <Border BorderBrush="Black" BorderThickness="1" >
+    <Grid  Background="{DynamicResource ForgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button
+                Name="SettingButton"
+            Grid.Row="0"
+                HorizontalAlignment="Right"
+                Click="DeleteWindowOnClick"
+                Style="{StaticResource Button_Menu}"
+                ToolTip="设置该便签">
+            <materialDesign:PackIcon
+                    Width="18"
+                    Height="18"
+                    Kind="Delete" />
+        </Button>
+            <TextBlock Name="CardTextBlock" MaxHeight="100" TextWrapping="Wrap" Margin="10 0 0 10" Grid.Row="1" FontSize="24" Text="{Binding RichTextBoxContent}"
+                       ></TextBlock>
+    </Grid>
+    </Border>
+</UserControl>

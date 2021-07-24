@@ -122,6 +122,11 @@
                     <StackPanel >
                         <Button
                             Padding="10"
+                            Name="ListButton"
+                            Command="{Binding OpenListCommand}"
+                            Content="笔记列表" />
+                        <Button
+                            Padding="10"
                             Name="SettingButton"
                             Command="{Binding OpenSettingCommand}"
                             Content="设置" />

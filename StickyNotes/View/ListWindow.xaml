@@ -1,0 +1,63 @@
+﻿<Window x:Class="StickyNotes.View.ListWindow"
+  xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StickyNotes.View"
+  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+  xmlns:usercontrol="clr-namespace:StickyNotes.UserControl" xmlns:viewmodel="clr-namespace:StickyNotes.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ListWindowViewModel}"
+        mc:Ignorable="d"
+  
+        Title="ListWindow" Height="800" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button
+                Name="AddButton"
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Style="{StaticResource Button_Menu}"
+                ToolTip="新增一条便签">
+                <materialDesign:PackIcon
+                    Width="18"
+                    Height="18"
+                    Kind="LibraryAdd" />
+            </Button>
+            <Rectangle Grid.Column="1" ></Rectangle>
+            <Button
+                Name="ExitButton"
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                Style="{StaticResource Button_Menu}"
+                ToolTip="关闭">
+                <materialDesign:PackIcon
+                    Width="18"
+                    Height="18"
+                    Kind="Close" />
+            </Button>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <ScrollViewer>
+                <ItemsControl Name="CardsItems" ItemsSource="{Binding ProgramData.Datas}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <usercontrol:CardItem MouseDoubleClick="Control_OnMouseDoubleClick"></usercontrol:CardItem>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

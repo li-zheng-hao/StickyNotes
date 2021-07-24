@@ -9,7 +9,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using StickyNotes.Utils;
 using StickyNotes.View;
+using StickyNotes.ViewModel;
 
 namespace StickyNotes
 {
@@ -54,6 +56,8 @@ namespace StickyNotes
         public RelayCommand OnContentRenderedCommand { get; private set; }
         public RelayCommand<MainWindow> OnSourceInitializedCommand { get; private set; }
         public RelayCommand<object> ChangeIsFocusedPropertyCommand { get; set; }
+
+        public RelayCommand OpenListCommand { get; set; }
         #endregion
 
         #region 快捷键数据
@@ -90,7 +94,20 @@ namespace StickyNotes
             OnContentRenderedCommand = new RelayCommand(OnContentRenderedMethod);
             OnSourceInitializedCommand = new RelayCommand<MainWindow>(OnSourceInitializedMethod);
             ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
+            OpenListCommand=new RelayCommand(OpenListMethod);
             ProgramData = ProgramData.Instance;
+        }
+
+        /// <summary>
+        /// 打开所有列表窗口
+        /// </summary>
+        private void OpenListMethod()
+        {
+            ListWindow listWindow=new ListWindow();
+            ListWindowViewModel listWindowViewModel=new ListWindowViewModel();
+            listWindow.DataContext = listWindowViewModel;
+            listWindow.Show();
+            
         }
 
         private void DeleteWindowMethod(object parameter)
@@ -148,7 +165,6 @@ namespace StickyNotes
         {
             TextRange range;
             FileStream fileStream;
-
             range = new TextRange(document.ContentStart,
                 document.ContentEnd);
             //获取当前文件夹路径
@@ -162,7 +178,7 @@ namespace StickyNotes
             }
             fileStream = new FileStream(subPath + datasDocumentFilePath, FileMode.Create);
             range.Save(fileStream, DataFormats.XamlPackage);
-
+            Datas.RichTextBoxContent = new TextRange(document.ContentStart, document.ContentEnd).Text;
             fileStream.Close();
         }
 

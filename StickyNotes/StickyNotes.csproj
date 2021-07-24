@@ -108,6 +108,9 @@
     <Compile Include="Converter\ThemeConverter.cs" />
     <Compile Include="Data\ConstData.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="UserControl\CardItem.xaml.cs">
+      <DependentUpon>CardItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\HotKeyUtil\EHotKeySetting.cs" />
     <Compile Include="Utils\HotKeyUtil\EKey.cs" />
     <Compile Include="Utils\HotKeyUtil\HotKeyHelper.cs" />
@@ -115,20 +118,25 @@
     <Compile Include="Utils\HotKeyUtil\HotKeyModel.cs" />
     <Compile Include="Utils\HotKeyUtil\HotKeySettingManager.cs" />
     <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\Messages\ChangeWindowMessage.cs" />
     <Compile Include="Utils\ThemeAssist.cs" />
     <Compile Include="Utils\TimerUtil.cs" />
     <Compile Include="Utils\WindowHide.cs" />
+    <Compile Include="ViewModel\ListWindowViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\ProgramData.cs" />
-    <Compile Include="Utils\SaveMessage.cs" />
+    <Compile Include="Utils\Messages\SaveMessage.cs" />
     <Compile Include="Utils\SystemTray.cs" />
     <Compile Include="Data\WindowsData.cs" />
     <Compile Include="Utils\WindowsManager.cs" />
     <Compile Include="Utils\XMLHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\ListWindow.xaml.cs">
+      <DependentUpon>ListWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
@@ -142,6 +150,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Style\Themes\Gray.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\CardItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
