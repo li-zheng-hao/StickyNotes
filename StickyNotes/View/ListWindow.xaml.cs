@@ -18,7 +18,7 @@ namespace StickyNotes.View
     /// <summary>
     /// ListWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class ListWindow :Window
+    public partial class ListWindow :MetroWindow
     {
         public ListWindow()
         {
@@ -28,6 +28,11 @@ namespace StickyNotes.View
         private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("MessageBox Show");
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

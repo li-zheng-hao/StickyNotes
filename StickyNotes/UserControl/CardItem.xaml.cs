@@ -36,7 +36,7 @@ namespace StickyNotes.UserControl
             var windowsdata = this.DataContext as WindowsData;
             ProgramData.Instance.Datas.Remove(windowsdata);
             // 通知主窗体删除这个数据 关闭这个便签窗体
-//            Messenger.Default.Send<ChangeWindowMessage>(new ChangeWindowMessage(){window = windowsdata,msgType = ChangeWindowMessageType.DeleteWindow});
+            Messenger.Default.Send<ChangeWindowMessage>(new ChangeWindowMessage(){window = windowsdata, msgType = ChangeWindowMessageType.DeleteWindow});
         }
     }
 }

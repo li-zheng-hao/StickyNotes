@@ -171,7 +171,7 @@
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
                                 <Button
-                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    
                                     IsDefault="True"
                                     Margin="0 8 8 0"
                                     Content="ACCEPT"
@@ -182,7 +182,7 @@
                                 </Button>
 
                                 <Button
-                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                    
                                     IsCancel="True"
                                     Margin="0 8 8 0"
                                     Content="CANCEL"
@@ -213,7 +213,7 @@
                 BorderThickness="0"
                 FontFamily="Microsoft YaHei"
                 FontSize="16"
-                Style="{StaticResource MetroRichTextBox}">
+               >
                 <FlowDocument
                     Name="Document"
                     LineHeight="5"
@@ -310,7 +310,7 @@
                 <Label FontSize="22" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"  FontFamily="/StickyNotes;component/Resources/Fonts/#Lato">是否删除当前便签?</Label>
                 <Button Name="DeleteWindowButton" Grid.Row="1" Grid.Column="0"
                         Command="{Binding DeleteWindowCommand}"
-                        Margin="20 5 20 5" Background="{StaticResource AccentColorBrush2}">
+                        Margin="20 5 20 5" >
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource DeleteWindowMessageConverter}">
                             <Binding Path="Name" RelativeSource="{RelativeSource Self}" ></Binding>

@@ -6,18 +6,24 @@
              xmlns:local="clr-namespace:StickyNotes.UserControl"
                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             
-             d:DesignHeight="200" d:DesignWidth="800">
-    <Border BorderBrush="Black" BorderThickness="1" >
-    <Grid  Background="{DynamicResource ForgroundBrush}">
+             MinHeight="100"
+             MaxHeight="300"
+             d:DesignHeight="300" d:DesignWidth="800">
+    <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent2}" BorderThickness="1" Cursor="Hand"  >
+        <Grid  >
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button
+            <StackPanel Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent2}"></StackPanel>
+            <StackPanel Grid.Row="1" Background="{DynamicResource MahApps.Brushes.Gray9}"></StackPanel>
+            <TextBlock Name="CardTextBlock" MaxHeight="100" TextWrapping="Wrap" Margin="10 5 0 10" Grid.Row="1" FontSize="24" Text="{Binding RichTextBoxContent}"
+                       ></TextBlock>
+            <Button
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
                 Name="SettingButton"
-            Grid.Row="0"
-                HorizontalAlignment="Right"
+            Grid.Row="1"
                 Click="DeleteWindowOnClick"
                 Style="{StaticResource Button_Menu}"
                 ToolTip="设置该便签">
@@ -26,8 +32,7 @@
                     Height="18"
                     Kind="Delete" />
         </Button>
-            <TextBlock Name="CardTextBlock" MaxHeight="100" TextWrapping="Wrap" Margin="10 0 0 10" Grid.Row="1" FontSize="24" Text="{Binding RichTextBoxContent}"
-                       ></TextBlock>
+           
     </Grid>
     </Border>
 </UserControl>

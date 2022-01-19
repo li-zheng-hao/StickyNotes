@@ -47,11 +47,10 @@
              
             Name="IsTopMostBtn"
             Margin="3"
-            CheckChangedCommand="{Binding IsTopMostChangedCommand}"
-            CheckChangedCommandParameter="{Binding Path=IsChecked, ElementName=IsTopMostBtn}"
-            IsChecked="{Binding Datas.IsWindowTopMost, Mode=TwoWay}"
-            OffLabel="OFF"
-            OnLabel="ON" />
+            OffContent="OFF"
+            OnContent="ON"
+            IsOn="{Binding Datas.IsWindowTopMost, Mode=TwoWay}"
+            />
         <Label
             HorizontalContentAlignment="Center"
             FontFamily="{StaticResource LatoBold}"
@@ -62,11 +61,10 @@
         <Controls:ToggleSwitch
             Name="IsStartUpWithSystemBtn"
             Margin="3"
-            CheckChangedCommand="{Binding IsStartUpWithSystemChangedCommand}"
-            CheckChangedCommandParameter="{Binding Path=IsChecked, ElementName=IsStartUpWithSystemBtn}"
-            IsChecked="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
-            OffLabel="OFF"
-            OnLabel="ON" />
+            IsOn="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
+            OnContent="ON"
+            OffContent="OFF"
+            />
         <Label
             HorizontalContentAlignment="Center"
             FontFamily="{StaticResource LatoBold}"
@@ -77,9 +75,10 @@
         <Controls:ToggleSwitch
             Name="AutoCheckUpdateBtn"
             Margin="3"
-            IsChecked="{Binding Datas.IsAutoCheckUpdate, Mode=TwoWay}"
-            OffLabel="OFF"
-            OnLabel="ON" />
+            IsOn="{Binding Datas.IsAutoCheckUpdate, Mode=TwoWay}"
+            OffContent="OFF"
+            OnContent="ON"
+            />
         <StackPanel>
             <Label
                 HorizontalAlignment="Center"
