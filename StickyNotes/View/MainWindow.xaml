@@ -207,6 +207,7 @@
             VerticalScrollBarVisibility="Hidden">
             <RichTextBox
                 Name="RichTextBox"
+                VerticalScrollBarVisibility="Hidden"
                 Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
                 Padding="5"
                 Background="{DynamicResource BackgroundBrush}"
@@ -215,6 +216,7 @@
                 FontSize="16"
                >
                 <FlowDocument
+                    
                     Name="Document"
                     LineHeight="5"
                     PagePadding="10" />
