@@ -203,20 +203,20 @@
         <ScrollViewer
             Name="ViewContent"
             Grid.Row="1"
+            HorizontalScrollBarVisibility="Disabled"
             Background="{DynamicResource BackgroundBrush}"
             VerticalScrollBarVisibility="Hidden">
             <RichTextBox
                 Name="RichTextBox"
                 VerticalScrollBarVisibility="Hidden"
                 Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
-                Padding="5"
                 Background="{DynamicResource BackgroundBrush}"
                 BorderThickness="0"
                 FontFamily="Microsoft YaHei"
                 FontSize="16"
                >
                 <FlowDocument
-                    
+                     
                     Name="Document"
                     LineHeight="5"
                     PagePadding="10" />

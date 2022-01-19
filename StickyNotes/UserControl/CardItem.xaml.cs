@@ -33,10 +33,24 @@ namespace StickyNotes.UserControl
         /// <param name="e"></param>
         private void DeleteWindowOnClick(object sender, RoutedEventArgs e)
         {
-            var windowsdata = this.DataContext as WindowsData;
-            ProgramData.Instance.Datas.Remove(windowsdata);
-            // 通知主窗体删除这个数据 关闭这个便签窗体
-            Messenger.Default.Send<ChangeWindowMessage>(new ChangeWindowMessage(){window = windowsdata, msgType = ChangeWindowMessageType.DeleteWindow});
+           
+            RoutedEventArgs args =new RoutedEventArgs(DeleteNoteEvent,this);
+            this.RaiseEvent(args);
+        }
+        /// <summary>
+        /// 声明删除事件
+        /// 参数:要注册的路由事件名称，路由事件的路由策略，事件处理程序的委托类型(可自定义)，路由事件的所有者类类型
+        /// </summary>
+        public static readonly RoutedEvent DeleteNoteEvent = EventManager.RegisterRoutedEvent("DeleteNoteEvent", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventArgs<Object>), typeof(System.Windows.Controls.UserControl));
+        /// <summary>
+        /// 处理各种路由事件的方法 
+        /// </summary>
+        public event RoutedEventHandler DeleteNoteClick
+        {
+            //将路由事件添加路由事件处理程序
+            add { AddHandler(DeleteNoteEvent, value); }
+            //从路由事件处理程序中移除路由事件
+            remove { RemoveHandler(DeleteNoteEvent, value); }
         }
     }
 }

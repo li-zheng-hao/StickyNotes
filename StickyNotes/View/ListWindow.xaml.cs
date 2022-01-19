@@ -1,4 +1,6 @@
-﻿using MahApps.Metro.Controls;
+﻿using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls;
+using StickyNotes.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +22,17 @@ namespace StickyNotes.View
     /// </summary>
     public partial class ListWindow :MetroWindow
     {
+      
+
         public ListWindow()
         {
             InitializeComponent();
+            ListWindowViewModel vm = new ListWindowViewModel();
+            this.DataContext=vm;
+
         }
 
+     
         private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("MessageBox Show");
@@ -32,7 +40,11 @@ namespace StickyNotes.View
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            var i=this.DataContext;
+
+            //this.Close();
         }
+
+       
     }
 }

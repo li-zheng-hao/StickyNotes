@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using StickyNotes.Utils;
 using StickyNotes.View;
 using StickyNotes.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace StickyNotes
 {
@@ -96,6 +97,21 @@ namespace StickyNotes
             ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
             OpenListCommand=new RelayCommand(OpenListMethod);
             ProgramData = ProgramData.Instance;
+
+            Messenger.Default.Register<WindowsData>(this, "DeleteWindow",DeleteWindowActionInListView);
+
+        }
+
+        private void DeleteWindowActionInListView(WindowsData windowsData)
+        {
+            if(windowsData == this.Datas)
+            {
+                // 说明要删除的就是自己这个窗体
+                foreach (Window item in Application.Current.Windows)
+                {
+                    if (item.DataContext == this) item.Close();
+                }
+            }
         }
 
         /// <summary>
@@ -104,8 +120,6 @@ namespace StickyNotes
         private void OpenListMethod()
         {
             ListWindow listWindow=new ListWindow();
-            ListWindowViewModel listWindowViewModel=new ListWindowViewModel();
-            listWindow.DataContext = listWindowViewModel;
             listWindow.Show();
             
         }

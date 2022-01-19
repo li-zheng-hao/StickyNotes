@@ -22,7 +22,7 @@
             <Button
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-                Name="SettingButton"
+                Name="deleteBtn"
             Grid.Row="1"
                 Click="DeleteWindowOnClick"
                 Style="{StaticResource Button_Menu}"

@@ -6,9 +6,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StickyNotes.View"
   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-  xmlns:usercontrol="clr-namespace:StickyNotes.UserControl" xmlns:viewmodel="clr-namespace:StickyNotes.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ListWindowViewModel}"
+  xmlns:usercontrol="clr-namespace:StickyNotes.UserControl" xmlns:viewmodel="clr-namespace:StickyNotes.ViewModel"
+                      xmlns:cmd="http://www.galasoft.ch/mvvmlight" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+                      d:DataContext="{d:DesignInstance Type=viewmodel:ListWindowViewModel}"
         mc:Ignorable="d"
         ShowTitleBar="False"
+                      Name="listWindow"
                        GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       Background="White"
                       TitleBarHeight="0"
@@ -81,7 +84,21 @@
                 <ItemsControl Name="CardsItems" ItemsSource="{Binding ProgramData.Datas}" Margin="10 5 10 5">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <usercontrol:CardItem Margin="0 5 0 5" MouseDoubleClick="Control_OnMouseDoubleClick" ></usercontrol:CardItem>
+                            <usercontrol:CardItem Margin="0 5 0 5" 
+                                                  >
+                                <i:Interaction.Triggers>
+                                 
+                                    <i:EventTrigger EventName="MouseDoubleClick" >
+                                        <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}" />
+                                    </i:EventTrigger>
+
+                                    <i:EventTrigger EventName="DeleteNoteClick" >
+                                        <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandParameter="{Binding .}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </usercontrol:CardItem>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
