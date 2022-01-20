@@ -11,29 +11,21 @@
     Title="设置"
     Width="200"
     Height="400"
-    BorderBrush="{DynamicResource ForgroundBrush}"
     FontFamily="{StaticResource LatoBold}"
-    GlowBrush="{DynamicResource ForgroundBrush}"
     ShowInTaskbar="True"
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
     ShowTitleBar="False"
+    Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
     Topmost="{Binding IsTopMost}"
     WindowStartupLocation="CenterOwner"
-    WindowTitleBrush="{DynamicResource ForgroundBrush}"
     mc:Ignorable="d">
     <Window.Resources>
         <local:ThemeConverter x:Key="ThemeConverter" />
         <local:ShowAllHotKeyConverter x:Key="ShowAllHotKeyConverter" />
     </Window.Resources>
 
-    <Window.Effect>
-        <DropShadowEffect
-            BlurRadius="12"
-            Direction="90"
-            ShadowDepth="1"
-            Color="DarkGray" />
-    </Window.Effect>
+  
 
     <StackPanel Margin="5,20,5,5" Orientation="Vertical">
         <Label
@@ -44,23 +36,27 @@
             所有窗体置顶
         </Label>
         <Controls:ToggleSwitch
-             
             Name="IsTopMostBtn"
             Margin="3"
             OffContent="OFF"
+            Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+            
             OnContent="ON"
-            IsOn="{Binding Datas.IsWindowTopMost, Mode=TwoWay}"
+            IsOn="{Binding Datas.IsWindowTopMost, Mode=TwoWay}" 
             />
         <Label
             HorizontalContentAlignment="Center"
             FontFamily="{StaticResource LatoBold}"
             FontSize="16"
+            Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+            
             FontWeight="Bold">
             开机自启动
         </Label>
         <Controls:ToggleSwitch
             Name="IsStartUpWithSystemBtn"
             Margin="3"
+            Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
             IsOn="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
             OnContent="ON"
             OffContent="OFF"
@@ -75,6 +71,8 @@
         <Controls:ToggleSwitch
             Name="AutoCheckUpdateBtn"
             Margin="3"
+            Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+            
             IsOn="{Binding Datas.IsAutoCheckUpdate, Mode=TwoWay}"
             OffContent="OFF"
             OnContent="ON"

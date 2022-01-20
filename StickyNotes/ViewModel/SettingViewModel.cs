@@ -171,18 +171,18 @@ namespace StickyNotes
         {
             var content = e.AddedItems[0] as ComboBoxItem;
 
-            switch (content.Content.ToString())
-            {
-                case "橘黄色":
-                    ThemeAssist.ChangeTheme(Themes.Orange);
-                    break;
-                case "蓝色":
-                    ThemeAssist.ChangeTheme(Themes.Blue);
-                    break;
-                case "灰色":
-                    ThemeAssist.ChangeTheme(Themes.Gray);
-                    break;
-            }
+            //switch (content.Content.ToString())
+            //{
+            //    case "橘黄色":
+            //        ThemeAssist.ChangeTheme(Themes.Orange);
+            //        break;
+            //    case "蓝色":
+            //        ThemeAssist.ChangeTheme(Themes.Blue);
+            //        break;
+            //    case "灰色":
+            //        ThemeAssist.ChangeTheme(Themes.Gray);
+            //        break;
+            //}
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using ControlzEx.Theming;
+using GalaSoft.MvvmLight.Command;
 using MahApps.Metro.Controls;
 using StickyNotes.ViewModel;
 using System;
@@ -27,22 +28,17 @@ namespace StickyNotes.View
         public ListWindow()
         {
             InitializeComponent();
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            ThemeManager.Current.SyncTheme();
             ListWindowViewModel vm = new ListWindowViewModel();
             this.DataContext=vm;
 
         }
 
-     
-        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("MessageBox Show");
-        }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            var i=this.DataContext;
-
-            //this.Close();
+            this.Close();
         }
 
        

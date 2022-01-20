@@ -15,7 +15,7 @@
                     <Border
                         Background="Transparent"
                         x:Name="MyBackgroundElement"
-                        BorderBrush="{DynamicResource ForgroundBrush}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Button.Border}"
                         BorderThickness="0">
                         <ContentPresenter
                             x:Name="ButtonContentPresenter"
@@ -24,7 +24,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="{DynamicResource ForgroundBrush100}" />
+                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Background.MouseOver}" />
                             <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.7" />
                         </Trigger>
                     </ControlTemplate.Triggers>

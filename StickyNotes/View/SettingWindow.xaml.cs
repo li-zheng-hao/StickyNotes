@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using ControlzEx.Theming;
+using MahApps.Metro.Controls;
 
 namespace StickyNotes
 {
@@ -11,6 +12,8 @@ namespace StickyNotes
         public SettingWindow()
         {
             InitializeComponent();
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            ThemeManager.Current.SyncTheme();
             settingViewModel = new SettingViewModel();
             this.DataContext = settingViewModel;
         }

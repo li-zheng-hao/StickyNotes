@@ -58,6 +58,7 @@ namespace StickyNotes
         public RelayCommand<MainWindow> OnSourceInitializedCommand { get; private set; }
         public RelayCommand<object> ChangeIsFocusedPropertyCommand { get; set; }
 
+        public RelayCommand CloseWindowButNotDeleteDataCommand { get; private set; }
         public RelayCommand OpenListCommand { get; set; }
         #endregion
 
@@ -96,9 +97,11 @@ namespace StickyNotes
             OnSourceInitializedCommand = new RelayCommand<MainWindow>(OnSourceInitializedMethod);
             ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
             OpenListCommand=new RelayCommand(OpenListMethod);
+            CloseWindowButNotDeleteDataCommand = new RelayCommand(CloseWindowButNotDeleteDataMethod);
             ProgramData = ProgramData.Instance;
 
             Messenger.Default.Register<WindowsData>(this, "DeleteWindow",DeleteWindowActionInListView);
+            Messenger.Default.Register<WindowsData>(this, "CloseWindow", DeleteWindowActionInListView);
 
         }
 
@@ -109,9 +112,27 @@ namespace StickyNotes
                 // 说明要删除的就是自己这个窗体
                 foreach (Window item in Application.Current.Windows)
                 {
-                    if (item.DataContext == this) item.Close();
+                    if (item.DataContext == this)
+                    {
+                        WindowsManager.Instance.Windows.Remove((MainWindow)item);
+                        item.Close();
+                    }
                 }
             }
+        }
+        private void CloseWindowButNotDeleteDataMethod()
+        {
+
+                // 说明要删除的就是自己这个窗体
+                foreach (Window item in Application.Current.Windows)
+                {
+                    if (item.DataContext == this)
+                    {
+                        WindowsManager.Instance.Windows.Remove((MainWindow)item);
+                        item.Close();
+                    }
+                }
+
         }
 
         /// <summary>
@@ -126,6 +147,8 @@ namespace StickyNotes
 
         private void DeleteWindowMethod(object parameter)
         {
+            ThemeAssist.ChangeTheme("Orange");
+
             var values = (object[])parameter;
             var btnName= (string)values[0];
             MainWindow win = (MainWindow)values[1];

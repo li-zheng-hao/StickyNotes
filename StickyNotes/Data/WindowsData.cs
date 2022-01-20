@@ -53,6 +53,11 @@ namespace StickyNotes
         /// 当前窗口存储的文件路径
         /// </summary>
         public string DocumentFileName { get; set; }
+
+        /// <summary>
+        /// 窗体是否已经显示
+        /// </summary>
+        public bool IsShowed { get; set; }
         /// <summary>
         /// 默认初始化数据
         /// </summary>

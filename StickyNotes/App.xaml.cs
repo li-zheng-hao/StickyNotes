@@ -59,10 +59,10 @@ namespace StickyNotes
                 var windowsDatas = programData.Datas;
                 ProgramData.Instance.IsWindowTopMost = programData.IsWindowTopMost;
                 ProgramData.Instance.IsStartUpWithSystem = programData.IsStartUpWithSystem;
-                ProgramData.Instance.CurrenTheme = programData.CurrenTheme;
+                ProgramData.Instance.CurrentTheme = programData.CurrentTheme;
                 ProgramData.Instance.ShowAllHotKey = programData.ShowAllHotKey;
                 ProgramData.Instance.IsAutoCheckUpdate = programData.IsAutoCheckUpdate;
-                ThemeAssist.ChangeTheme(programData.CurrenTheme);
+                ThemeAssist.ChangeTheme(programData.CurrentTheme);
                 //有创建过的窗口
                 if (windowsDatas.Count > 0)
                 {

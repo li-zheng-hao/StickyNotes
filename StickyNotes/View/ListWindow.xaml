@@ -34,11 +34,12 @@
                 Name="AddButton"
                 Grid.Column="0"
                 HorizontalAlignment="Left"
+                Command="{Binding NewWindowCommand}"
                 Style="{StaticResource Button_Menu}"
                 ToolTip="新增一条便签">
                 <materialDesign:PackIcon
-                    Width="24"
-                    Height="24"
+                    Width="18"
+                    Height="18"
                     Kind="LibraryAdd" />
             </Button>
          
@@ -50,8 +51,8 @@
                 Style="{StaticResource Button_Menu}"
                 ToolTip="关闭">
                 <materialDesign:PackIcon
-                    Width="24"
-                    Height="24"
+                    Width="18"
+                    Height="18"
                     Kind="Close" />
             </Button>
 
@@ -90,7 +91,7 @@
                                  
                                     <i:EventTrigger EventName="MouseDoubleClick" >
                                         <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}" />
+AncestorType={x:Type Window}}, Path=DataContext.ChangeWindowVisibilityCommand}"  CommandParameter="{Binding .}" />
                                     </i:EventTrigger>
 
                                     <i:EventTrigger EventName="DeleteNoteClick" >
