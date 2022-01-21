@@ -9,6 +9,25 @@
 一个简单清爽的的Windows桌面便利贴</br></br>
 A convenitent and beautiful Windows StikyNotes Application </br></br>
 
+
+
+## 2022年新开发目标
+
+1. 升级依赖库，用MahApp为主体重构项目UI
+2. 支持多语言切换
+3. 支持夜间、日间模式
+4. 新增列表功能，不需要显示的可以暂时隐藏起来
+5. 用web端的markdown文本编辑器或富文本编辑器替换现有WPF的富文本控件（WPF的富文本控件实在是不太行，暂时找不到新方案，欢迎大家提issue交流）
+6. 搭建一个主页网站（类似Typora，计划Asp.Net Core+Vue实现），方便无法科学上网下载软件的朋友能够下载和更新本软件
+
+以上几点目标希望2022年能够实现。
+
+
+
+## 
+
+## 
+
 ## 安装 Installation
 
 点击下载`StickyNotes.exe`及`AutoUpdateTool.exe`两个文件，放置在同一个目录下即可，双击`StickyNotes.exe`运行便签软件：
