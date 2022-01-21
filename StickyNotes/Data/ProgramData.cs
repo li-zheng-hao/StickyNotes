@@ -12,6 +12,9 @@ namespace StickyNotes
     public class ProgramData : INotifyPropertyChanged
     {
         public ObservableCollection<WindowsData> Datas { get; set; }
+        public ObservableCollection<WindowsData> HideWindowData { get; set; }
+
+
 
         /// <summary>
         /// 窗体是否置顶
@@ -55,6 +58,7 @@ namespace StickyNotes
         {
             //            Instance = new ProgramData();
             Datas = new ObservableCollection<WindowsData>();
+            HideWindowData= new ObservableCollection<WindowsData>();
             IsWindowTopMost = false;
             IsStartUpWithSystem = false;
             IsAutoCheckUpdate = true;

@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using StickyNotes.Utils.HotKeyUtil;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows;
@@ -14,7 +15,11 @@ namespace StickyNotes
     public class SettingViewModel : ViewModelBase
     {
         public ProgramData Datas { get; set; }
-
+        
+        public List<string> Themes { get; set; }  = new List<string>()
+        {
+            "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt", "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
+        };
         public HotKeyModel ShowAllHotKey { get; set; }
 
         public RelayCommand<bool> IsTopMostChangedCommand { get; set; }
@@ -37,6 +42,7 @@ namespace StickyNotes
         public SettingViewModel()
         {
             Datas = ProgramData.Instance;
+            
             ShowAllHotKey = ProgramData.Instance.ShowAllHotKey;
             HotKeyStr = ShowAllHotKey.ToString();
             IsTopMostChangedCommand = new RelayCommand<bool>(IsTopMostChangedMethod);
@@ -169,20 +175,9 @@ namespace StickyNotes
         /// <param name="obj"></param>
         private void SelectionChangedMethod(SelectionChangedEventArgs e)
         {
-            var content = e.AddedItems[0] as ComboBoxItem;
+            var content = e.AddedItems[0] as string;
 
-            //switch (content.Content.ToString())
-            //{
-            //    case "橘黄色":
-            //        ThemeAssist.ChangeTheme(Themes.Orange);
-            //        break;
-            //    case "蓝色":
-            //        ThemeAssist.ChangeTheme(Themes.Blue);
-            //        break;
-            //    case "灰色":
-            //        ThemeAssist.ChangeTheme(Themes.Gray);
-            //        break;
-            //}
+            ThemeAssist.ChangeTheme(content);
         }
 
         /// <summary>

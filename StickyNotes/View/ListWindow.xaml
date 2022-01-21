@@ -82,7 +82,19 @@
         </TextBox>
         <Grid Grid.Row="3">
             <ScrollViewer VerticalScrollBarVisibility="Hidden"   >
-                <ItemsControl Name="CardsItems" ItemsSource="{Binding ProgramData.Datas}" Margin="10 5 10 5">
+                <ItemsControl Name="CardsItems" Margin="10 5 10 5">
+                    <ItemsControl.Resources>
+                        <CollectionViewSource x:Key="a" Source="{Binding  ProgramData.Datas}"/>
+                        <CollectionViewSource x:Key="b" Source="{Binding  ProgramData.HideWindowData}"/>
+                    </ItemsControl.Resources>
+                    <ItemsControl.ItemsSource>
+                        <CompositeCollection >
+                            <CollectionContainer
+                Collection="{Binding Source={StaticResource a}}" />
+                            <CollectionContainer
+                Collection="{Binding  Source={StaticResource b} }" />
+                        </CompositeCollection>
+                    </ItemsControl.ItemsSource>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <usercontrol:CardItem Margin="0 5 0 5" 

@@ -8,6 +8,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:StickyNotes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:SettingViewModel}"
     Title="设置"
     Width="200"
     Height="400"
@@ -55,7 +56,6 @@
         </Label>
         <Controls:ToggleSwitch
             Name="IsStartUpWithSystemBtn"
-            Margin="3"
             Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
             IsOn="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
             OnContent="ON"
@@ -70,9 +70,7 @@
         </Label>
         <Controls:ToggleSwitch
             Name="AutoCheckUpdateBtn"
-            Margin="3"
             Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
-            
             IsOn="{Binding Datas.IsAutoCheckUpdate, Mode=TwoWay}"
             OffContent="OFF"
             OnContent="ON"
@@ -86,26 +84,16 @@
             </Label>
             <ComboBox
                 Margin="1,10,1,3"
-                Controls:TextBoxHelper.ClearTextButton="True"
                 BorderThickness="1"
-                SelectedIndex="{Binding Datas.CurrenTheme, Converter={StaticResource ThemeConverter}, Mode=TwoWay}">
+                SelectedItem="{Binding Datas.CurrentTheme}"
+                ItemsSource="{Binding Themes}"
+                >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <command:EventToCommand Command="{Binding SelectionChangedCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <ComboBoxItem
-                    Padding="5"
-                    Background="#6495ED"
-                    Content="蓝色" />
-                <ComboBoxItem
-                    Padding="5"
-                    Background="#757575"
-                    Content="灰色" />
-                <ComboBoxItem
-                    Padding="5"
-                    Background="#ffd180"
-                    Content="橘黄色" />
+               
             </ComboBox>
         </StackPanel>
         <StackPanel>
@@ -115,17 +103,17 @@
                 FontSize="16">
                 快捷键
             </Label>
-            <Grid>
+            <Grid >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">显示/隐藏所有便签</Label>
 
                 <TextBox
                     Name="ShowAllTB"
                     Grid.Column="1"
-                    MinWidth="80"
+                    MinWidth="70"
                     HorizontalAlignment="Right"
                     HorizontalContentAlignment="Center"
                     IsReadOnly="True"

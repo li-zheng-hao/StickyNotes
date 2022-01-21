@@ -9,7 +9,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:utils="clr-namespace:StickyNotes.Utils"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    xmlns:converter="clr-namespace:StickyNotes.Converter"
+    xmlns:converter="clr-namespace:StickyNotes.Converter" xmlns:stickynotes="clr-namespace:StickyNotes" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     x:Name="loaded"
     Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
@@ -90,14 +90,16 @@
                     Kind="LibraryAdd" />
             </Button>
             <ToggleButton
+                Style="{DynamicResource MahApps.Styles.ToggleButton.WindowCommands}"
                 x:Name="isTopMostToogle"
                 Grid.Column="1"
+                Padding="5"
                 Cursor="Hand"
                 IsChecked="{Binding Datas.IsCurrentWindowTopMost, Mode=TwoWay}"
                 ToolTip="置顶">
                 <materialDesign:PackIcon
-                    Width="18"
-                    Height="18"
+                    Width="16"
+                    Height="16"
                     Kind="Pin" />
 
             </ToggleButton>
@@ -114,32 +116,48 @@
                 Grid.Column="3"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
+
+                <metro:DropDownButton Name="DownButton"
+                                      ArrowVisibility="Collapsed"
+                                      Padding="0"
+                                      Cursor="Hand"
+                                      
+                                      ItemsSource="{Binding Commands}"
+                                    Style="{DynamicResource MahApps.Styles.DropDownButton.WindowCommands}">
+                    <metro:DropDownButton.Icon>
+                        <iconPacks:PackIconModern Kind="List" Width="18" Height="18" />
+                    </metro:DropDownButton.Icon>
+                    <metro:DropDownButton.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:DropDownButton}}, Path=DataContext.DropDownMenuClickCommand}" />
+                            <Setter Property="CommandParameter" Value="{Binding .}" />
+                        </Style>
+                    </metro:DropDownButton.ItemContainerStyle>
+
+                </metro:DropDownButton>
                 <!--  更多设置按钮  -->
-                <materialDesign:PopupBox
+                <!--<materialDesign:PopupBox
                     Grid.Column="2"
                     HorizontalAlignment="Right"
                     PlacementMode="BottomAndAlignCentres">
 
                     <StackPanel >
                         <Button
-                            Padding="10"
                             Name="ListButton"
                             Command="{Binding OpenListCommand}"
                             Content="笔记列表" />
                         <Button
-                            Padding="10"
                             Name="SettingButton"
                             Command="{Binding OpenSettingCommand}"
                             Content="设置" />
                         <Button
-                            Padding="10"
                             Name="AboutButton"
                             Command="{Binding OpenAboutCommand}"
                             Content="关于" />
 
                     </StackPanel>
 
-                </materialDesign:PopupBox>
+                </materialDesign:PopupBox>-->
 
 
                 <!--  隐藏按钮  -->
@@ -149,6 +167,7 @@
                     Grid.Column="4"
                     HorizontalAlignment="Right"
                     Command="{Binding CloseWindowButNotDeleteDataCommand}"
+                    CommandParameter="{Binding Datas}"
                     Style="{StaticResource Button_Menu}"
                     ToolTip="隐藏此便签">
 
@@ -230,7 +249,6 @@
                 FontSize="16"
                >
                 <FlowDocument
-                     
                     Name="Document"
                     LineHeight="5"
                     PagePadding="10" />

@@ -317,7 +317,6 @@ namespace StickyNotes
                     {
                         Logger.Log().Error(exception.StackTrace);
                         Logger.Log().Error(exception.Message);
-                        MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
                         Application.Current.Shutdown();
 
 

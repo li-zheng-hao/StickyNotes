@@ -30,6 +30,10 @@ namespace StickyNotes
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+
+        public RelayCommand<object> DropDownMenuClickCommand { get; set; }
+
+        public List<string> Commands { get;set; } =new List<string>() { "笔记列表","设置","关于"};
         /// <summary>
         /// 窗体数据
         /// </summary>
@@ -58,7 +62,7 @@ namespace StickyNotes
         public RelayCommand<MainWindow> OnSourceInitializedCommand { get; private set; }
         public RelayCommand<object> ChangeIsFocusedPropertyCommand { get; set; }
 
-        public RelayCommand CloseWindowButNotDeleteDataCommand { get; private set; }
+        public RelayCommand<WindowsData> CloseWindowButNotDeleteDataCommand { get; private set; }
         public RelayCommand OpenListCommand { get; set; }
         #endregion
 
@@ -97,12 +101,29 @@ namespace StickyNotes
             OnSourceInitializedCommand = new RelayCommand<MainWindow>(OnSourceInitializedMethod);
             ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
             OpenListCommand=new RelayCommand(OpenListMethod);
-            CloseWindowButNotDeleteDataCommand = new RelayCommand(CloseWindowButNotDeleteDataMethod);
+            CloseWindowButNotDeleteDataCommand = new RelayCommand<WindowsData>(CloseWindowButNotDeleteDataMethod);
+            DropDownMenuClickCommand = new RelayCommand<object>(DropDownMenuClickMethod);
             ProgramData = ProgramData.Instance;
 
             Messenger.Default.Register<WindowsData>(this, "DeleteWindow",DeleteWindowActionInListView);
-            Messenger.Default.Register<WindowsData>(this, "CloseWindow", DeleteWindowActionInListView);
+            Messenger.Default.Register<WindowsData>(this, "CloseWindow", CloseWindowButNotDeleteDataMethod);
+            Messenger.Default.Register<WindowsData>(this, "OpenNewExistWindow", OpenNewExistWindowMethod);
 
+        }
+
+        private void DropDownMenuClickMethod(object obj)
+        {
+            MessageBox.Show(obj.ToString());
+            switch(obj.ToString())
+            {
+                case "笔记列表":
+                    OpenListCommand.Execute(null);
+                    break;
+            }
+        }
+
+        private void OpenNewExistWindowMethod(WindowsData data)
+        {
         }
 
         private void DeleteWindowActionInListView(WindowsData windowsData)
@@ -120,18 +141,25 @@ namespace StickyNotes
                 }
             }
         }
-        private void CloseWindowButNotDeleteDataMethod()
+        private void CloseWindowButNotDeleteDataMethod(WindowsData data)
         {
 
-                // 说明要删除的就是自己这个窗体
-                foreach (Window item in Application.Current.Windows)
+            // 关闭但是不删除
+            foreach (Window item in Application.Current.Windows)
+            {
+                var main = item as MainWindow;
+                if (main != null)
                 {
-                    if (item.DataContext == this)
+                    var db = main.DataContext as MainViewModel;
+                    if (db.Datas.WindowID == this.Datas.WindowID&&this.Datas.WindowID==data.WindowID)
                     {
                         WindowsManager.Instance.Windows.Remove((MainWindow)item);
+                        ProgramData.Instance.Datas.Remove(data);
+                        ProgramData.Instance.HideWindowData.Add(data);
                         item.Close();
                     }
                 }
+            }
 
         }
 
@@ -147,7 +175,6 @@ namespace StickyNotes
 
         private void DeleteWindowMethod(object parameter)
         {
-            ThemeAssist.ChangeTheme("Orange");
 
             var values = (object[])parameter;
             var btnName= (string)values[0];

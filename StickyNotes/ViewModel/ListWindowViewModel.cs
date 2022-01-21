@@ -14,6 +14,7 @@ namespace StickyNotes.ViewModel
     {
         public RelayCommand<WindowsData> DeleteWindowCommand { get; set; }
         public RelayCommand<WindowsData> ChangeWindowVisibilityCommand { get; set; }
+
         public RelayCommand NewWindowCommand { get; set; }
         public ProgramData ProgramData { get; set; }
         public ListWindowViewModel()
@@ -36,17 +37,20 @@ namespace StickyNotes.ViewModel
 
         private void ChangeWindowVisibilityMethod(WindowsData windowsData)
         {
-            if(windowsData.IsShowed)
+            if(ProgramData.Instance.Datas.Contains(windowsData))
             {
                 //通知主窗体关闭
                 Messenger.Default.Send<WindowsData>(windowsData, "CloseWindow");
             }
             else
             {
-                var window=new MainWindow();
-                window.DataContext = windowsData;
-                windowsData.IsShowed=true;
-                window.Show();
+                var MainWindow = new MainWindow();
+                MainWindow.viewModel.Datas = windowsData;
+                MainWindow.viewModel.RestoreData(MainWindow.Document, MainWindow.viewModel.Datas.WindowID);
+                MainWindow.Show();
+                WindowsManager.Instance.Windows.Add(MainWindow);
+                ProgramData.Instance.Datas.Add(windowsData);
+                ProgramData.Instance.HideWindowData.Remove(windowsData);
             }
            
         }
