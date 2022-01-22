@@ -85,8 +85,8 @@
                 Style="{StaticResource Button_Menu}"
                 ToolTip="新增一条便签">
                 <materialDesign:PackIcon
-                    Width="18"
-                    Height="18"
+                    Width="16"
+                    Height="16"
                     Kind="LibraryAdd" />
             </Button>
             <ToggleButton
@@ -125,7 +125,7 @@
                                       ItemsSource="{Binding Commands}"
                                     Style="{DynamicResource MahApps.Styles.DropDownButton.WindowCommands}">
                     <metro:DropDownButton.Icon>
-                        <iconPacks:PackIconModern Kind="List" Width="18" Height="18" />
+                        <iconPacks:PackIconModern Kind="List" Width="14" Height="14" />
                     </metro:DropDownButton.Icon>
                     <metro:DropDownButton.ItemContainerStyle>
                         <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
@@ -172,8 +172,8 @@
                     ToolTip="隐藏此便签">
 
                     <iconPacks:Modern
-                        Width="18"
-                        Height="18"
+                        Width="14"
+                        Height="14"
                         Kind="EyeHide" />
                    
                     </Button>
@@ -187,7 +187,7 @@
                     Style="{StaticResource Button_Menu}"
                     ToolTip="删除此便签">
 
-                    <iconPacks:PackIconModern Kind="Delete" />
+                    <iconPacks:PackIconModern Kind="Delete" Width="14" Height="14" />
                 </Button>
                 <materialDesign:DialogHost
                     DialogTheme="Inherit">
@@ -325,7 +325,7 @@
             </materialDesign:SnackbarMessage>
         </materialDesign:Snackbar>
 
-        <Grid Name="CheckDeleteWindow" Visibility="{Binding IsDeleteWindowShowed,Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="0" ZIndex="100" Grid.RowSpan="3" Background="#7F868686">
+        <Grid Name="CheckDeleteWindow" Visibility="Hidden" Grid.Row="0" ZIndex="100" Grid.RowSpan="3" Background="#7F868686">
             <Grid  Margin="10 100 10 100"  Background="{StaticResource MahApps.Brushes.ThemeBackground}">
                 <Grid.Effect>
                     <DropShadowEffect

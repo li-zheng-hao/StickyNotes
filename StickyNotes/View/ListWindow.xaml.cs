@@ -41,6 +41,6 @@ namespace StickyNotes.View
             this.Close();
         }
 
-       
+     
     }
 }

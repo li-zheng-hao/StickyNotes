@@ -12,10 +12,12 @@
         mc:Ignorable="d"
         ShowTitleBar="False"
                       Name="listWindow"
+                      Title="便签列表"
                        GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       Background="White"
                       TitleBarHeight="0"
-        Title="ListWindow" Height="500" Width="300">
+        Height="500" Width="300">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -59,16 +61,17 @@
         </Grid>
         <Label Grid.Row="1" FontSize="24">StickyNotes</Label>
         <TextBox Grid.Column="2"  Grid.Row="2" Margin="10 5 10 5"
-                     
+                     Text="{Binding FilterText,Mode=TwoWay}"
+               
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="False"
                              Controls:TextBoxHelper.Watermark="Search...">
-            <TextBox.InputBindings>
-                <KeyBinding Key="Return"
-                                        Command="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
-            </TextBox.InputBindings>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <cmd:EventToCommand Command="{Binding FilterTextChangedCommand}" PassEventArgsToCommand="True"></cmd:EventToCommand>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <TextBox.Style>
                 <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search}" TargetType="{x:Type TextBox}">
                     <Style.Triggers>
@@ -82,22 +85,11 @@
         </TextBox>
         <Grid Grid.Row="3">
             <ScrollViewer VerticalScrollBarVisibility="Hidden"   >
-                <ItemsControl Name="CardsItems" Margin="10 5 10 5">
-                    <ItemsControl.Resources>
-                        <CollectionViewSource x:Key="a" Source="{Binding  ProgramData.Datas}"/>
-                        <CollectionViewSource x:Key="b" Source="{Binding  ProgramData.HideWindowData}"/>
-                    </ItemsControl.Resources>
-                    <ItemsControl.ItemsSource>
-                        <CompositeCollection >
-                            <CollectionContainer
-                Collection="{Binding Source={StaticResource a}}" />
-                            <CollectionContainer
-                Collection="{Binding  Source={StaticResource b} }" />
-                        </CompositeCollection>
-                    </ItemsControl.ItemsSource>
+                <ItemsControl Name="CardsItems" Margin="10 5 10 5" ItemsSource="{Binding DisplayWindows}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <usercontrol:CardItem Margin="0 5 0 5" 
+                            <usercontrol:CardItem 
+                                x:Name="CardItem" Margin="0 5 0 5" IsShowOnScreen="{Binding IsShowed,Mode=TwoWay}"
                                                   >
                                 <i:Interaction.Triggers>
                                  

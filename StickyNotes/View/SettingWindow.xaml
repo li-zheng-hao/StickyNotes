@@ -14,11 +14,12 @@
     Height="400"
     FontFamily="{StaticResource LatoBold}"
     ShowInTaskbar="True"
+    
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
     ShowTitleBar="False"
     Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
-    Topmost="{Binding IsTopMost}"
+    Topmost="true"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Window.Resources>
@@ -43,7 +44,10 @@
             Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
             
             OnContent="ON"
-            IsOn="{Binding Datas.IsWindowTopMost, Mode=TwoWay}" 
+            OffCommand="{Binding IsTopMostChangedCommand}"
+            OnCommand="{Binding  IsTopMostChangedCommand}"
+            CommandParameter="{Binding IsTopMost}"
+            IsOn="{Binding IsTopMost, Mode=TwoWay}" 
             />
         <Label
             HorizontalContentAlignment="Center"
@@ -58,6 +62,9 @@
             Name="IsStartUpWithSystemBtn"
             Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
             IsOn="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
+             OffCommand="{Binding IsStartUpWithSystemChangedCommand}"
+            OnCommand="{Binding  IsStartUpWithSystemChangedCommand}"
+            CommandParameter="{Binding Datas.IsStartUpWithSystem}"
             OnContent="ON"
             OffContent="OFF"
             />

@@ -42,7 +42,7 @@ namespace StickyNotes
         public SettingViewModel()
         {
             Datas = ProgramData.Instance;
-            
+            IsTopMost = Datas.IsWindowTopMost;
             ShowAllHotKey = ProgramData.Instance.ShowAllHotKey;
             HotKeyStr = ShowAllHotKey.ToString();
             IsTopMostChangedCommand = new RelayCommand<bool>(IsTopMostChangedMethod);
@@ -218,12 +218,13 @@ namespace StickyNotes
         {
             foreach (var win in WindowsManager.Instance.Windows)
             {
-                win.Topmost = !param;
+                win.Topmost = param;
+                win.Activate();
             }
-            this.IsTopMost = !param;
+            //this.IsTopMost = !param;
 
 
-            Datas.IsWindowTopMost = !param;
+            Datas.IsWindowTopMost = IsTopMost;
 
         }
 

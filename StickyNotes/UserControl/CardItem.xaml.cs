@@ -37,6 +37,20 @@ namespace StickyNotes.UserControl
             RoutedEventArgs args =new RoutedEventArgs(DeleteNoteEvent,this);
             this.RaiseEvent(args);
         }
+
+
+
+        public bool IsShowOnScreen
+        {
+            get { return (bool)GetValue(IsShowOnScreenProperty); }
+            set { SetValue(IsShowOnScreenProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsShowOnScreen.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsShowOnScreenProperty =
+            DependencyProperty.Register("IsShowOnScreen", typeof(bool), typeof(CardItem), new PropertyMetadata(true));
+
+
         /// <summary>
         /// 声明删除事件
         /// 参数:要注册的路由事件名称，路由事件的路由策略，事件处理程序的委托类型(可自定义)，路由事件的所有者类类型

@@ -13,6 +13,7 @@ using StickyNotes.Utils;
 using StickyNotes.View;
 using StickyNotes.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace StickyNotes
 {
@@ -113,11 +114,16 @@ namespace StickyNotes
 
         private void DropDownMenuClickMethod(object obj)
         {
-            MessageBox.Show(obj.ToString());
             switch(obj.ToString())
             {
                 case "笔记列表":
                     OpenListCommand.Execute(null);
+                    break;
+                case "设置":
+                    OpenSettingCommand.Execute(null);
+                    break;
+                case "关于":
+                    OpenAboutCommand.Execute(null);
                     break;
             }
         }
@@ -156,6 +162,7 @@ namespace StickyNotes
                         WindowsManager.Instance.Windows.Remove((MainWindow)item);
                         ProgramData.Instance.Datas.Remove(data);
                         ProgramData.Instance.HideWindowData.Add(data);
+                        data.IsShowed = false;
                         item.Close();
                     }
                 }
@@ -173,33 +180,25 @@ namespace StickyNotes
             
         }
 
-        private void DeleteWindowMethod(object parameter)
+        private void DeleteWindowMethod(object window)
         {
-
-            var values = (object[])parameter;
-            var btnName= (string)values[0];
-            MainWindow win = (MainWindow)values[1];
-            if (btnName == "DeleteWindowButton")
+            var win=window as MainWindow;
+           
+            // 删除窗体
+            IsDeleteWindowShowed = false;
+            string documentFileName = string.Empty;
+            if (WindowsManager.Instance.Windows.Contains(win))
             {
-                // 删除窗体
-                IsDeleteWindowShowed = false;
-                string documentFileName = string.Empty;
-                if (WindowsManager.Instance.Windows.Contains(win))
-                {
-                    WindowsManager.Instance.Windows.Remove(win);
-                    ProgramData.Instance.Datas.Remove(Datas);
-                    documentFileName = Datas.DocumentFileName;
-                }
-                win.Close();
-                if (documentFileName != string.Empty)
-                {
-                    RemoveDocumentFile(documentFileName);
-                }
+                WindowsManager.Instance.Windows.Remove(win);
+                ProgramData.Instance.Datas.Remove(Datas);
+                documentFileName = Datas.DocumentFileName;
             }
-            else
+            win.Close();
+            if (documentFileName != string.Empty)
             {
-                IsDeleteWindowShowed = false;
+                RemoveDocumentFile(documentFileName);
             }
+            
         }
 
         /// <summary>
@@ -445,10 +444,28 @@ namespace StickyNotes
         /// <summary>
         /// 删除窗体
         /// </summary>
-        void ShowDeleteWindowMethod()
+        async void ShowDeleteWindowMethod()
         {
             IsDeleteWindowShowed = true;
+            MainWindow win=null;
+            var datas = Datas;
+            foreach(Window item in Application.Current.Windows)
+            {
+                if(item.DataContext==this)
+                {
+                    win = item as MainWindow;
+                    break;
+                }
+            }
+            MetroDialogSettings dialogSettings = new MetroDialogSettings();
+            dialogSettings.AffirmativeButtonText = "确定";
+            dialogSettings.NegativeButtonText = "取消";
 
+            MessageDialogResult result=await win?.ShowMessageAsync("警告", "删除后无法恢复，是否确认?",MessageDialogStyle.AffirmativeAndNegative,dialogSettings);
+            if (result!=null&& result==MessageDialogResult.Affirmative)
+            {
+                DeleteWindowCommand.Execute(win);
+            }
         }
         /// <summary>
         /// 删除已经不需要的文档数据

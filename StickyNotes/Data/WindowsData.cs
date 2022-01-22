@@ -78,6 +78,7 @@ namespace StickyNotes
             RichTextBoxContent = string.Empty;
             IsCurrentWindowTopMost = false;
             IsFocused = true;
+            IsShowed = true;
         }
 
 

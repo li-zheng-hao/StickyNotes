@@ -9,13 +9,28 @@
              MinHeight="100"
              MaxHeight="300"
              d:DesignHeight="300" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="HeaderColor" TargetType="{x:Type StackPanel}">
+            <Setter Property="Cursor" Value="Hand"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsShowOnScreen,RelativeSource={RelativeSource AncestorType={x:Type local:CardItem}}}" Value="true">
+                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsShowOnScreen,Mode=TwoWay,RelativeSource={RelativeSource AncestorType={x:Type local:CardItem}}}" Value="false">
+                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    
     <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent2}" BorderThickness="1" Cursor="Hand"  >
         <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="6"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent2}"></StackPanel>
+            <StackPanel Grid.Row="0" Style="{DynamicResource HeaderColor}" ></StackPanel>
             <StackPanel Grid.Row="1" Background="{DynamicResource MahApps.Brushes.Gray9}"></StackPanel>
             <TextBlock Name="CardTextBlock" MaxHeight="100" TextWrapping="Wrap" Margin="10 5 0 10" Grid.Row="1" FontSize="24" Text="{Binding RichTextBoxContent}"
                        ></TextBlock>
