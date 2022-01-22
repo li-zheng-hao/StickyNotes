@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using log4net;
+using StickyNotes.Utils;
 
 namespace StickyNotes.ViewModel
 {
@@ -95,9 +97,21 @@ namespace StickyNotes.ViewModel
        
         private void DeleteWindowClick(WindowsData windowsData)
         {
-            ProgramData.Instance.Datas.Remove(windowsData);
-            //通知主窗体删除这个数据 关闭这个便签窗体
-            Messenger.Default.Send<WindowsData>(windowsData, "DeleteWindow");
+            try
+            {
+                if (ProgramData.Instance.HideWindowData.Contains(windowsData))
+                {
+                    ChangeWindowVisibilityMethod(windowsData);
+                }
+                ProgramData.Instance.Datas.Remove(windowsData);
+                //通知主窗体删除这个数据 关闭这个便签窗体
+                Messenger.Default.Send<WindowsData>(windowsData, "DeleteWindow");
+            }
+            catch (Exception ex)
+            {
+                Logger.Log().Error("删除窗体时出错"+ex.Message);
+            }
+           
         }
 
     }
