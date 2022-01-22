@@ -12,6 +12,8 @@ using System.Windows.Threading;
 using StickyNotes.Utils;
 using StickyNotes.View;
 using StickyNotes.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace StickyNotes
 {
@@ -29,6 +31,10 @@ namespace StickyNotes
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+
+        public RelayCommand<object> DropDownMenuClickCommand { get; set; }
+
+        public List<string> Commands { get;set; } =new List<string>() { "笔记列表","设置","关于"};
         /// <summary>
         /// 窗体数据
         /// </summary>
@@ -57,6 +63,7 @@ namespace StickyNotes
         public RelayCommand<MainWindow> OnSourceInitializedCommand { get; private set; }
         public RelayCommand<object> ChangeIsFocusedPropertyCommand { get; set; }
 
+        public RelayCommand<WindowsData> CloseWindowButNotDeleteDataCommand { get; private set; }
         public RelayCommand OpenListCommand { get; set; }
         #endregion
 
@@ -95,7 +102,72 @@ namespace StickyNotes
             OnSourceInitializedCommand = new RelayCommand<MainWindow>(OnSourceInitializedMethod);
             ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
             OpenListCommand=new RelayCommand(OpenListMethod);
+            CloseWindowButNotDeleteDataCommand = new RelayCommand<WindowsData>(CloseWindowButNotDeleteDataMethod);
+            DropDownMenuClickCommand = new RelayCommand<object>(DropDownMenuClickMethod);
             ProgramData = ProgramData.Instance;
+
+            Messenger.Default.Register<WindowsData>(this, "DeleteWindow",DeleteWindowActionInListView);
+            Messenger.Default.Register<WindowsData>(this, "CloseWindow", CloseWindowButNotDeleteDataMethod);
+            Messenger.Default.Register<WindowsData>(this, "OpenNewExistWindow", OpenNewExistWindowMethod);
+
+        }
+
+        private void DropDownMenuClickMethod(object obj)
+        {
+            switch(obj.ToString())
+            {
+                case "笔记列表":
+                    OpenListCommand.Execute(null);
+                    break;
+                case "设置":
+                    OpenSettingCommand.Execute(null);
+                    break;
+                case "关于":
+                    OpenAboutCommand.Execute(null);
+                    break;
+            }
+        }
+
+        private void OpenNewExistWindowMethod(WindowsData data)
+        {
+        }
+
+        private void DeleteWindowActionInListView(WindowsData windowsData)
+        {
+            if(windowsData == this.Datas)
+            {
+                // 说明要删除的就是自己这个窗体
+                foreach (Window item in Application.Current.Windows)
+                {
+                    if (item.DataContext == this)
+                    {
+                        WindowsManager.Instance.Windows.Remove((MainWindow)item);
+                        item.Close();
+                    }
+                }
+            }
+        }
+        private void CloseWindowButNotDeleteDataMethod(WindowsData data)
+        {
+
+            // 关闭但是不删除
+            foreach (Window item in Application.Current.Windows)
+            {
+                var main = item as MainWindow;
+                if (main != null)
+                {
+                    var db = main.DataContext as MainViewModel;
+                    if (db.Datas.WindowID == this.Datas.WindowID&&this.Datas.WindowID==data.WindowID)
+                    {
+                        WindowsManager.Instance.Windows.Remove((MainWindow)item);
+                        ProgramData.Instance.Datas.Remove(data);
+                        ProgramData.Instance.HideWindowData.Add(data);
+                        data.IsShowed = false;
+                        item.Close();
+                    }
+                }
+            }
+
         }
 
         /// <summary>
@@ -104,38 +176,29 @@ namespace StickyNotes
         private void OpenListMethod()
         {
             ListWindow listWindow=new ListWindow();
-            ListWindowViewModel listWindowViewModel=new ListWindowViewModel();
-            listWindow.DataContext = listWindowViewModel;
             listWindow.Show();
             
         }
 
-        private void DeleteWindowMethod(object parameter)
+        private void DeleteWindowMethod(object window)
         {
-            var values = (object[])parameter;
-            var btnName= (string)values[0];
-            MainWindow win = (MainWindow)values[1];
-            if (btnName == "DeleteWindowButton")
+            var win=window as MainWindow;
+           
+            // 删除窗体
+            IsDeleteWindowShowed = false;
+            string documentFileName = string.Empty;
+            if (WindowsManager.Instance.Windows.Contains(win))
             {
-                // 删除窗体
-                IsDeleteWindowShowed = false;
-                string documentFileName = string.Empty;
-                if (WindowsManager.Instance.Windows.Contains(win))
-                {
-                    WindowsManager.Instance.Windows.Remove(win);
-                    ProgramData.Instance.Datas.Remove(Datas);
-                    documentFileName = Datas.DocumentFileName;
-                }
-                win.Close();
-                if (documentFileName != string.Empty)
-                {
-                    RemoveDocumentFile(documentFileName);
-                }
+                WindowsManager.Instance.Windows.Remove(win);
+                ProgramData.Instance.Datas.Remove(Datas);
+                documentFileName = Datas.DocumentFileName;
             }
-            else
+            win.Close();
+            if (documentFileName != string.Empty)
             {
-                IsDeleteWindowShowed = false;
+                RemoveDocumentFile(documentFileName);
             }
+            
         }
 
         /// <summary>
@@ -381,10 +444,28 @@ namespace StickyNotes
         /// <summary>
         /// 删除窗体
         /// </summary>
-        void ShowDeleteWindowMethod()
+        async void ShowDeleteWindowMethod()
         {
             IsDeleteWindowShowed = true;
+            MainWindow win=null;
+            var datas = Datas;
+            foreach(Window item in Application.Current.Windows)
+            {
+                if(item.DataContext==this)
+                {
+                    win = item as MainWindow;
+                    break;
+                }
+            }
+            MetroDialogSettings dialogSettings = new MetroDialogSettings();
+            dialogSettings.AffirmativeButtonText = "确定";
+            dialogSettings.NegativeButtonText = "取消";
 
+            MessageDialogResult result=await win?.ShowMessageAsync("警告", "删除后无法恢复，是否确认?",MessageDialogStyle.AffirmativeAndNegative,dialogSettings);
+            if (result!=null&& result==MessageDialogResult.Affirmative)
+            {
+                DeleteWindowCommand.Execute(win);
+            }
         }
         /// <summary>
         /// 删除已经不需要的文档数据

@@ -1,4 +1,7 @@
-﻿using MahApps.Metro.Controls;
+﻿using ControlzEx.Theming;
+using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls;
+using StickyNotes.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +21,26 @@ namespace StickyNotes.View
     /// <summary>
     /// ListWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class ListWindow :Window
+    public partial class ListWindow :MetroWindow
     {
+      
+
         public ListWindow()
         {
             InitializeComponent();
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            ThemeManager.Current.SyncTheme();
+            ListWindowViewModel vm = new ListWindowViewModel();
+            this.DataContext=vm;
+
         }
 
-        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("MessageBox Show");
+            this.Close();
         }
+
+     
     }
 }

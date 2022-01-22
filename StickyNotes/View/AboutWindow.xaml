@@ -9,20 +9,18 @@
     xmlns:prop="clr-namespace:StickyNotes.Properties"
     Width="200"
     Height="250"
-    BorderBrush="{StaticResource ForgroundBrush}"
+     GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
     FontFamily="{StaticResource LatoBold}"
-    GlowBrush="{StaticResource ForgroundBrush}"
     ShowInTaskbar="False"
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
     ShowTitleBar="False"
     Topmost="True"
     WindowStartupLocation="CenterOwner"
-    WindowTitleBrush="{StaticResource ForgroundBrush}"
     mc:Ignorable="d">
 
 
-    <Grid Margin="10,10,10,0">
+    <Grid Margin="10,15,10,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />

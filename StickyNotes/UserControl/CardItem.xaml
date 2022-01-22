@@ -6,18 +6,39 @@
              xmlns:local="clr-namespace:StickyNotes.UserControl"
                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             
-             d:DesignHeight="200" d:DesignWidth="800">
-    <Border BorderBrush="Black" BorderThickness="1" >
-    <Grid  Background="{DynamicResource ForgroundBrush}">
+             MinHeight="100"
+             MaxHeight="300"
+             d:DesignHeight="300" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="HeaderColor" TargetType="{x:Type StackPanel}">
+            <Setter Property="Cursor" Value="Hand"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsShowOnScreen,RelativeSource={RelativeSource AncestorType={x:Type local:CardItem}}}" Value="true">
+                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsShowOnScreen,Mode=TwoWay,RelativeSource={RelativeSource AncestorType={x:Type local:CardItem}}}" Value="false">
+                    <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Border.NonActive}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    
+    <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent2}" BorderThickness="1" Cursor="Hand"  >
+        <Grid  >
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="6"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button
-                Name="SettingButton"
-            Grid.Row="0"
-                HorizontalAlignment="Right"
+            <StackPanel Grid.Row="0" Style="{DynamicResource HeaderColor}" ></StackPanel>
+            <StackPanel Grid.Row="1" Background="{DynamicResource MahApps.Brushes.Gray9}"></StackPanel>
+            <TextBlock Name="CardTextBlock" MaxHeight="100" TextWrapping="Wrap" Margin="10 5 0 10" Grid.Row="1" FontSize="24" Text="{Binding RichTextBoxContent}"
+                       ></TextBlock>
+            <Button
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+                Name="deleteBtn"
+            Grid.Row="1"
                 Click="DeleteWindowOnClick"
                 Style="{StaticResource Button_Menu}"
                 ToolTip="设置该便签">
@@ -26,8 +47,7 @@
                     Height="18"
                     Kind="Delete" />
         </Button>
-            <TextBlock Name="CardTextBlock" MaxHeight="100" TextWrapping="Wrap" Margin="10 0 0 10" Grid.Row="1" FontSize="24" Text="{Binding RichTextBoxContent}"
-                       ></TextBlock>
+           
     </Grid>
     </Border>
 </UserControl>
