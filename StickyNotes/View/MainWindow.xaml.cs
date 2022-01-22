@@ -1,4 +1,6 @@
-﻿using StickyNotes.Utils;
+﻿using ControlzEx.Theming;
+using MahApps.Metro.Controls;
+using StickyNotes.Utils;
 using System.Windows;
 
 namespace StickyNotes
@@ -7,7 +9,7 @@ namespace StickyNotes
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         public MainViewModel viewModel;
         //构造函数
@@ -15,6 +17,8 @@ namespace StickyNotes
         {
 
             InitializeComponent();
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            ThemeManager.Current.SyncTheme();
             viewModel = new MainViewModel();
             this.DataContext = viewModel;
             WindowHide windowHide = new WindowHide(this);

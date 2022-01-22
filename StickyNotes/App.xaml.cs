@@ -59,10 +59,11 @@ namespace StickyNotes
                 var windowsDatas = programData.Datas;
                 ProgramData.Instance.IsWindowTopMost = programData.IsWindowTopMost;
                 ProgramData.Instance.IsStartUpWithSystem = programData.IsStartUpWithSystem;
-                ProgramData.Instance.CurrenTheme = programData.CurrenTheme;
+                ProgramData.Instance.CurrentTheme = programData.CurrentTheme;
                 ProgramData.Instance.ShowAllHotKey = programData.ShowAllHotKey;
                 ProgramData.Instance.IsAutoCheckUpdate = programData.IsAutoCheckUpdate;
-                ThemeAssist.ChangeTheme(programData.CurrenTheme);
+                ProgramData.Instance.HideWindowData= programData.HideWindowData;
+                ThemeAssist.ChangeTheme(programData.CurrentTheme);
                 //有创建过的窗口
                 if (windowsDatas.Count > 0)
                 {
@@ -285,7 +286,6 @@ namespace StickyNotes
             {
                 Logger.Log().Error(ex.StackTrace);
                 Logger.Log().Error(ex.Message);
-                MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
                 Application.Current.Shutdown();
             }
         }
@@ -317,17 +317,13 @@ namespace StickyNotes
                     {
                         Logger.Log().Error(exception.StackTrace);
                         Logger.Log().Error(exception.Message);
-                        MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
                         Application.Current.Shutdown();
-
-
                     }
                 }
                 catch (Exception exxxx)
                 {
                     Logger.Log().Error(exxxx.StackTrace);
                     Logger.Log().Error(exxxx.Message);
-                    MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
                     Application.Current.Shutdown();
 
                 }

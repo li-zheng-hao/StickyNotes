@@ -12,6 +12,9 @@ namespace StickyNotes
     public class ProgramData : INotifyPropertyChanged
     {
         public ObservableCollection<WindowsData> Datas { get; set; }
+        public ObservableCollection<WindowsData> HideWindowData { get; set; }
+
+
 
         /// <summary>
         /// 窗体是否置顶
@@ -33,10 +36,15 @@ namespace StickyNotes
         /// </summary>
         public HotKeyModel ShowAllHotKey { get; set; }
 
+
+        /// <summary>
+        /// 日间或夜间
+        /// </summary>
+        public string BaseTheme { get; set; }
         /// <summary>
         /// 窗体主题颜色
         /// </summary>
-        public Themes CurrenTheme { get; set; }
+        public string CurrentTheme { get; set; }
 
         /// <summary>
         /// 是否开机自启动
@@ -50,11 +58,13 @@ namespace StickyNotes
         {
             //            Instance = new ProgramData();
             Datas = new ObservableCollection<WindowsData>();
+            HideWindowData= new ObservableCollection<WindowsData>();
             IsWindowTopMost = false;
             IsStartUpWithSystem = false;
             IsAutoCheckUpdate = true;
             Datas.CollectionChanged += Datas_CollectionChanged;
-            CurrenTheme = Themes.Blue;
+            BaseTheme = "Light";
+            CurrentTheme = "Blue";
             ShowAllHotKey = new HotKeyModel()
             { IsSelectAlt = false, IsSelectCtrl = true, IsSelectShift = false, IsUsable = true, SelectKey = EKey.Q, Name = EHotKeySetting.ShowAllWindow.ToString() };
         }

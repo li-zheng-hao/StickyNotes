@@ -34,9 +34,9 @@ namespace StickyNotes
         /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var index = (Themes)value;
-            return index;
-
+            //var index = (Themes)value;
+            //return index;
+            return "1";
         }
     }
 }

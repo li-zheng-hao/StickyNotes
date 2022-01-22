@@ -13,8 +13,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border
+                        Background="Transparent"
                         x:Name="MyBackgroundElement"
-                        BorderBrush="{DynamicResource ForgroundBrush}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Button.Border}"
                         BorderThickness="0">
                         <ContentPresenter
                             x:Name="ButtonContentPresenter"
@@ -23,7 +24,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="{DynamicResource ForgroundBrush100}" />
+                            <Setter TargetName="MyBackgroundElement" Property="Background" Value="{DynamicResource MahApps.Brushes.Button.AccentedSquare.Background.MouseOver}" />
                             <Setter TargetName="MyBackgroundElement" Property="Opacity" Value="0.7" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -42,50 +43,5 @@
         <Setter Property="Background" Value="AliceBlue" />
         <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
-    <Style x:Key="CardButton" TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle">
-            <Setter.Value>
-                <Style>
-                    <Setter Property="Control.Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorForeground" Value="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-        <Setter Property="materialDesign:ButtonProgressAssist.IndicatorBackground" Value="{DynamicResource PrimaryHueMidBrush}"/>
-        <Setter Property="materialDesign:RippleAssist.Feedback" Value="White"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1"/>
-        <Setter Property="FontWeight" Value="Medium"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="16,4"/>
-        <Setter Property="Height" Value="32"/>
-        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="False"/>
-        <Setter Property="materialDesign:ButtonProgressAssist.Opacity" Value="0.4"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid/>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True"/>
-                        <Trigger Property="IsKeyboardFocused" Value="True"/>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.23"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+   
 </ResourceDictionary>

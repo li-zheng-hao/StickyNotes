@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 
 namespace StickyNotes.View
@@ -13,6 +14,8 @@ namespace StickyNotes.View
         public AboutWindow()
         {
             InitializeComponent();
+            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
+            ThemeManager.Current.SyncTheme();
             this.DataContext = this;
 
         }
