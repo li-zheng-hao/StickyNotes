@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using StickyNotes.Utils;
 using StickyNotes.Utils.HotKeyUtil;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,11 @@ namespace StickyNotes
         {
             "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt", "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
         };
+        public List<string> Languages { get; set; } = new List<string>()
+        {
+            "中文",
+            "English",
+        };
         public HotKeyModel ShowAllHotKey { get; set; }
 
         public RelayCommand<bool> IsTopMostChangedCommand { get; set; }
@@ -27,6 +33,7 @@ namespace StickyNotes
         public RelayCommand<bool> IsStartUpWithSystemChangedCommand { get; set; }
 
         public RelayCommand<SelectionChangedEventArgs> SelectionChangedCommand { get; set; }
+        public RelayCommand<SelectionChangedEventArgs> LanguageChangeCommand { get; set; }
         public RelayCommand<KeyEventArgs> ShowAllHotKeyChangedCommand { get; set; }
 
         #region 窗体数据
@@ -50,8 +57,14 @@ namespace StickyNotes
             SelectionChangedCommand = new RelayCommand<SelectionChangedEventArgs>(SelectionChangedMethod);
             ShowAllHotKeyChangedCommand = new RelayCommand<KeyEventArgs>(ShowAllShortCutChangedMethod);
             ShowAllTextUsedCommand = new RelayCommand<string>(ShowAllTextUsedMethod);
+            LanguageChangeCommand = new RelayCommand<SelectionChangedEventArgs>(LanguageChangeMethod);
         }
 
+        private void LanguageChangeMethod(SelectionChangedEventArgs arg)
+        {
+            int index=Languages.IndexOf(arg.AddedItems[0].ToString());
+            LanguageManager.ChangeLanguage((Language)index);
+        }
 
         private void ShowAllTextUsedMethod(string key)
         {

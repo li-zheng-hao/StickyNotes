@@ -8,114 +8,105 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:StickyNotes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DataContext="{d:DesignInstance Type=local:SettingViewModel}"
     Title="设置"
-    Width="200"
-    Height="400"
+    Width="250"
+    Height="480"
+    d:DataContext="{d:DesignInstance Type=local:SettingViewModel}"
+    Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
     FontFamily="{StaticResource LatoBold}"
     ShowInTaskbar="True"
-    
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
     ShowTitleBar="False"
-    Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
     Topmost="true"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <Window.Resources>
         <local:ThemeConverter x:Key="ThemeConverter" />
         <local:ShowAllHotKeyConverter x:Key="ShowAllHotKeyConverter" />
+        <local:LanguageConverter x:Key="LangConverter" />
     </Window.Resources>
 
-  
+
 
     <StackPanel Margin="5,20,5,5" Orientation="Vertical">
         <Label
             HorizontalContentAlignment="Center"
+            Content="{DynamicResource setting-AllWindowTop}"
             FontFamily="{StaticResource LatoBold}"
             FontSize="16"
-            FontWeight="Bold">
-            所有窗体置顶
-        </Label>
+            FontWeight="Bold" />
         <Controls:ToggleSwitch
             Name="IsTopMostBtn"
             Margin="3"
-            OffContent="OFF"
-            Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
-            
-            OnContent="ON"
-            OffCommand="{Binding IsTopMostChangedCommand}"
-            OnCommand="{Binding  IsTopMostChangedCommand}"
             CommandParameter="{Binding IsTopMost}"
-            IsOn="{Binding IsTopMost, Mode=TwoWay}" 
-            />
+            Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
+            IsOn="{Binding IsTopMost, Mode=TwoWay}"
+            OffCommand="{Binding IsTopMostChangedCommand}"
+            OffContent="OFF"
+            OnCommand="{Binding IsTopMostChangedCommand}"
+            OnContent="ON" />
         <Label
             HorizontalContentAlignment="Center"
+            Content="{DynamicResource setting-AutoStartUp}"
             FontFamily="{StaticResource LatoBold}"
             FontSize="16"
-            Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
-            
-            FontWeight="Bold">
-            开机自启动
-        </Label>
+            FontWeight="Bold"
+            Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Controls:ToggleSwitch
             Name="IsStartUpWithSystemBtn"
+            Margin="3"
+            CommandParameter="{Binding Datas.IsStartUpWithSystem}"
             Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
             IsOn="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}"
-             OffCommand="{Binding IsStartUpWithSystemChangedCommand}"
-            OnCommand="{Binding  IsStartUpWithSystemChangedCommand}"
-            CommandParameter="{Binding Datas.IsStartUpWithSystem}"
-            OnContent="ON"
+            OffCommand="{Binding IsStartUpWithSystemChangedCommand}"
             OffContent="OFF"
-            />
+            OnCommand="{Binding IsStartUpWithSystemChangedCommand}"
+            OnContent="ON" />
         <Label
             HorizontalContentAlignment="Center"
+            Content="{DynamicResource setting-AutoCheckUpdate}"
             FontFamily="{StaticResource LatoBold}"
             FontSize="16"
-            FontWeight="Bold">
-            自动检查更新
-        </Label>
+            FontWeight="Bold" />
         <Controls:ToggleSwitch
             Name="AutoCheckUpdateBtn"
+            Margin="3"
             Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"
             IsOn="{Binding Datas.IsAutoCheckUpdate, Mode=TwoWay}"
             OffContent="OFF"
-            OnContent="ON"
-            />
+            OnContent="ON" />
         <StackPanel>
             <Label
                 HorizontalAlignment="Center"
+                Content="{DynamicResource setting-Theme}"
                 FontFamily="{StaticResource LatoBold}"
-                FontSize="16">
-                主题颜色
-            </Label>
+                FontSize="16" />
             <ComboBox
                 Margin="1,10,1,3"
                 BorderThickness="1"
-                SelectedItem="{Binding Datas.CurrentTheme}"
                 ItemsSource="{Binding Themes}"
-                >
+                SelectedItem="{Binding Datas.CurrentTheme}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <command:EventToCommand Command="{Binding SelectionChangedCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-               
+
             </ComboBox>
         </StackPanel>
         <StackPanel>
             <Label
                 HorizontalAlignment="Center"
+                Content="{DynamicResource setting-ShortCut}"
                 FontFamily="{StaticResource LatoBold}"
-                FontSize="16">
-                快捷键
-            </Label>
-            <Grid >
+                FontSize="16" />
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0">显示/隐藏所有便签</Label>
+                <Label Grid.Column="0" Content="{DynamicResource setting-ShortCutExplain}" />
 
                 <TextBox
                     Name="ShowAllTB"
@@ -161,7 +152,22 @@
 
 
             </Grid>
-
+            <Label
+                HorizontalAlignment="Center"
+                Content="{DynamicResource setting-Language}"
+                FontFamily="{StaticResource LatoBold}"
+                FontSize="16" />
+            <ComboBox
+                Margin="1,10,1,3"
+                BorderThickness="1"
+                ItemsSource="{Binding Languages}"
+                SelectedItem="{Binding Datas.Language, Mode=OneWay, Converter={StaticResource LangConverter}}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <command:EventToCommand Command="{Binding LanguageChangeCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
         </StackPanel>
     </StackPanel>
 </Controls:MetroWindow>

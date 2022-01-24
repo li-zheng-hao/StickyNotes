@@ -104,6 +104,7 @@
     </ApplicationDefinition>
     <Compile Include="Converter\boolToVisibilityConverter.cs" />
     <Compile Include="Converter\DeleteWindowMessageConverter.cs" />
+    <Compile Include="Converter\LanguageConverter.cs" />
     <Compile Include="Converter\ShowAllHotKeyConverter.cs" />
     <Compile Include="Converter\ThemeConverter.cs" />
     <Compile Include="Data\ConstData.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Utils\HotKeyUtil\HotKeySettingManager.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\Messages\ChangeWindowMessage.cs" />
+    <Compile Include="Utils\LanguageManager.cs" />
     <Compile Include="Utils\ThemeAssist.cs" />
     <Compile Include="Utils\TimerUtil.cs" />
     <Compile Include="Utils\WindowHide.cs" />
@@ -141,6 +143,14 @@
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="Style\Languages\Lan-en.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Style\Languages\Lan-cn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Style\Themes\Blue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -308,5 +318,6 @@
       <Version>2.6.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,37 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="menuList">Note List</sys:String>
+    <sys:String x:Key="menuSetting">Setting</sys:String>
+    <sys:String x:Key="menuAbout">About</sys:String>
+    <sys:String x:Key="setting-AllWindowTop">All Notes TopMost</sys:String>
+    <sys:String x:Key="setting-AutoStartUp">Auto Startup</sys:String>
+    <sys:String x:Key="setting-AutoCheckUpdate">Auto Check Update</sys:String>
+    <sys:String x:Key="setting-Theme">Theme</sys:String>
+    <sys:String x:Key="setting-ShortCut">Shortcut</sys:String>
+    <sys:String x:Key="setting-ShortCutExplain">Show/Hidden All Notes</sys:String>
+
+    <sys:String x:Key="about-about">About</sys:String>
+    <sys:String x:Key="about-projectAddress">Project Address</sys:String>
+    <sys:String x:Key="about-githubLabel">Github Address</sys:String>
+    <sys:String x:Key="about-versionInfo">Version ：</sys:String>
+    <sys:String x:Key="about-aboutContent">If there are any bugs or good suggestions during use, please let me know on github</sys:String>
+    <sys:String x:Key="about-addressContent">Subsequent updates will be released at the above address. If it is useful, please give me a star~</sys:String>
+
+    <sys:String x:Key="tooltip-addNote">add note</sys:String>
+    <sys:String x:Key="tooltip-menu">menu</sys:String>
+
+    <sys:String x:Key="tooltip-delNote">delete note</sys:String>
+    <sys:String x:Key="tooltip-hideNote">hide note</sys:String>
+    <sys:String x:Key="main-confirmDelLabel">Are you sure you to delete?</sys:String>
+    <sys:String x:Key="main-confirm">Yes</sys:String>
+    <sys:String x:Key="main-cancel">Cancel</sys:String>
+    <sys:String x:Key="main-warnning">Warning</sys:String>
+
+    <sys:String x:Key="setting-Language">Language</sys:String>
+
+
+
+
+</ResourceDictionary>

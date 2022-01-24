@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using StickyNotes.Annotations;
+using StickyNotes.Utils;
 using StickyNotes.Utils.HotKeyUtil;
 using System;
 using System.Collections.ObjectModel;
@@ -14,8 +15,10 @@ namespace StickyNotes
         public ObservableCollection<WindowsData> Datas { get; set; }
         public ObservableCollection<WindowsData> HideWindowData { get; set; }
 
-
-
+        /// <summary>
+        /// 系统语言
+        /// </summary>
+        public Language Language { get; set; }
         /// <summary>
         /// 窗体是否置顶
         /// </summary>
@@ -64,6 +67,7 @@ namespace StickyNotes
             IsAutoCheckUpdate = true;
             Datas.CollectionChanged += Datas_CollectionChanged;
             BaseTheme = "Light";
+            Language = Language.English;
             CurrentTheme = "Blue";
             ShowAllHotKey = new HotKeyModel()
             { IsSelectAlt = false, IsSelectCtrl = true, IsSelectShift = false, IsUsable = true, SelectKey = EKey.Q, Name = EHotKeySetting.ShowAllWindow.ToString() };

@@ -52,8 +52,9 @@ namespace StickyNotes
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
             var systemtray = SystemTray.Instance;
-
             var programData = XMLHelper.DecodeXML<ProgramData>(ConstData.SaveSettingDataName);
+            LanguageManager.ChangeLanguage(programData.Language);
+
             if (programData != null)
             {
                 var windowsDatas = programData.Datas;

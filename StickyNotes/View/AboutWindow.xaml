@@ -9,8 +9,8 @@
     xmlns:prop="clr-namespace:StickyNotes.Properties"
     Width="200"
     Height="250"
-     GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
     FontFamily="{StaticResource LatoBold}"
+    GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
     ShowInTaskbar="False"
     ShowMaxRestoreButton="False"
     ShowMinButton="False"
@@ -38,16 +38,14 @@
                     <Label
                         Margin="0,5,0,0"
                         HorizontalAlignment="Center"
+                        Content="{DynamicResource about-about}"
                         FontFamily="Microsoft YaHei UI"
-                        FontWeight="Bold">
-                        关于
-                    </Label>
+                        FontWeight="Bold" />
                     <TextBlock
                         Margin="5"
                         FontFamily="{StaticResource FontAwesome}"
-                        TextWrapping="WrapWithOverflow">
-                        使用过程中出现什么bug或者你有什么好的建议，欢迎在github链接中提issue.
-                    </TextBlock>
+                        Text="{DynamicResource about-aboutContent}"
+                        TextWrapping="WrapWithOverflow" />
                     <!--<Label FontFamily="{StaticResource FontAwesome}">减少字体大小 Ctrl+Alt+↓</Label>-->
                 </StackPanel>
             </Border>
@@ -58,21 +56,20 @@
                     <Label
                         Margin="0,5,0,0"
                         HorizontalAlignment="Center"
+                        Content="{DynamicResource about-projectAddress}"
                         FontFamily="Microsoft YaHei UI"
-                        FontWeight="Bold">
-                        项目地址
-                    </Label>
+                        FontWeight="Bold" />
                     <Label FontFamily="{StaticResource FontAwesome}">
                         <Hyperlink Click="Hyperlink_Click" NavigateUri="https://github.com/li-zheng-hao/StickyNotes">
-                            <TextBlock Text="Github地址" TextWrapping="Wrap" />
+                            <TextBlock Text="{DynamicResource about-githubLabel}" TextWrapping="Wrap" />
                         </Hyperlink>
                     </Label>
                     <Label FontFamily="{StaticResource FontAwesome}">
-                        <TextBlock Text="后续更新都会在上面发布，好用的话点个Star吧~" TextWrapping="Wrap" />
+                        <TextBlock Text="{DynamicResource about-addressContent}" TextWrapping="Wrap" />
                     </Label>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <Label HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesome}">
-                            <TextBlock Text="版本信息:" TextWrapping="Wrap" />
+                            <TextBlock Text="{DynamicResource about-versionInfo}" TextWrapping="Wrap" />
                         </Label>
                         <Label HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesome}">
                             <TextBlock Text="{x:Static prop:Resources.Version}" TextWrapping="Wrap" />

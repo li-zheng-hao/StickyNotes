@@ -1,28 +1,30 @@
 ﻿<metro:MetroWindow
-    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
     x:Class="StickyNotes.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:command="http://www.galasoft.ch/mvvmlight"
+    xmlns:converter="clr-namespace:StickyNotes.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:utils="clr-namespace:StickyNotes.Utils"
+    xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:stickynotes="clr-namespace:StickyNotes"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    xmlns:converter="clr-namespace:StickyNotes.Converter" xmlns:stickynotes="clr-namespace:StickyNotes" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:utils="clr-namespace:StickyNotes.Utils"
     x:Name="loaded"
     Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
     MaxWidth="800"
     MaxHeight="800"
-    ShowInTaskbar="False"
+    BorderThickness="1"
+    GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
     Left="{Binding Datas.StartUpPositionLeft, Mode=TwoWay}"
-     GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
+    ShowInTaskbar="False"
+    ShowTitleBar="False"
+    TitleBarHeight="0"
     Top="{Binding Datas.StartUpPositionTop, Mode=TwoWay}"
     Topmost="{Binding Datas.IsCurrentWindowTopMost, Mode=TwoWay}"
-    ShowTitleBar="False"
-    BorderThickness="1"
-    TitleBarHeight="0"
     WindowStartupLocation="Manual">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -51,7 +53,7 @@
     </i:Interaction.Triggers>
     <Window.Resources>
         <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <converter:DeleteWindowMessageConverter x:Key="DeleteWindowMessageConverter"></converter:DeleteWindowMessageConverter>
+        <converter:DeleteWindowMessageConverter x:Key="DeleteWindowMessageConverter" />
     </Window.Resources>
     <!--<i:Interaction.Behaviors>-->
     <!--<utils:WndHideBehavior />-->
@@ -59,7 +61,7 @@
 
     <Grid>
         <!--  菜单栏阴影效果  -->
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -83,19 +85,19 @@
                 HorizontalAlignment="Left"
                 Command="{Binding NewWindowCommand}"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="新增一条便签">
+                ToolTip="{DynamicResource tooltip-addNote}">
                 <materialDesign:PackIcon
                     Width="16"
                     Height="16"
                     Kind="LibraryAdd" />
             </Button>
             <ToggleButton
-                Style="{DynamicResource MahApps.Styles.ToggleButton.WindowCommands}"
                 x:Name="isTopMostToogle"
                 Grid.Column="1"
                 Padding="5"
                 Cursor="Hand"
                 IsChecked="{Binding Datas.IsCurrentWindowTopMost, Mode=TwoWay}"
+                Style="{DynamicResource MahApps.Styles.ToggleButton.WindowCommands}"
                 ToolTip="置顶">
                 <materialDesign:PackIcon
                     Width="16"
@@ -117,15 +119,19 @@
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
 
-                <metro:DropDownButton Name="DownButton"
-                                      ArrowVisibility="Collapsed"
-                                      Padding="0"
-                                      Cursor="Hand"
-                                      
-                                      ItemsSource="{Binding Commands}"
-                                    Style="{DynamicResource MahApps.Styles.DropDownButton.WindowCommands}">
+                <metro:DropDownButton
+                    Name="DownButton"
+                    Padding="0"
+                    ArrowVisibility="Collapsed"
+                    Cursor="Hand"
+                    ItemsSource="{Binding Commands}"
+                    Style="{DynamicResource MahApps.Styles.DropDownButton.WindowCommands}"
+                    ToolTip="{DynamicResource tooltip-menu}">
                     <metro:DropDownButton.Icon>
-                        <iconPacks:PackIconModern Kind="List" Width="14" Height="14" />
+                        <iconPacks:PackIconModern
+                            Width="14"
+                            Height="14"
+                            Kind="List" />
                     </metro:DropDownButton.Icon>
                     <metro:DropDownButton.ItemContainerStyle>
                         <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
@@ -163,63 +169,61 @@
                 <!--  隐藏按钮  -->
                 <Button
                     Name="CloseButton"
-                    Tag="CloseButton"
                     Grid.Column="4"
                     HorizontalAlignment="Right"
                     Command="{Binding CloseWindowButNotDeleteDataCommand}"
                     CommandParameter="{Binding Datas}"
                     Style="{StaticResource Button_Menu}"
-                    ToolTip="隐藏此便签">
+                    Tag="CloseButton"
+                    ToolTip="{DynamicResource tooltip-hideNote}">
 
                     <iconPacks:Modern
                         Width="14"
                         Height="14"
                         Kind="EyeHide" />
-                   
-                    </Button>
-                <!-- 删除按钮-->
+
+                </Button>
+                <!--  删除按钮  -->
                 <Button
                     Name="DeleteButton"
-                    Tag="DeleteButton"
                     Grid.Column="5"
                     HorizontalAlignment="Right"
                     Command="{Binding ShowDeleteWindowCommand}"
                     Style="{StaticResource Button_Menu}"
-                    ToolTip="删除此便签">
+                    Tag="DeleteButton"
+                    ToolTip="{DynamicResource tooltip-delNote}">
 
-                    <iconPacks:PackIconModern Kind="Delete" Width="14" Height="14" />
+                    <iconPacks:PackIconModern
+                        Width="14"
+                        Height="14"
+                        Kind="Delete" />
                 </Button>
-                <materialDesign:DialogHost
-                    DialogTheme="Inherit">
+                <materialDesign:DialogHost DialogTheme="Inherit">
                     <materialDesign:DialogHost.DialogContent>
                         <StackPanel Margin="16">
-                            <TextBlock Text="Add a new fruit."/>
+                            <TextBlock Text="Add a new fruit." />
 
                             <TextBox
-                                Margin="0 8 0 0"
-                                HorizontalAlignment="Stretch"
-                                x:Name="FruitTextBox"/>
+                                x:Name="FruitTextBox"
+                                Margin="0,8,0,0"
+                                HorizontalAlignment="Stretch" />
 
-                            <StackPanel
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                 <Button
-                                    
-                                    IsDefault="True"
-                                    Margin="0 8 8 0"
+                                    Margin="0,8,8,0"
+                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                                     Content="ACCEPT"
-                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                    IsDefault="True">
                                     <Button.CommandParameter>
                                         <system:Boolean>True</system:Boolean>
                                     </Button.CommandParameter>
                                 </Button>
 
                                 <Button
-                                    
-                                    IsCancel="True"
-                                    Margin="0 8 8 0"
+                                    Margin="0,8,8,0"
+                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                                     Content="CANCEL"
-                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                    IsCancel="True">
                                     <Button.CommandParameter>
                                         <system:Boolean>False</system:Boolean>
                                     </Button.CommandParameter>
@@ -236,18 +240,17 @@
         <ScrollViewer
             Name="ViewContent"
             Grid.Row="1"
-            HorizontalScrollBarVisibility="Disabled"
             Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
+            HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Hidden">
             <RichTextBox
                 Name="RichTextBox"
-                VerticalScrollBarVisibility="Hidden"
                 Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
                 Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
                 BorderThickness="0"
                 FontFamily="Microsoft YaHei"
                 FontSize="16"
-               >
+                VerticalScrollBarVisibility="Hidden">
                 <FlowDocument
                     Name="Document"
                     LineHeight="5"
@@ -325,8 +328,14 @@
             </materialDesign:SnackbarMessage>
         </materialDesign:Snackbar>
 
-        <Grid Name="CheckDeleteWindow" Visibility="Hidden" Grid.Row="0" ZIndex="100" Grid.RowSpan="3" Background="#7F868686">
-            <Grid  Margin="10 100 10 100"  Background="{StaticResource MahApps.Brushes.ThemeBackground}">
+        <Grid
+            Name="CheckDeleteWindow"
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Background="#7F868686"
+            Visibility="Hidden"
+            ZIndex="100">
+            <Grid Margin="10,100,10,100" Background="{StaticResource MahApps.Brushes.ThemeBackground}">
                 <Grid.Effect>
                     <DropShadowEffect
                         BlurRadius="5"
@@ -341,29 +350,44 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label FontSize="22" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center"  FontFamily="/StickyNotes;component/Resources/Fonts/#Lato">是否删除当前便签?</Label>
-                <Button Name="DeleteWindowButton" Grid.Row="1" Grid.Column="0"
-                        Command="{Binding DeleteWindowCommand}"
-                        Margin="20 5 20 5" Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}" Background="{DynamicResource MahApps.Brushes.Accent4}">
+                <Label
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{DynamicResource main}"
+                    FontFamily="/StickyNotes;component/Resources/Fonts/#Lato"
+                    FontSize="22" />
+                <Button
+                    Name="DeleteWindowButton"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="20,5,20,5"
+                    Background="{DynamicResource MahApps.Brushes.Accent4}"
+                    Command="{Binding DeleteWindowCommand}"
+                    Content="{DynamicResource main-confirm}"
+                    Foreground="{DynamicResource MahApps.Brushes.ThemeBackground}">
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource DeleteWindowMessageConverter}">
-                            <Binding Path="Name" RelativeSource="{RelativeSource Self}" ></Binding>
-                            <Binding ElementName="loaded"/>
+                            <Binding Path="Name" RelativeSource="{RelativeSource Self}" />
+                            <Binding ElementName="loaded" />
                         </MultiBinding>
                     </Button.CommandParameter>
-                    确定
+
                 </Button>
-                <Button Name="CancelDeleteWindowButton"
-                        Command="{Binding DeleteWindowCommand}"
-                       
-                        Grid.Row="1" Grid.Column="1" Background="{DynamicResource MahApps.Brushes.ThemeBackground}" Margin="20 5 20 5">
+                <Button
+                    Name="CancelDeleteWindowButton"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="20,5,20,5"
+                    Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                    Command="{Binding DeleteWindowCommand}"
+                    Content="{DynamicResource main-cancel}">
                     <Button.CommandParameter>
                         <MultiBinding Converter="{StaticResource DeleteWindowMessageConverter}">
-                            <Binding Path="Name" RelativeSource="{RelativeSource Self}"></Binding>
-                            <Binding  ElementName="loaded"/>
+                            <Binding Path="Name" RelativeSource="{RelativeSource Self}" />
+                            <Binding ElementName="loaded" />
                         </MultiBinding>
                     </Button.CommandParameter>
-                    取消
                 </Button>
             </Grid>
 

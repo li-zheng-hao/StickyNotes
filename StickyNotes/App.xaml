@@ -18,8 +18,10 @@
                 <ResourceDictionary Source="Style/Window.xaml" />
                 <ResourceDictionary Source="Style/Label.xaml" />
                 <ResourceDictionary Source="Style/Themes/Blue.xaml" />
+                <!--<ResourceDictionary Source="Style/Languages/Lan-cn.xaml" />-->
+                <!--<ResourceDictionary Source="Style/Languages/Lan-en.xaml" />-->
 
-              
+
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />-->
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -31,9 +33,9 @@
 
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator
-                        xmlns:vm="clr-namespace:StickyNotes.ViewModel"
-                        x:Key="Locator"
-                        d:IsDataSource="True" />
+                xmlns:vm="clr-namespace:StickyNotes.ViewModel"
+                x:Key="Locator"
+                d:IsDataSource="True" />
             <ContextMenu x:Key="NotifyIconMenu" StaysOpen="False">
                 <MenuItem
                     Name="MenuOpen"

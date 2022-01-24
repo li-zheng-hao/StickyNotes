@@ -8,24 +8,23 @@ using System.Windows.Data;
 
 namespace StickyNotes
 {
-    public class ThemeConverter:IValueConverter
+    internal class LanguageConverter : IValueConverter
     {
         /// <summary>
         /// 从DataContext中的数据转换到View中的数据
         /// </summary>
-        /// <param name="value">DataContent中的数据</param>
+        /// <param name="value"></param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int result=(int)value;
-            return result.ToString();
+            string result = value.ToString();
+            return result;
         }
-
         /// <summary>
-        /// 只有在TwoWay的时候才能用上
+        /// 不需要这个
         /// </summary>
         /// <param name="value"></param>
         /// <param name="targetType"></param>
@@ -34,9 +33,7 @@ namespace StickyNotes
         /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //var index = (Themes)value;
-            //return index;
-            return "1";
+            throw new Exception("不需要转换语言,只允许单向绑定");
         }
     }
 }

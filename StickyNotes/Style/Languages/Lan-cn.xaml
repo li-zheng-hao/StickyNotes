@@ -1,0 +1,35 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="menuList">笔记列表</sys:String>
+    <sys:String x:Key="menuSetting">设置</sys:String>
+    <sys:String x:Key="menuAbout">关于</sys:String>
+    <sys:String x:Key="setting-AllWindowTop">所有窗体置顶</sys:String>
+    <sys:String x:Key="setting-AutoStartUp">开机自启动</sys:String>
+    <sys:String x:Key="setting-AutoCheckUpdate">自动检查更新</sys:String>
+    <sys:String x:Key="setting-Theme">主题颜色</sys:String>
+    <sys:String x:Key="setting-ShortCut">快捷键</sys:String>
+    <sys:String x:Key="setting-ShortCutExplain">显示/隐藏所有便签</sys:String>
+
+    <sys:String x:Key="about-about">关于</sys:String>
+    <sys:String x:Key="about-projectAddress">项目地址</sys:String>
+    <sys:String x:Key="about-githubLabel">Github地址</sys:String>
+    <sys:String x:Key="about-versionInfo">版本信息：</sys:String>
+    <sys:String x:Key="about-aboutContent">使用过程中出现什么BUG或者好的建议，欢迎在github上提建议</sys:String>
+    <sys:String x:Key="about-addressContent">后续更新都会在上面的地址中发布，好用的话欢迎点个Star~</sys:String>
+
+
+    <sys:String x:Key="tooltip-addNote">新增便签</sys:String>
+    <sys:String x:Key="tooltip-menu">菜单</sys:String>
+    <sys:String x:Key="tooltip-delNote">删除便签</sys:String>
+    <sys:String x:Key="tooltip-hideNote">隐藏便签</sys:String>
+    <sys:String x:Key="main-confirmDelLabel">是否删除当前便签?</sys:String>
+    <sys:String x:Key="main-confirm">确定</sys:String>
+    <sys:String x:Key="main-cancel">取消</sys:String>
+    <sys:String x:Key="main-warnning">警告</sys:String>
+
+    <sys:String x:Key="setting-Language">语言</sys:String>
+
+
+</ResourceDictionary>

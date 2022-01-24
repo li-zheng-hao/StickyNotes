@@ -34,7 +34,7 @@ namespace StickyNotes
 
         public RelayCommand<object> DropDownMenuClickCommand { get; set; }
 
-        public List<string> Commands { get;set; } =new List<string>() { "笔记列表","设置","关于"};
+        public List<string> Commands { get;set; } =new List<string>() { LanguageManager.Translate("menuList"), LanguageManager.Translate("menuSetting"), LanguageManager.Translate("menuAbout") };
         /// <summary>
         /// 窗体数据
         /// </summary>
@@ -114,18 +114,21 @@ namespace StickyNotes
 
         private void DropDownMenuClickMethod(object obj)
         {
-            switch(obj.ToString())
+            string command=obj.ToString();
+            if(command==Commands[0])
             {
-                case "笔记列表":
-                    OpenListCommand.Execute(null);
-                    break;
-                case "设置":
-                    OpenSettingCommand.Execute(null);
-                    break;
-                case "关于":
-                    OpenAboutCommand.Execute(null);
-                    break;
+                OpenListCommand.Execute(null);
+            }else if(command==Commands[1])
+            {
+                OpenSettingCommand.Execute(null);
+
+            }else if(command==Commands[2])
+            {
+                OpenAboutCommand.Execute(null);
+
             }
+                
+               
         }
 
         private void OpenNewExistWindowMethod(WindowsData data)
@@ -151,6 +154,10 @@ namespace StickyNotes
         {
 
             // 关闭但是不删除
+            if(WindowsManager.Instance.Windows.Count==1)
+            {
+                return;
+            }
             foreach (Window item in Application.Current.Windows)
             {
                 var main = item as MainWindow;
@@ -458,10 +465,11 @@ namespace StickyNotes
                 }
             }
             MetroDialogSettings dialogSettings = new MetroDialogSettings();
-            dialogSettings.AffirmativeButtonText = "确定";
-            dialogSettings.NegativeButtonText = "取消";
+            dialogSettings.AffirmativeButtonText = LanguageManager.Translate("main-confirm");
+            dialogSettings.NegativeButtonText = LanguageManager.Translate("main-cancel");
 
-            MessageDialogResult result=await win?.ShowMessageAsync("警告", "删除后无法恢复，是否确认?",MessageDialogStyle.AffirmativeAndNegative,dialogSettings);
+            MessageDialogResult result=await win?.ShowMessageAsync(LanguageManager.Translate("main-warning")
+                , LanguageManager.Translate("main-confirmDelLabel"), MessageDialogStyle.AffirmativeAndNegative,dialogSettings);
             if (result!=null&& result==MessageDialogResult.Affirmative)
             {
                 DeleteWindowCommand.Execute(win);
