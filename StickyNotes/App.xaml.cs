@@ -53,7 +53,17 @@ namespace StickyNotes
             //Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
             var systemtray = SystemTray.Instance;
             var programData = XMLHelper.DecodeXML<ProgramData>(ConstData.SaveSettingDataName);
-            LanguageManager.ChangeLanguage(programData.Language);
+            var programData = XMLHelper.DecodeXML<ProgramData>(ConstData.SaveSettingDataName);
+            if (programData == null)
+            {
+                LanguageManager.ChangeLanguage(Language.English);
+
+            }
+            else
+            {
+                LanguageManager.ChangeLanguage(programData.Language);
+
+            }
 
             if (programData != null)
             {
