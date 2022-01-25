@@ -27,7 +27,7 @@
     <sys:String x:Key="main-confirmDelLabel">是否删除当前便签?</sys:String>
     <sys:String x:Key="main-confirm">确定</sys:String>
     <sys:String x:Key="main-cancel">取消</sys:String>
-    <sys:String x:Key="main-warnning">警告</sys:String>
+    <sys:String x:Key="main-warning">警告</sys:String>
 
     <sys:String x:Key="setting-Language">语言</sys:String>
 
