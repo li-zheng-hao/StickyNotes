@@ -61,7 +61,7 @@ namespace StickyNotes.Properties {
         }
         
         /// <summary>
-        ///   查找类似 v4.7.1 的本地化字符串。
+        ///   查找类似 v4.7.2 的本地化字符串。
         /// </summary>
         public static string Version {
             get {

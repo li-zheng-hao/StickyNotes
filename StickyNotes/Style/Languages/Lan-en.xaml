@@ -27,7 +27,7 @@
     <sys:String x:Key="main-confirmDelLabel">Are you sure you to delete?</sys:String>
     <sys:String x:Key="main-confirm">Yes</sys:String>
     <sys:String x:Key="main-cancel">Cancel</sys:String>
-    <sys:String x:Key="main-warnning">Warning</sys:String>
+    <sys:String x:Key="main-warning">Warning</sys:String>
 
     <sys:String x:Key="setting-Language">Language</sys:String>
 

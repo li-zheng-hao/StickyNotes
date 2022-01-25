@@ -23,7 +23,7 @@ namespace StickyNotes
         };
         public List<string> Languages { get; set; } = new List<string>()
         {
-            "中文",
+            "Chinese",
             "English",
         };
         public HotKeyModel ShowAllHotKey { get; set; }
