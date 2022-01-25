@@ -73,6 +73,7 @@ namespace StickyNotes
                 ProgramData.Instance.ShowAllHotKey = programData.ShowAllHotKey;
                 ProgramData.Instance.IsAutoCheckUpdate = programData.IsAutoCheckUpdate;
                 ProgramData.Instance.HideWindowData= programData.HideWindowData;
+                ProgramData.Instance.Language = programData.Language;
                 ThemeAssist.ChangeTheme(programData.CurrentTheme);
                 //有创建过的窗口
                 if (windowsDatas.Count > 0)
