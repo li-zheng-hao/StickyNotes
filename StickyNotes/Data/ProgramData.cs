@@ -61,10 +61,10 @@ namespace StickyNotes
         {
             //            Instance = new ProgramData();
             Datas = new ObservableCollection<WindowsData>();
-            HideWindowData= new ObservableCollection<WindowsData>();
+            HideWindowData = new ObservableCollection<WindowsData>();
             IsWindowTopMost = false;
             IsStartUpWithSystem = false;
-            IsAutoCheckUpdate = true;
+            IsAutoCheckUpdate = false;
             Datas.CollectionChanged += Datas_CollectionChanged;
             BaseTheme = "Light";
             Language = Language.English;
