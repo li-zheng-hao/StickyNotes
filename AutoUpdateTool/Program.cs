@@ -27,15 +27,15 @@ namespace AutoUpdateTool
                 // 当前版本
                 LocalVersion = ConvertVersion(args[0]);
                 StickyNotesExePath = args[1];
-                Console.WriteLine("当前版本"+ args[0]);
-                Console.WriteLine(""+StickyNotesExePath);
+                Console.WriteLine("当前版本" + args[0]);
+                Console.WriteLine("" + StickyNotesExePath);
             }
             else
             {
                 LocalVersion = ConvertVersion("v1.1.1");
                 StickyNotesExePath = "D:\\StikyNotes\\StikyNotes\\bin\\Debug\\StikyNotes.exe";
                 Console.WriteLine("参数不正确,程序退出");
-//                return;
+                //                return;
             }
 
             var res = WebUtil.HttpGet(RepositoryInfo.RepositoryAddr);
@@ -43,7 +43,7 @@ namespace AutoUpdateTool
 
             var model = JsonConvert.DeserializeObject<GithubReleaseModel>(responseResult);
             GithubVersion = ConvertVersion(model.tag_name);
-            Console.WriteLine("查询到Github最新版本："+GithubVersion);
+            Console.WriteLine("查询到Github最新版本：" + GithubVersion);
             if (GithubVersion <= LocalVersion) return;
             // 下载新版本进行替换
             // 思路：
@@ -55,19 +55,31 @@ namespace AutoUpdateTool
             Console.WriteLine("发现新版本，开始关闭进程");
             KillProcess("STICKYNOTES");
             Console.WriteLine("发现Github上有新版本，正在下载中，长时间未下载完成请科学上网");
-            string downloadUrl="";
+            string downloadUrl = "";
             foreach (var item in model.assets)
             {
-                if (item.browser_download_url.Contains("StickyNotes"))
+                if (item.name.ToLower().Contains("StickyNotes".ToLower()))
                 {
                     downloadUrl = item.browser_download_url;
                     break;
                 }
             }
             var result = WebUtil.HttpDownLoadFile(downloadUrl, "StickyNotes.exe");
-            if (result.Result) Console.WriteLine("下载完成......");
+            try
+            {
+                if (result.Result)
+                    Console.WriteLine("下载完成......");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("下载过程中出现异常，可能是网络连接不上");
+                Console.WriteLine(ex.Message + ex.StackTrace);
+                Console.WriteLine("按Enter回车退出更新（多次更新不上请将更新程序删掉后再打开StickyNotes）");
+                Console.ReadLine();
+            }
             RunProcess(StickyNotesExePath);
-     }
+        }
         public static void KillProcess(string strProcessesByName)//关闭线程
         {
             foreach (Process p in Process.GetProcesses())//GetProcessesByName(strProcessesByName))
@@ -85,7 +97,7 @@ namespace AutoUpdateTool
                 }
             }
         }
-        public static void RunProcess(string filePath, string argument="")
+        public static void RunProcess(string filePath, string argument = "")
         {
             var p = new Process();
 
