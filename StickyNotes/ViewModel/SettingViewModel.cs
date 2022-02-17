@@ -221,7 +221,7 @@ namespace StickyNotes
                 }
             }
 
-            Datas.IsStartUpWithSystem = !param;
+            //Datas.IsStartUpWithSystem = !param;
         }
 
         /// <summary>
