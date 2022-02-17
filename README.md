@@ -9,7 +9,11 @@
 一个简单清爽的的Windows桌面便利贴</br></br>
 A convenitent and beautiful Windows StikyNotes Application </br></br>
 
+# 官网
 
+[http://stickynotes.lizhenghao.site](http://stickynotes.lizhenghao.site)
+
+（github下载较慢的可以在这下载）
 
 ## 2022年新开发目标
 
@@ -17,12 +21,8 @@ A convenitent and beautiful Windows StikyNotes Application </br></br>
 2. ~~支持多语言切换~~（完成）
 3. 支持夜间、日间模式
 4. ~~新增列表功能，不需要显示的可以暂时隐藏起来~~(完成)
-5. 用web端的markdown文本编辑器或富文本编辑器替换现有WPF的富文本控件（WPF的富文本控件实在是不太行，暂时找不到新方案，欢迎大家提issue交流）
-6. 搭建一个主页网站（类似Typora，计划Asp.Net Core+Vue实现），方便无法科学上网下载软件的朋友能够下载和更新本软件
-
-以上几点目标希望2022年能够实现。
-
-
+5. ~~用web端的markdown文本编辑器或富文本编辑器替换现有WPF的富文本控件（WPF的富文本控件实在是不太行，暂时找不到新方案，欢迎大家提issue交流）~~（cefsharp打包体积太大，思考新解决方案）
+6. ~~搭建一个主页网站（类似Typora，计划Asp.Net Core+Vue实现），方便无法科学上网下载软件的朋友能够下载和更新本软件~~（完成）
 
 ## 安装 Installation
 
