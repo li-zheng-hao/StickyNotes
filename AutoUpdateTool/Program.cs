@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using Newtonsoft.Json;
 
 /// <summary>
@@ -35,7 +36,8 @@ namespace AutoUpdateTool
                 LocalVersion = ConvertVersion("v1.1.1");
                 StickyNotesExePath = "D:\\StikyNotes\\StikyNotes\\bin\\Debug\\StikyNotes.exe";
                 Console.WriteLine("参数不正确,程序退出");
-                //                return;
+                Thread.Sleep(2000);
+                return;
             }
 
             var res = WebUtil.HttpGet(RepositoryInfo.RepositoryAddr);
