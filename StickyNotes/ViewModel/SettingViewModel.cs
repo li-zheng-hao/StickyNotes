@@ -200,7 +200,7 @@ namespace StickyNotes
         /// <param name="param">当前选项是否勾选</param>
         private void IsStartUpWithSystemChangedMethod(bool param)
         {
-            if (param == false)
+            if (param == true)
             {
                 Microsoft.Win32.RegistryKey key =
                     Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
