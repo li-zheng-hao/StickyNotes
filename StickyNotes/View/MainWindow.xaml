@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:command="http://www.galasoft.ch/mvvmlight"
     xmlns:converter="clr-namespace:StickyNotes.Converter"
+    xmlns:cmds="clr-namespace:StickyNotes.Commands"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -55,6 +56,11 @@
         <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converter:DeleteWindowMessageConverter x:Key="DeleteWindowMessageConverter" />
     </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="cmds:CStrikeCommand.StrikeCommand"
+                    Executed="StrikeCommand_Executed"
+                    CanExecute="StrikeCommand_CanExecute" />
+    </Window.CommandBindings>
     <!--<i:Interaction.Behaviors>-->
     <!--<utils:WndHideBehavior />-->
     <!--</i:Interaction.Behaviors>-->
@@ -281,6 +287,16 @@
                                 Width="18"
                                 Height="18"
                                 Kind="FormatBold" />
+                        </Button>
+                        <Button
+                            Background="{StaticResource MahApps.Brushes.ThemeBackground}"
+                            Command="cmds:CStrikeCommand.StrikeCommand"
+                            CommandTarget="{Binding ElementName=RichTextBox}"
+                            Style="{StaticResource Button_Menu}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="FormatStrikethrough"  />
                         </Button>
                         <Button
                             Background="{StaticResource MahApps.Brushes.ThemeBackground}"

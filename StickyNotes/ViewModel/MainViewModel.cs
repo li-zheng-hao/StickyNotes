@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using StickyNotes.Utils;
@@ -488,6 +489,14 @@ namespace StickyNotes
             {
                 System.IO.File.Delete(subPath + fileName);
             }
+        }
+    }
+
+    namespace Commands
+    {
+        public class CStrikeCommand
+        {
+            public static RoutedCommand StrikeCommand = new RoutedCommand("CStrikeCommand", typeof(CStrikeCommand));
         }
     }
 }
