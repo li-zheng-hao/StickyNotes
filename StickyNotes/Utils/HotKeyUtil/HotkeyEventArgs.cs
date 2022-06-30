@@ -2,5 +2,6 @@
 {
     public class HotkeyEventArgs
     {
+        public HotKeyType Type { get; set; }
     }
 }

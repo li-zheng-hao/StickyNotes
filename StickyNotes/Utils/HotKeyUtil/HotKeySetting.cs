@@ -9,9 +9,8 @@ namespace StickyNotes.Utils.HotKeyUtil
     /// <summary>
     /// 快捷键设置项枚举
     /// </summary>
-    public enum EHotKeySetting
+    public enum HotKeyType
     {
-        ShowAllWindow = 0,
-       
+        ShowOrHideAllWindow = 0,
     }
 }

@@ -48,9 +48,9 @@ namespace StickyNotes.Utils.HotKeyUtil
         private static HotkeyManager Instance { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of <see cref="Hotkey"/> for this <see cref="HotkeyManager"/>.
+        /// Gets or sets the collection of <see cref="HotKey"/> for this <see cref="HotkeyManager"/>.
         /// </summary>
-        private Dictionary<ushort, Hotkey> Keys { get; set; } = new Dictionary<ushort, Hotkey>();
+        private Dictionary<ushort, HotKey> Keys { get; set; } = new Dictionary<ushort, HotKey>();
 
         /// <summary>
         /// Returns a single, global instance of <see cref="HotkeyManager"/>.
@@ -73,12 +73,12 @@ namespace StickyNotes.Utils.HotKeyUtil
         }
 
         /// <summary>
-        /// Attempts to add a <see cref="Hotkey"/> to a dictionary and register it.
+        /// Attempts to add a <see cref="HotKey"/> to a dictionary and register it.
         /// </summary>
-        /// <param name="hotkey">The <see cref="Hotkey"/> to add and register.</param>
-        /// <returns><see langword="true"/> if the specified <see cref="Hotkey"/> was successfully added and registered; otherwise, <see langword="false"/>.</returns>
+        /// <param name="hotkey">The <see cref="HotKey"/> to add and register.</param>
+        /// <returns><see langword="true"/> if the specified <see cref="HotKey"/> was successfully added and registered; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="hotkey"/> is <see langword="null"/>.</exception>
-        public bool TryAddHotkey(Hotkey hotkey)
+        public bool TryAddHotkey(HotKey hotkey)
         {
             if (hotkey is null)
             {
@@ -100,23 +100,24 @@ namespace StickyNotes.Utils.HotKeyUtil
         }
 
         /// <summary>
-        /// Attempts to remove a <see cref="Hotkey"/> from a dictionary and unregister it.
+        /// Attempts to remove a <see cref="HotKey"/> from a dictionary and unregister it.
         /// </summary>
-        /// <param name="hotkey">The <see cref="Hotkey"/> to remove and unregister.</param>
-        /// <returns><see langword="true"/> if the specified <see cref="Hotkey"/> was successfully removed and unregistered; otherwise, <see langword="false"/>.</returns>
+        /// <param name="hotkey">The <see cref="HotKey"/> to remove and unregister.</param>
+        /// <returns><see langword="true"/> if the specified <see cref="HotKey"/> was successfully removed and unregistered; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="hotkey"/> is <see langword="null"/>.</exception>
-        public bool TryRemoveHotkey(Hotkey hotkey)
+        public bool TryRemoveHotkey(HotKey hotkey)
         {
             if (hotkey is null)
             {
                 throw new ArgumentNullException(nameof(hotkey));
             }
-
+            if(!Keys.ContainsKey(hotkey.Id))
+                return false;
             return Keys.Remove(hotkey.Id) && UnregisterHotkey(Handle, hotkey.Id);
         }
 
         /// <summary>
-        /// Attempts to locate an existing <see cref="Hotkey"/> through its current key and modifiers, unregister it, and reregister it with a new key and modifiers.
+        /// Attempts to locate an existing <see cref="HotKey"/> through its current key and modifiers, unregister it, and reregister it with a new key and modifiers.
         /// </summary>
         /// <param name="oldKey">The key to match.</param>
         /// <param name="oldModifiers">The modifiers to match.</param>
@@ -132,7 +133,7 @@ namespace StickyNotes.Utils.HotKeyUtil
             }
 
             bool success = false;
-            foreach (Hotkey hotkey in GetHotkeys())
+            foreach (HotKey hotkey in GetHotkeys())
             {
                 if (hotkey.Key == oldKey && hotkey.Modifiers == oldModifiers)
                 {
@@ -151,9 +152,9 @@ namespace StickyNotes.Utils.HotKeyUtil
         }
 
         /// <summary>
-        /// Attempts to locate an existing <see cref="Hotkey"/> through its Id property, unregister it, and reregister it with a new key and modifiers.
+        /// Attempts to locate an existing <see cref="HotKey"/> through its Id property, unregister it, and reregister it with a new key and modifiers.
         /// </summary>
-        /// <param name="id">The Id of the targeted <see cref="Hotkey"/>.</param>
+        /// <param name="id">The Id of the targeted <see cref="HotKey"/>.</param>
         /// <param name="newKey">The key to replace the current key.</param>
         /// <param name="newModifiers">The modifiers to replace the current modifiers.</param>
         /// <returns><see langword="true"/> if the specified id was matched and the new key and modifiers were successfully registered; otherwise, <see langword="false"/>.</returns>
@@ -215,7 +216,7 @@ namespace StickyNotes.Utils.HotKeyUtil
             // ERROR_HOTKEY_ALREADY_REGISTERED error and an ApplicationException gets subsequently thrown.
             if (Keys.ContainsKey(id) && GetHotkeys().Where(it=>it.Key== newKey&&it.Modifiers==newModifiers) is null && UnregisterHotkey(Handle, id))
             {
-                Hotkey oldhotkey = Keys[id];
+                HotKey oldhotkey = Keys[id];
                 oldhotkey.Key = newKey;
                 oldhotkey.Modifiers = newModifiers;
                 return RegisterHotkey(oldhotkey);
@@ -227,19 +228,19 @@ namespace StickyNotes.Utils.HotKeyUtil
         /// <summary>
         /// Returns a <see cref="Dictionary{TKey, TValue}.ValueCollection"/> of hotkeys.
         /// </summary>
-        /// <returns>A <see cref="Dictionary{TKey, TValue}.ValueCollection"/> of <see cref="Hotkey"/></returns>
-        public Dictionary<ushort, Hotkey>.ValueCollection GetHotkeys()
+        /// <returns>A <see cref="Dictionary{TKey, TValue}.ValueCollection"/> of <see cref="HotKey"/></returns>
+        public Dictionary<ushort, HotKey>.ValueCollection GetHotkeys()
         {
             return Keys.Values;
         }
 
         /// <summary>
-        /// Registers a <see cref="Hotkey"/>.
+        /// Registers a <see cref="HotKey"/>.
         /// </summary>
-        /// <param name="hotkey">The <see cref="Hotkey"/> to register.</param>
-        /// <returns><see langword="true"/> if the specified <see cref="Hotkey"/> was successfully registered; otherwise, <see langword="false"/></returns>
-        /// <exception cref="ApplicationException">The specified <see cref="Hotkey"/> is already registered.</exception>
-        private static bool RegisterHotkey(Hotkey hotkey)
+        /// <param name="hotkey">The <see cref="HotKey"/> to register.</param>
+        /// <returns><see langword="true"/> if the specified <see cref="HotKey"/> was successfully registered; otherwise, <see langword="false"/></returns>
+        /// <exception cref="ApplicationException">The specified <see cref="HotKey"/> is already registered.</exception>
+        private static bool RegisterHotkey(HotKey hotkey)
         {
             bool success = NativeMethods.RegisterHotKey(Handle, hotkey.Id, (uint)hotkey.Modifiers, (uint)KeyInterop.VirtualKeyFromKey(hotkey.Key));
             if (!success)
@@ -258,7 +259,7 @@ namespace StickyNotes.Utils.HotKeyUtil
         /// Unregisters a hotkey.
         /// </summary>
         /// <param name="hWnd">The handle to a window.</param>
-        /// <param name="id">The Id associated with a <see cref="Hotkey"/>.</param>
+        /// <param name="id">The Id associated with a <see cref="HotKey"/>.</param>
         /// <returns><see langword="true"/> if the hotkey was successfully unregistered; otherwise, <see langword="false"/>.</returns>
         private static bool UnregisterHotkey(IntPtr hWnd, ushort id)
         {
@@ -276,9 +277,9 @@ namespace StickyNotes.Utils.HotKeyUtil
         /// <returns>The return value is the result of the message processing, and depends on the message sent.</returns>
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == NativeMethods.WM_HOTKEY && Keys.TryGetValue((ushort)wParam.ToInt32(), out Hotkey hotkey))
+            if (msg == NativeMethods.WM_HOTKEY && Keys.TryGetValue((ushort)wParam.ToInt32(), out HotKey hotkey))
             {
-                hotkey.OnPressed(new HotkeyEventArgs());
+                hotkey.OnPressed(new HotkeyEventArgs() { Type=hotkey.HotKeyType});
                 handled = true;
             }
 

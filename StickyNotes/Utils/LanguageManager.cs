@@ -14,6 +14,11 @@ namespace StickyNotes.Utils
     public class LanguageManager
     {
         private const string _resourceStrFomart = "pack://application:,,,/Style/Languages/Lan-{0}.xaml";
+        /// <summary>
+        /// 获取当前语言下的对应标签
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static string Translate(string key)
         {
             return Application.Current.FindResource(key).ToString();

@@ -21,7 +21,7 @@ namespace StickyNotes
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = (HotKeyModel)value;
+            var result = (HotKey)value;
             return result.ToString();
         }
 

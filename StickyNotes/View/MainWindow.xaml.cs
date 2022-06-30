@@ -1,7 +1,10 @@
 ﻿using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using StickyNotes.Utils;
+using StickyNotes.Utils.HotKeyUtil;
+using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace StickyNotes
 {
@@ -23,8 +26,11 @@ namespace StickyNotes
             this.DataContext = viewModel;
             WindowHide windowHide = new WindowHide(this);
             WindowHideManager.GetInstance().windowHideList.Add(windowHide);
+
+
+       
         }
 
-
+       
     }
 }
