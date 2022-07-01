@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdateTool", "AutoUpdat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StickyNotes", "StickyNotes\StickyNotes.csproj", "{8E1B2A13-29D3-47DB-A48D-E0D795F29C3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{0E9DA473-F7C4-401B-B1AE-455313699794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8E1B2A13-29D3-47DB-A48D-E0D795F29C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E1B2A13-29D3-47DB-A48D-E0D795F29C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E1B2A13-29D3-47DB-A48D-E0D795F29C3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E9DA473-F7C4-401B-B1AE-455313699794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E9DA473-F7C4-401B-B1AE-455313699794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E9DA473-F7C4-401B-B1AE-455313699794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E9DA473-F7C4-401B-B1AE-455313699794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

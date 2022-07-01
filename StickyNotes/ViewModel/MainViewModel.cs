@@ -237,43 +237,19 @@ namespace StickyNotes
         /// <param name="datasDocumentFilePath"></param>
         private void SaveDocument(FlowDocument document, string datasDocumentFilePath)
         {
-            TextRange range;
-            FileStream fileStream;
-            range = new TextRange(document.ContentStart,
-                document.ContentEnd);
-            //获取当前文件夹路径
-            string currPath = System.Windows.Forms.Application.StartupPath;
-            //检查是否存在文件夹
-            string subPath = currPath + "/Datas/";
-            if (false == System.IO.Directory.Exists(subPath))
-            {
-                //创建Datas文件夹
-                System.IO.Directory.CreateDirectory(subPath);
-            }
-            fileStream = new FileStream(subPath + datasDocumentFilePath, FileMode.Create);
-            range.Save(fileStream, DataFormats.XamlPackage);
             Datas.RichTextBoxContent = new TextRange(document.ContentStart, document.ContentEnd).Text;
-            fileStream.Close();
         }
 
         public void RestoreData(FlowDocument document, string fileName)
         {
             TextRange range;
-            FileStream fileStream;
-
             range = new TextRange(document.ContentStart,
                 document.ContentEnd);
-
-            string currPath = System.Windows.Forms.Application.StartupPath;
-            //Environment.CurrentDirectory;
-            string subPath = currPath + "/Datas/";
-            fileStream = new FileStream(subPath + fileName, FileMode.Open);
-            range.Load(fileStream, DataFormats.XamlPackage);
-            fileStream.Close();
+            range.Text = Datas.RichTextBoxContent;
         }
-       
 
-       
+
+
 
 
         private void OnContentRenderedMethod()

@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using DB;
+using MahApps.Metro.Controls;
 using StickyNotes.Utils;
 using System;
 using System.Diagnostics;
@@ -51,8 +52,12 @@ namespace StickyNotes
             Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
+            // 初始化数据库
+            DBInit.InitDB();
+            // 删除3小时前的旧数据
+            new ProgramDataService().DeleteByDate(DateTime.Now.AddHours(3));
             var systemtray = SystemTray.Instance;
-            var programData = XMLHelper.DecodeXML<ProgramData>(ConstData.SaveSettingDataName);
+            var programData = DataHelper.RestoreData<ProgramData>();
             if (programData == null)
             {
                 LanguageManager.ChangeLanguage(Language.English);
@@ -196,7 +201,7 @@ namespace StickyNotes
         protected override void OnExit(ExitEventArgs e)
         {
             Logger.Log().Info("程序退出");
-            XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
+            DataHelper.SaveData(ProgramData.Instance);
             SystemTray.Instance.DisposeNotifyIcon();
             base.OnExit(e);
         }
@@ -227,29 +232,10 @@ namespace StickyNotes
         {
             if (!IsInited)
             {
-                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
-                BackupDataAction();
+                DataHelper.SaveData(ProgramData.Instance);
             }
         }
-        public void BackupDataAction()
-        {
-            if (File.Exists(ConstData.BackUpDataName))
-            {
-                FileInfo newestData = new FileInfo(ConstData.SaveSettingDataName);
-                FileInfo backupData = new FileInfo(ConstData.BackUpDataName);
-                TimeSpan ts1 = new TimeSpan(newestData.CreationTime.Ticks);
-                TimeSpan ts2 = new TimeSpan(backupData.CreationTime.Ticks);
-                TimeSpan ts = ts1.Subtract(ts2).Duration();
-                if (ts.Hours >= 2)
-                {
-                    XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.BackUpDataName);
-                }
-            }
-            else
-            {
-                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.BackUpDataName);
-            }
-        }
+        
         /// <summary>
         /// 打开一个空的窗体
         /// </summary>
