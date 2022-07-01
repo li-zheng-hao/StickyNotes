@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.2.32616.157
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdateTool", "AutoUpdateTool\AutoUpdateTool.csproj", "{C65B3500-B271-4604-A8FD-BDF035DE3885}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StickyNotes", "StickyNotes\StickyNotes.csproj", "{8E1B2A13-29D3-47DB-A48D-E0D795F29C3C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{B26CEBF4-70AC-4446-A188-252C6C94FAE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{8E1B2A13-29D3-47DB-A48D-E0D795F29C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E1B2A13-29D3-47DB-A48D-E0D795F29C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E1B2A13-29D3-47DB-A48D-E0D795F29C3C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B26CEBF4-70AC-4446-A188-252C6C94FAE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B26CEBF4-70AC-4446-A188-252C6C94FAE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B26CEBF4-70AC-4446-A188-252C6C94FAE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B26CEBF4-70AC-4446-A188-252C6C94FAE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
