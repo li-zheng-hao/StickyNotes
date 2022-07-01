@@ -75,7 +75,7 @@ namespace StickyNotes
         /// <summary>
         /// 记录快捷键注册项的唯一标识符
         /// </summary>
-        private Dictionary<EHotKeySetting, int> m_HotKeySettings = new Dictionary<EHotKeySetting, int>();
+        //private Dictionary<EHotKeySetting, int> m_HotKeySettings = new Dictionary<EHotKeySetting, int>();
         #endregion
 
 
@@ -99,7 +99,6 @@ namespace StickyNotes
             AddFontSizeCommand = new RelayCommand(AddFontSizeMethod);
             ReduceFontSizeCommand = new RelayCommand(ReduceFontSizeMethod);
             OnContentRenderedCommand = new RelayCommand(OnContentRenderedMethod);
-            OnSourceInitializedCommand = new RelayCommand<MainWindow>(OnSourceInitializedMethod);
             ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
             OpenListCommand=new RelayCommand(OpenListMethod);
             CloseWindowButNotDeleteDataCommand = new RelayCommand<WindowsData>(CloseWindowButNotDeleteDataMethod);
@@ -267,67 +266,9 @@ namespace StickyNotes
             range.Load(fileStream, DataFormats.XamlPackage);
             fileStream.Close();
         }
-        private void OnSourceInitializedMethod(MainWindow window)
-        {
-            HotKeySettingsManager.Instance.RegisterGlobalHotKeyEvent += Instance_RegisterGlobalHotKeyEvent;
+       
 
-            // 获取窗体句柄
-            m_Hwnd = new WindowInteropHelper(window).Handle;
-            HwndSource hWndSource = HwndSource.FromHwnd(m_Hwnd);
-            // 添加处理程序
-            if (hWndSource != null) hWndSource.AddHook(WndProc);
-        }
-
-        /// <summary>
-        /// 窗体回调函数，接收所有窗体消息的事件处理函数
-        /// </summary>
-        /// <param name="hWnd">窗口句柄</param>
-        /// <param name="msg">消息</param>
-        /// <param name="wideParam">附加参数1</param>
-        /// <param name="longParam">附加参数2</param>
-        /// <param name="handled">是否处理</param>
-        /// <returns>返回句柄</returns>
-        private IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wideParam, IntPtr longParam, ref bool handled)
-        {
-            switch (msg)
-            {
-                case HotKeyManager.WM_HOTKEY:
-                    int sid = wideParam.ToInt32();
-                    // 按下了显示所有窗体的快捷键,执行相应逻辑
-                    if (sid == m_HotKeySettings[EHotKeySetting.ShowAllWindow])
-                    {
-                        ActivateOrHideAllNotTopMostWindow();
-                        // WindowHideManager.GetInstance().StopAllHideAction(2000);
-                    }
-                    handled = true;
-                    break;
-            }
-            return IntPtr.Zero;
-        }
-        /// <summary>
-        /// 显示所有窗体或者隐藏所有窗体
-        /// </summary>
-        private void ActivateOrHideAllNotTopMostWindow()
-        {
-            foreach (var window in WindowsManager.Instance.Windows)
-            {
-                if (window.viewModel.Datas.IsCurrentWindowTopMost == false)
-                {
-                    if (ProgramData.Instance.IsWindowVisible)
-                        window.Visibility = Visibility.Hidden;
-                    else
-                    {
-                        Console.WriteLine("A");
-                        window.Visibility = Visibility.Visible;
-                        window.Activate();
-                    }
-
-                }
-            }
-
-            ProgramData.Instance.IsWindowVisible = !ProgramData.Instance.IsWindowVisible;
-
-        }
+       
 
 
         private void OnContentRenderedMethod()
@@ -336,41 +277,35 @@ namespace StickyNotes
             InitHotKey();
         }
 
-        /// <summary>
-        /// 通知注册系统快捷键事件处理函数
-        /// </summary>
-        /// <param name="hotKeyModelList"></param>
-        /// <returns></returns>
-        private bool Instance_RegisterGlobalHotKeyEvent(ObservableCollection<HotKeyModel> hotKeyModelList)
-        {
-            return InitHotKey(hotKeyModelList);
-        }
+        ///// <summary>
+        ///// 通知注册系统快捷键事件处理函数
+        ///// </summary>
+        ///// <param name="hotKeyModelList"></param>
+        ///// <returns></returns>
+        //private bool Instance_RegisterGlobalHotKeyEvent(ObservableCollection<HotKey> hotKeyModelList)
+        //{
+        //    return InitHotKey(hotKeyModelList);
+        //}
 
         /// <summary>
         /// 初始化注册快捷键
         /// </summary>
         /// <param name="hotKeyModelList">待注册热键的项</param>
         /// <returns>true:保存快捷键的值；false:弹出设置窗体</returns>
-        private bool InitHotKey(ObservableCollection<HotKeyModel> hotKeyModelList = null)
+        private bool InitHotKey()
         {
-            if (HotKeySettingsManager.Instance.IsShowAllWindowHotKeyRegistered == false ||
-                HotKeySettingsManager.Instance.IsShowAllWindowHotKeyNeedChanged == true)
-            {
-                HotKeySettingsManager.Instance.IsShowAllWindowHotKeyRegistered = true;
-                HotKeySettingsManager.Instance.IsShowAllWindowHotKeyNeedChanged = false;
-                var list = hotKeyModelList ?? HotKeySettingsManager.Instance.LoadDefaultHotKey();
-                // 注册全局快捷键
-                string failList = HotKeyHelper.RegisterGlobalHotKey(list, m_Hwnd, out m_HotKeySettings);
-                if (string.IsNullOrEmpty(failList))
-                    return true;
-                System.Windows.MessageBox.Show(string.Format("无法注册下列快捷键\n\r{0}", failList), "提示", MessageBoxButton.OK);
-                return false;
-            }
-            else
-            {
+           
+                try
+                {
+                    //ProgramData.ShowAllHotKey.Pressed += HotKeyHandler.HandlePress;
+                    HotkeyManager.GetHotkeyManager().TryAddHotkey(ProgramData.ShowAllHotKey);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"注册快捷键{ProgramData.ShowAllHotKey.ToString()}失败");
+                }
+                   
                 return true;
-            }
-
         }
 
 
@@ -470,7 +405,7 @@ namespace StickyNotes
 
             MessageDialogResult result=await win?.ShowMessageAsync(LanguageManager.Translate("main-warning")
                 , LanguageManager.Translate("main-confirmDelLabel"), MessageDialogStyle.AffirmativeAndNegative,dialogSettings);
-            if (result!=null&& result==MessageDialogResult.Affirmative)
+            if (result==MessageDialogResult.Affirmative)
             {
                 DeleteWindowCommand.Execute(win);
             }

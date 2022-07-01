@@ -163,7 +163,7 @@ namespace StickyNotes
             }
             catch (Exception ex)
             {
-                Logger.Log().Debug("无法连接项目github官网");
+                Logger.Log().Debug($"无法连接项目github官网 {ex.Message}");
             }
         }
 

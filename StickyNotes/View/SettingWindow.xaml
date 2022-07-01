@@ -117,7 +117,7 @@
                     IsReadOnly="True"
                     Text="{Binding HotKeyStr, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="KeyDown">
+                        <i:EventTrigger EventName="PreviewKeyDown">
                             <command:EventToCommand Command="{Binding ShowAllHotKeyChangedCommand}" PassEventArgsToCommand="True" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

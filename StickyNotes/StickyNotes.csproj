@@ -112,12 +112,12 @@
     <Compile Include="UserControl\CardItem.xaml.cs">
       <DependentUpon>CardItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\HotKeyUtil\EHotKeySetting.cs" />
-    <Compile Include="Utils\HotKeyUtil\EKey.cs" />
-    <Compile Include="Utils\HotKeyUtil\HotKeyHelper.cs" />
-    <Compile Include="Utils\HotKeyUtil\HotKeyMananger.cs" />
-    <Compile Include="Utils\HotKeyUtil\HotKeyModel.cs" />
-    <Compile Include="Utils\HotKeyUtil\HotKeySettingManager.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKey.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotkeyEventArgs.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeyHandler.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeyManager.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeySetting.cs" />
+    <Compile Include="Utils\HotKeyUtil\NativeMethods.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\Messages\ChangeWindowMessage.cs" />
     <Compile Include="Utils\LanguageManager.cs" />

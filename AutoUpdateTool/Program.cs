@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
+using StickyNotes.Utils;
 
 /// <summary>
 /// 自动更新程序
@@ -95,6 +96,7 @@ namespace AutoUpdateTool
                     }
                     catch (Exception e)
                     {
+                        Logger.Log().Error(e.Message);
                     }
                 }
             }
