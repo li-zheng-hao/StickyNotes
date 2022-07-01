@@ -61,7 +61,7 @@ namespace StickyNotes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to v4.7.6.
+        ///   Looks up a localized string similar to v4.7.7.
         /// </summary>
         public static string Version {
             get {

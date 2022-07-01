@@ -11,7 +11,7 @@
     xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:stickynotes="clr-namespace:StickyNotes"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    xmlns:utils="clr-namespace:StickyNotes.Utils"
+    xmlns:utils="clr-namespace:StickyNotes.Utils" xmlns:usercontrol="clr-namespace:StickyNotes.UserControl"
     x:Name="loaded"
     Width="{Binding Datas.WindowsWidth, Mode=TwoWay}"
     Height="{Binding Datas.WindowsHeight, Mode=TwoWay}"
@@ -54,6 +54,8 @@
     <Window.Resources>
         <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converter:DeleteWindowMessageConverter x:Key="DeleteWindowMessageConverter" />
+
+        <usercontrol:CustomWarningDialog x:Key="customWarningDialog"></usercontrol:CustomWarningDialog>
     </Window.Resources>
     <!--<i:Interaction.Behaviors>-->
     <!--<utils:WndHideBehavior />-->

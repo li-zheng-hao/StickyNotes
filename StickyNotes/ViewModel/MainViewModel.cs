@@ -14,6 +14,10 @@ using StickyNotes.View;
 using StickyNotes.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.Controls.Dialogs;
+using MaterialDesignThemes.Wpf;
+using System.Threading;
+using System.Threading.Tasks;
+using StickyNotes.UserControl;
 
 namespace StickyNotes
 {
@@ -65,6 +69,7 @@ namespace StickyNotes
 
         public RelayCommand<WindowsData> CloseWindowButNotDeleteDataCommand { get; private set; }
         public RelayCommand OpenListCommand { get; set; }
+        public CustomDialog CustomDeleteDialog { get; private set; }
         #endregion
 
         #region 快捷键数据
@@ -297,7 +302,8 @@ namespace StickyNotes
            
                 try
                 {
-                    //ProgramData.ShowAllHotKey.Pressed += HotKeyHandler.HandlePress;
+                ProgramData.ShowAllHotKey.Pressed -= HotKeyHandler.HandlePress;
+                ProgramData.ShowAllHotKey.Pressed += HotKeyHandler.HandlePress;
                     HotkeyManager.GetHotkeyManager().TryAddHotkey(ProgramData.ShowAllHotKey);
                 }
                 catch (Exception)
@@ -349,10 +355,13 @@ namespace StickyNotes
         /// <summary>
         /// 打开设置窗口
         /// </summary>
-        private void OpenSettingMethod()
+        private async void OpenSettingMethod()
         {
-            var win = new SettingWindow();
-            win.Show();
+           
+
+            
+            var win2 = new SettingWindow();
+            win2.Show();
         }
 
         /// <summary>
@@ -399,17 +408,69 @@ namespace StickyNotes
                     break;
                 }
             }
-            MetroDialogSettings dialogSettings = new MetroDialogSettings();
-            dialogSettings.AffirmativeButtonText = LanguageManager.Translate("main-confirm");
-            dialogSettings.NegativeButtonText = LanguageManager.Translate("main-cancel");
+            var dialog = win.Resources["customWarningDialog"] as CustomWarningDialog;
+            CustomDeleteDialog = new CustomDialog(win) { Content = dialog, Title = LanguageManager.Translate("main-warning") };
+            CustomDeleteDialog.DialogContentMargin = new GridLength(20);
+            //CustomDeleteDialog.DialogContentWidth = new GridLength(100);
+            dialog.CloseButtonClicked -= CancelDelete;
+            dialog.CloseButtonClicked += CancelDelete;
+            dialog.ConfirmButtonClicked -= DeleteWindow;
+            dialog.ConfirmButtonClicked += DeleteWindow;
+            await win.ShowMetroDialogAsync(CustomDeleteDialog);
+        }
+        
 
-            MessageDialogResult result=await win?.ShowMessageAsync(LanguageManager.Translate("main-warning")
-                , LanguageManager.Translate("main-confirmDelLabel"), MessageDialogStyle.AffirmativeAndNegative,dialogSettings);
-            if (result==MessageDialogResult.Affirmative)
+        public MainWindow GetCurrentWindow()
+        {
+            MainWindow win = null;
+            var datas = Datas;
+            foreach (Window item in Application.Current.Windows)
             {
-                DeleteWindowCommand.Execute(win);
+                if (item.DataContext == this)
+                {
+                    win = item as MainWindow;
+                    break;
+                }
+            }
+            return win;
+        }
+        private async void DeleteWindow(object sender, RoutedEventArgs e)
+        {
+            MainWindow win = GetCurrentWindow();
+            foreach (Window item in Application.Current.Windows)
+            {
+                if (item.DataContext == this)
+                {
+                    win = item as MainWindow;
+                    break;
+                }
+            }
+            await win.HideMetroDialogAsync(CustomDeleteDialog);
+            DeleteWindowMethod(win);
+        }
+
+        private void CancelDelete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow win = null;
+                var datas = Datas;
+                foreach (Window item in Application.Current.Windows)
+                {
+                    if (item.DataContext == this)
+                    {
+                        win = item as MainWindow;
+                        break;
+                    }
+                }
+                win.HideMetroDialogAsync(CustomDeleteDialog);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log().Error(ex.Message);
             }
         }
+
         /// <summary>
         /// 删除已经不需要的文档数据
         /// </summary>

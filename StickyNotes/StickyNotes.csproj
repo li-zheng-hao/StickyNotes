@@ -112,6 +112,9 @@
     <Compile Include="UserControl\CardItem.xaml.cs">
       <DependentUpon>CardItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\CustomWarningDialog.xaml.cs">
+      <DependentUpon>CustomWarningDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\HotKeyUtil\HotKey.cs" />
     <Compile Include="Utils\HotKeyUtil\HotkeyEventArgs.cs" />
     <Compile Include="Utils\HotKeyUtil\HotKeyHandler.cs" />
@@ -166,6 +169,10 @@
     <Page Include="UserControl\CardItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\CustomWarningDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ListWindow.xaml">
       <SubType>Designer</SubType>
