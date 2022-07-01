@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>StickyNotes</RootNamespace>
     <AssemblyName>StickyNotes</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -32,6 +32,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -115,6 +116,7 @@
     <Compile Include="UserControl\CustomWarningDialog.xaml.cs">
       <DependentUpon>CustomWarningDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\DataHelper.cs" />
     <Compile Include="Utils\HotKeyUtil\HotKey.cs" />
     <Compile Include="Utils\HotKeyUtil\HotkeyEventArgs.cs" />
     <Compile Include="Utils\HotKeyUtil\HotKeyHandler.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Utils\LanguageManager.cs" />
     <Compile Include="Utils\ThemeAssist.cs" />
     <Compile Include="Utils\TimerUtil.cs" />
+    <Compile Include="Utils\UpdateHelper.cs" />
     <Compile Include="Utils\WindowHide.cs" />
     <Compile Include="ViewModel\ListWindowViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
@@ -137,7 +140,6 @@
     <Compile Include="Utils\SystemTray.cs" />
     <Compile Include="Data\WindowsData.cs" />
     <Compile Include="Utils\WindowsManager.cs" />
-    <Compile Include="Utils\XMLHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\ListWindow.xaml.cs">
       <DependentUpon>ListWindow.xaml</DependentUpon>

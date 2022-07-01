@@ -23,6 +23,11 @@ A convenitent and beautiful Windows StikyNotes Application </br></br>
 4. ~~新增列表功能，不需要显示的可以暂时隐藏起来~~(完成)
 5. ~~用web端的markdown文本编辑器或富文本编辑器替换现有WPF的富文本控件（WPF的富文本控件实在是不太行，暂时找不到新方案，欢迎大家提issue交流）~~（cefsharp打包体积太大，思考新解决方案）
 6. ~~搭建一个主页网站（类似Typora，计划Asp.Net Core+Vue实现），方便无法科学上网下载软件的朋友能够下载和更新本软件~~（完成）
+7. 更新功能优化
+   1. 更新工具改成GUI，通知并显示更新信息
+   2. 主程序支持对更新工具的更新
+   3. Web端后台集成上传新补丁及新程序安装包功能
+
 
 ## 安装 Installation
 

@@ -61,6 +61,15 @@ namespace StickyNotes.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://127.0.0.1:5001.
+        /// </summary>
+        public static string ServerUrl {
+            get {
+                return ResourceManager.GetString("ServerUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to v4.8.0.
         /// </summary>
         public static string Version {
