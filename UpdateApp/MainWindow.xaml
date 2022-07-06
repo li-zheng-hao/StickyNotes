@@ -1,0 +1,60 @@
+﻿<mah:MetroWindow x:Class="UpdateApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:UpdateApp"
+        mc:Ignorable="d"
+                 xmlns:hc="https://handyorg.github.io/handycontrol"
+        Title="Update" Height="450" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">接收到新更新内容</Label>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+                <TextBox>111</TextBox>
+
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label>10%</Label>
+            <mah:MetroProgressBar Value="60" Orientation="Horizontal" />
+        </StackPanel>
+      
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center"
+                    
+                    >
+            <Button Click="Button_Click"  Style="{DynamicResource MahApps.Styles.Button.MetroSquare.Accent}" Margin="10 5 10 5 " MaxWidth="120">Open Message</Button>
+            <Button Click="Button_Click"
+                    Style="{DynamicResource MahApps.Styles.Button.MetroSquare}"
+                    Margin="100 5 10 5" MaxWidth="120">Close Message</Button>
+        </StackPanel>
+
+    </Grid>
+</mah:MetroWindow>
