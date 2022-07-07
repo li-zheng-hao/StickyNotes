@@ -337,6 +337,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{EB437726-8891-46DE-9D88-271242DB82BC}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{0E9DA473-F7C4-401B-B1AE-455313699794}</Project>
       <Name>DB</Name>

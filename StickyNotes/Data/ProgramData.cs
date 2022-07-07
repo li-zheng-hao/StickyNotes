@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Common.Lang;
+using GalaSoft.MvvmLight.Messaging;
 using StickyNotes.Annotations;
 using StickyNotes.Utils;
 using StickyNotes.Utils.HotKeyUtil;

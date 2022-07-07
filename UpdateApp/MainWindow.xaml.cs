@@ -1,4 +1,7 @@
-﻿using MahApps.Metro.Controls;
+﻿using Common;
+using Contract;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
@@ -22,14 +25,16 @@ namespace UpdateApp
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+      
+
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
             
         }
+       
+
+       
+       
     }
 }

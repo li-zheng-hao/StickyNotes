@@ -1,4 +1,5 @@
-﻿using DB;
+﻿using Common.Lang;
+using DB;
 using MahApps.Metro.Controls;
 using StickyNotes.Utils;
 using System;

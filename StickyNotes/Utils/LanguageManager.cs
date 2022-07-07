@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Lang;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,7 @@ using System.Windows;
 
 namespace StickyNotes.Utils
 {
-    public enum Language{
-        Chinese,
-        English
-    }
+ 
     public class LanguageManager
     {
         private const string _resourceStrFomart = "pack://application:,,,/Style/Languages/Lan-{0}.xaml";
