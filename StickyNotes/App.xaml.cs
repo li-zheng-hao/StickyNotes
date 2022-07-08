@@ -22,7 +22,7 @@ namespace StickyNotes
     public partial class App : Application
     {
 
-        #region 已经写好
+        #region 主程序
         System.Threading.Mutex mutex;
 
         public bool IsInited { get; set; } = true;
@@ -110,66 +110,24 @@ namespace StickyNotes
         private void CheckUpdate()
         {
             ProgramData p = ProgramData.Instance;
-            if (!p.IsAutoCheckUpdate)
-                return;
             try
             {
-                string version = StickyNotes.Properties.Resources.Version;
-                var process = new Process();
-                var arguments = version;
-                arguments += " " + Assembly.GetExecutingAssembly().Location;
-                process.StartInfo.FileName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+"\\AutoUpdateTool.exe"; // "iexplore.exe";   //IE
-                process.StartInfo.Arguments = arguments;
-                process.Start();
-                #region
-                //                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12; //加上这一句
-                //                System.Net.WebClient client = new WebClient();
-                //                byte[] page = client.DownloadData("https://github.com/li-zheng-hao/StickyNotes/releases/");
-                //                string content = System.Text.Encoding.UTF8.GetString(page);
-                //                string regex = @"v[0-9]\.[0-9]\.[0-9]";
-                //                Regex re = new Regex(regex);
-                //                MatchCollection matches = re.Matches(content);
-                //                System.Collections.IEnumerator enu = matches.GetEnumerator();
-                //                bool needUpdate = false;
-                //                while (enu.MoveNext() && enu.Current != null)
-                //                {
-                //                    Match match = (Match)(enu.Current);
-
-                //                    Console.Write(match.Value + "\r\n");
-                //                    string result = match.Value;
-                //                    Console.WriteLine(match.Value);
-                //                    if (Convert.ToInt32(match.Value[1]) > Convert.ToInt32(version[1]))
-                //                    {
-                //                        needUpdate = true;
-                //                    }
-                //                    else if (Convert.ToInt32(match.Value[1]) == Convert.ToInt32(version[1]) && Convert.ToInt32(match.Value[3]) > Convert.ToInt32(version[3]))
-                //                    {
-                //                        needUpdate = true;
-                //                    }
-                //                    else if (Convert.ToInt32(match.Value[1]) == Convert.ToInt32(version[1]) && Convert.ToInt32(match.Value[3]) == Convert.ToInt32(version[3]) && Convert.ToInt32(match.Value[5]) > Convert.ToInt32(version[5]))
-                //                    {
-                //                        needUpdate = true;
-
-                //                    }
-
-                //                    if (needUpdate)
-                //                    {
-                //                        new Thread(() =>
-                //                        {
-                //                            this.Invoke(new Action(() =>
-                //                            {
-                //                                MessageBox.Show("发现新版本，建议去Github更新");
-                //                            }));
-                //                        }).Start();
-                //                        break;
-                //                    }
-                //                }
-                #endregion
-
+                var updateHelper=new UpdateHelper();
+                updateHelper.UpdateToolCompleted += () => {
+                    if (p.IsAutoCheckUpdate == false)
+                        return;
+                   var res=updateHelper.CheckSelfNeedUpdate();
+                   if(res)
+                   {
+                        updateHelper.OpenUpdateTool();
+                   }
+                };
+               
+                updateHelper.UpdateUpdateTool();
             }
             catch (Exception ex)
             {
-                Logger.Log().Debug($"无法连接项目github官网 {ex.Message}");
+                Logger.Log().Debug($"无法更新 {ex.Message}");
             }
         }
 

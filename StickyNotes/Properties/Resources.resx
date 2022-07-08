@@ -124,4 +124,7 @@
     <value>v4.8.0</value>
     <comment>程序版本</comment>
   </data>
+  <data name="VersionFileName" xml:space="preserve">
+    <value>version.json</value>
+  </data>
 </root>

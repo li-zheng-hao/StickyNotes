@@ -21,7 +21,7 @@
                Content="{Binding LangHelper.Lang.UpdateWindowTitle}">
         </Label>
         <ListView  Grid.Row="1" VerticalContentAlignment="Top"  
-          ScrollViewer.VerticalScrollBarVisibility="Visible"
+          ScrollViewer.VerticalScrollBarVisibility="Auto"
           >
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
@@ -73,20 +73,25 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Visibility="{Binding UpdateProgressVisible}">
-            <Label>10%</Label>
-            <mah:MetroProgressBar Value="60" Orientation="Horizontal" />
-        </StackPanel>
-      
+        <Grid Grid.Row="2"  Visibility="{Binding UpdateProgressVisible}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="{Binding ProgressLabel}" ></Label>
+            
+            <mah:MetroProgressBar Grid.Column="1" Height="10" Margin="5" Value="{Binding ProgressValue}" BorderBrush="Black" BorderThickness="1" Orientation="Horizontal" />
+        </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center"
                     >
-            <Button  Style="{DynamicResource MahApps.Styles.Button.MetroSquare.Accent}" Margin="10 5 10 5 " 
+            <Button  Style="{DynamicResource MahApps.Styles.Button.MetroSquare.Accent}" Margin="10 5 10 5 "   Command="{Binding ClickUpdateCommand}"
+                     IsEnabled="{Binding CanDownloadFlag}"
                     Width="120" Height="30" Content="{Binding LangHelper.Lang.ConfirmUpdate}"></Button>
             <Button 
                 Height="26"
+                Command="{Binding CloseCommand}"
                     Style="{DynamicResource MahApps.Styles.Button.MetroSquare}"
                     Margin="100 5 10 5" Width="120" Content="{Binding LangHelper.Lang.CloseUpdate}"></Button>
         </StackPanel>
-
     </Grid>
 </mah:MetroWindow>

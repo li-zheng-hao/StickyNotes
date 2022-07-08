@@ -341,6 +341,10 @@
       <Project>{EB437726-8891-46DE-9D88-271242DB82BC}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Contract\Contract.csproj">
+      <Project>{5CB7E208-C6E8-4593-BAF9-B8D396FBFE41}</Project>
+      <Name>Contract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DB\DB.csproj">
       <Project>{0E9DA473-F7C4-401B-B1AE-455313699794}</Project>
       <Name>DB</Name>

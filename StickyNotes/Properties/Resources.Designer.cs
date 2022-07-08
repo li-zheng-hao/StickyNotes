@@ -77,5 +77,14 @@ namespace StickyNotes.Properties {
                 return ResourceManager.GetString("Version", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version.json.
+        /// </summary>
+        public static string VersionFileName {
+            get {
+                return ResourceManager.GetString("VersionFileName", resourceCulture);
+            }
+        }
     }
 }
