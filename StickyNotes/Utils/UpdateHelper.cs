@@ -28,6 +28,7 @@ namespace StickyNotes.Utils
         public static bool UpdateToolUpdated { get; set; } = false;
 
         public event Action UpdateToolCompleted;
+        public SoftwareUpdate LatestUpdateToolVersion { get;private set; }
         /// <summary>
         /// 更新 更新工具
         /// </summary>
@@ -40,9 +41,10 @@ namespace StickyNotes.Utils
             var res = HttpHelper.HttpGet("api/Software/GetLastedVersionByVersion",
                new string[] { "softwarename", "majorVersionNumber", "minorVersionNumber", "revisionNumebr" },
                new object[] { "updateapp", version.UpdateAppVersion.MajorVersionNumber, version.UpdateAppVersion.MinorVersionNumber, version.UpdateAppVersion.RevisionNumebr });
-            if (res.success)
+            if (res!=null&&res.success)
             {
                 List<SoftwareUpdate> software = HttpHelper.DynamicToObject<List<SoftwareUpdate>>(res.data);
+                LatestUpdateToolVersion = software.FirstOrDefault();
                 DownloadFileUrl = software.First().patch_file_url;
                 var fileName = Common.FileHelper.GetFileName(DownloadFileUrl);
                 var fileDir = Environment.CurrentDirectory;
@@ -64,6 +66,11 @@ namespace StickyNotes.Utils
             if (File.Exists(UpdatePatchFilePath))
                 File.Delete(UpdatePatchFilePath);
             UpdateToolUpdated = true;
+            var version=JsonHelper.ReadVersionFromFile(StickyNotes.Properties.Resources.VersionFileName);
+            version.UpdateAppVersion.MajorVersionNumber = LatestUpdateToolVersion.major_version_number;
+            version.UpdateAppVersion.MinorVersionNumber = LatestUpdateToolVersion.minor_version_number;
+            version.UpdateAppVersion.RevisionNumebr = LatestUpdateToolVersion.revision_number;
+            JsonHelper.WriteVersionToFile(version, StickyNotes.Properties.Resources.VersionFileName);
             UpdateToolCompleted?.Invoke();
         }
 

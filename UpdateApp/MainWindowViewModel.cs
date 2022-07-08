@@ -114,6 +114,12 @@ namespace UpdateApp
                 if (File.Exists(this.UpdatePatchFilePath))
                     File.Delete(this.UpdatePatchFilePath);
                 this.UpdatePatchFilePath = string.Empty;
+                var version = JsonHelper.ReadVersionFromFile(UpdateApp.Properties.Resources.VersionFileName);
+                var software=SoftwareInfoList.FirstOrDefault();
+                version.StickyNotesVersion.MajorVersionNumber = software.major_version_number;
+                version.StickyNotesVersion.MinorVersionNumber = software.minor_version_number;
+                version.StickyNotesVersion.RevisionNumebr = software.revision_number;
+                JsonHelper.WriteVersionToFile(version, UpdateApp.Properties.Resources.VersionFileName);
                 Process.Start(Path.Combine(Environment.CurrentDirectory, "StickyNotes.exe"));
                 Environment.Exit(0);
             }

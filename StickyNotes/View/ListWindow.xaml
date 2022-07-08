@@ -58,9 +58,9 @@
                     Kind="Add" />
                         </Button>
                         <StackPanel Grid.Column="1"  VerticalAlignment="Center">
-                            <Label  FontSize="20" Margin="50 0 0 0"  HorizontalAlignment="Center" FontFamily="Bell MT" >
+                            <TextBlock  FontSize="20" Margin="50 0 0 0"  HorizontalAlignment="Center" FontFamily="Bell MT" >
                                 StickyNotes
-                            </Label>
+                            </TextBlock>
                         </StackPanel>
                         <Button
                 Name="SettingButton"
@@ -70,11 +70,11 @@
                 HorizontalAlignment="Right"
                 Command="{Binding OpenSettingViewCommand}"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="关闭">
+                ToolTip="更多">
                             <materialDesign:PackIcon
                     Width="24"
                     Height="24"
-                    Kind="MoreHoriz" />
+                    Kind="MixerSettings" />
                         </Button>
                         <Button
                 Name="ExitButton"
@@ -130,13 +130,13 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
 
         <Grid Visibility="{Binding ShowSettingView,Converter={StaticResource Boolean2VisibilityConverter}}">
             <hc:TransitioningContentControl TransitionMode="Right2LeftWithFade"  >
-                <Grid>
+                <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Grid Height="40" VerticalAlignment="Center" Background="LightBlue">
+                    <Grid Height="40"  VerticalAlignment="Center" Background="LightBlue">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -158,9 +158,9 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                     Kind="ArrowBack" />
                         </Button>
                         <StackPanel Grid.Column="1"  VerticalAlignment="Center">
-                            <Label  FontSize="20" Margin="0 0 0 0"  HorizontalAlignment="Center"  >
+                            <TextBlock  FontSize="20" Margin="0 0 0 0"  HorizontalAlignment="Center"  >
                                 设置
-                            </Label>
+                            </TextBlock>
                         </StackPanel>
                      
                         <Button
@@ -179,87 +179,82 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                         </Button>
 
                     </Grid>
-                    <hc:ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Visible">
+                    <hc:ScrollViewer Grid.Row="1" Margin="0 12 0 0"  VerticalScrollBarVisibility="Visible">
                         <!--设置的主要列表-->
                         <StackPanel >
-                            <ItemsControl Margin="10">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.Template>
-                                        <ControlTemplate TargetType="ItemsControl">
-                                        <hc:ScrollViewer Orientation="Horizontal"  HorizontalScrollBarVisibility="Hidden">
-                                                <ItemsPresenter/>
-                                        </hc:ScrollViewer>
-
-                                    </ControlTemplate>
-                                    </ItemsControl.Template>
-                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                    <ColumnDefinition ></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                               
+                                <hc:Card MaxWidth="240" Grid.Column="0"  Margin="2"  MinHeight="100"  BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
-                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="BlueViolet">
-                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">Red</Label>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#d5d5d5">
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">冷 灰</TextBlock>
 
                                     </Border>
                                 </hc:Card>
-                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card MaxWidth="240" Grid.Column="1"  Margin="2"  MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
-                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="OrangeRed">
-                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">OrangeRed</Label>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#d1bfac">
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">田园褐</TextBlock>
 
                                     </Border>
                                 </hc:Card>
-                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card MaxWidth="240" Margin="2" Grid.Column="2"   MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
-                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="ForestGreen">
-                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">ForestGreen</Label>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#a59b95">
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">石材灰</TextBlock>
 
                                     </Border>
                                 </hc:Card>
-                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card MaxWidth="240" Margin="2" Grid.Column="3"   MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
-                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="Ivory">
-                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">Ivory</Label>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#7a7b79">
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">乌云灰</TextBlock>
 
                                     </Border>
                                 </hc:Card>
-                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card MaxWidth="240" Margin="2"  Grid.Column="4"  MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
-                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="Ivory">
-                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">Ivory</Label>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#7d90a5">
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">甘 蓝</TextBlock>
 
                                     </Border>
                                 </hc:Card>
 
-                            </ItemsControl>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                <Label VerticalAlignment="Center">主题自定义</Label>
+                            </Grid>
+                            <StackPanel Margin="0 5 0 -5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <TextBlock VerticalAlignment="Center" FontSize="12">主题自定义</TextBlock>
                                 <Button
                 Name="MoreThemeBtn"
                 Height="20"
@@ -276,7 +271,8 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                     Kind="MoreHoriz" />
                                 </Button>
                             </StackPanel>
-                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                            <Border Margin="0 18 0 0"></Border>
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10 5 10 5" >
                                 <Border CornerRadius="4" Style="{StaticResource BorderClip}">
                                     <Grid Margin="5">
                                         <Grid.ColumnDefinitions>
@@ -292,16 +288,16 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Ring" />
                                         </Border>
-                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                        <TextBlock Grid.Column="1" FontSize="14" VerticalAlignment="Center" Margin="10 0 0 0">
                                             开机自启动
-                                        </Label>
+                                        </TextBlock>
                                         <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
                                     </Grid>
 
 
                                 </Border>
                             </hc:Card>
-                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10 5 10 5" >
                                 <Border CornerRadius="4" Style="{StaticResource BorderClip}">
                                     <Grid Margin="5">
                                         <Grid.ColumnDefinitions>
@@ -317,9 +313,9 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Pin" />
                                         </Border>
-                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                        <TextBlock Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
                                             所有窗体置顶
-                                        </Label>
+                                        </TextBlock>
                                         <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
                                     </Grid>
 
@@ -327,7 +323,7 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                 </Border>
                             </hc:Card>
 
-                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10 5 10 5" >
                                 <Border CornerRadius="4" Style="{StaticResource BorderClip}">
                                     <Grid Margin="5">
                                         <Grid.ColumnDefinitions>
@@ -343,16 +339,16 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Update" />
                                         </Border>
-                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                        <TextBlock Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
                                             自动检查更新
-                                        </Label>
+                                        </TextBlock>
                                         <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
                                     </Grid>
 
 
                                 </Border>
                             </hc:Card>
-                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10 5 10 5" >
                                 <Border CornerRadius="4" Style="{StaticResource BorderClip}">
                                     <Grid Margin="5">
                                         <Grid.ColumnDefinitions>
@@ -368,16 +364,16 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Show" />
                                         </Border>
-                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                        <TextBlock Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
                                             显示/隐藏所有便签
-                                        </Label>
-                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                        </TextBlock>
+                                        <TextBox Grid.Column="3" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"  ></TextBox>
                                     </Grid>
 
 
                                 </Border>
                             </hc:Card>
-                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10 5 10 5"  >
                                 <Border CornerRadius="4" Style="{StaticResource BorderClip}">
                                     <Grid Margin="5">
                                         <Grid.ColumnDefinitions>
@@ -393,10 +389,15 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Language" />
                                         </Border>
-                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                        <TextBlock Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
                                             语言设置
-                                        </Label>
-                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                        </TextBlock>
+                                        <ComboBox Grid.Column="2" Width="100" HorizontalAlignment="Right" Height="25" >
+                                            <ComboBoxItem>1</ComboBoxItem>
+                                            <ComboBoxItem>1</ComboBoxItem>
+                                            <ComboBoxItem>1</ComboBoxItem>
+                                            <ComboBoxItem>1</ComboBoxItem>
+                                        </ComboBox>
                                     </Grid>
 
 

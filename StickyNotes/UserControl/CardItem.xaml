@@ -62,7 +62,7 @@
                 <StackPanel Grid.Row="1" Background="{DynamicResource GrayBackground}"></StackPanel>
                 <TextBlock Name="CardTextBlock" MaxHeight="150" MinHeight="100" TextWrapping="Wrap" Margin="10 5 0 10" Grid.Row="1" FontSize="14" Text="{Binding RichTextBoxContent}"
                        ></TextBlock>
-                <Label Grid.Row="1" Foreground="DimGray" HorizontalAlignment="Right" VerticalAlignment="Bottom">2022-7-8 13:34:10</Label>
+                <TextBlock Grid.Row="1" Foreground="DimGray" HorizontalAlignment="Right" VerticalAlignment="Bottom">2022-7-8 13:34:10</TextBlock>
 
 
             </Grid>

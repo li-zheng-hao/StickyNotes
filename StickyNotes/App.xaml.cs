@@ -234,15 +234,13 @@ namespace StickyNotes
             {
                 Logger.Log().Error(e.Exception.StackTrace);
                 Logger.Log().Error(e.Exception.Message);
-                MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
-                Application.Current.Shutdown();
+                MessageBox.Show(e.Exception.Message);
 
             }
             catch (Exception ex)
             {
                 Logger.Log().Error(ex.StackTrace);
                 Logger.Log().Error(ex.Message);
-                Application.Current.Shutdown();
             }
         }
 

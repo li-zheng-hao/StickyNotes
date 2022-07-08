@@ -129,4 +129,7 @@
     <value>0</value>
     <comment>修订版本</comment>
   </data>
+  <data name="VersionFileName" xml:space="preserve">
+    <value>version.json</value>
+  </data>
 </root>

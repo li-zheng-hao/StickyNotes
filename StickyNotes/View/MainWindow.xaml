@@ -67,15 +67,17 @@
         <!--  菜单栏阴影效果  -->
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="35" />
         </Grid.RowDefinitions>
-        <hc:Drawer Name="DrawerLeft" Grid.Row="0"  Dock="Top"  >
+        <metro:Flyout Name="DrawerLeft" Theme="Light"  Position="Top"  CloseButtonVisibility="Collapsed" TitleVisibility="Collapsed" IsOpen="{Binding Datas.IsFocused}" >
             <Grid
+                Height="40"
             Name="Menu"
             Grid.Row="0"
-            Background="{DynamicResource MahApps.Brushes.Accent2}">
+                Background="#add8e6"
+            >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="Auto" />
@@ -106,17 +108,18 @@
                 ToolTip="置顶">
                     <materialDesign:PackIcon
                     Width="16"
+                        Foreground="Black"
                     Height="16"
                     Kind="Pin" />
 
                 </ToggleButton>
 
                 <!--  软件名称  -->
-                <Label
+                <TextBlock
                 Name="SoftWareName"
                 Grid.Column="2"
-                Style="{StaticResource TitleLabelStyle}">
-                </Label>
+                >
+                </TextBlock>
 
                 <StackPanel
                 Grid.Column="3"
@@ -135,6 +138,7 @@
                             <iconPacks:PackIconModern
                             Width="14"
                             Height="14"
+                                Foreground="Black"
                             Kind="List" />
                         </metro:DropDownButton.Icon>
                         <metro:DropDownButton.ItemContainerStyle>
@@ -216,7 +220,7 @@
                 </StackPanel>
             </Grid>
 
-        </hc:Drawer>
+        </metro:Flyout>
 
 
         <!--  文字显示区域  -->
@@ -249,9 +253,10 @@
             MaxWidth="800"
             Margin="0,0,0,0"
             Padding="2"
-            
+            Height="30"
+            Opacity="0.6"
             HorizontalAlignment="Left"
-            Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
+            Background="#D5ADD8E6"
             IsActive="{Binding Path=Datas.IsFocused, Mode=OneWay}">
             <materialDesign:SnackbarMessage>
                 <materialDesign:SnackbarMessage.Content>
@@ -306,7 +311,6 @@
                                 Height="18"
                                 Kind="FormatFontSizeDecrease" />
                         </Button>
-                        <ToggleButton IsChecked="{Binding IsOpen,ElementName=DrawerLeft}"></ToggleButton>
                     </StackPanel>
                 </materialDesign:SnackbarMessage.Content>
             </materialDesign:SnackbarMessage>
@@ -334,11 +338,11 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Label
+                <TextBlock
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Content="{DynamicResource main}"
+                    Text="{DynamicResource main}"
                     FontFamily="/StickyNotes;component/Resources/Fonts/#Lato"
                     FontSize="22" />
                 <Button

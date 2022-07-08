@@ -86,5 +86,14 @@ namespace UpdateApp.Properties {
                 return ResourceManager.GetString("revisionNumebr", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to version.json.
+        /// </summary>
+        internal static string VersionFileName {
+            get {
+                return ResourceManager.GetString("VersionFileName", resourceCulture);
+            }
+        }
     }
 }
