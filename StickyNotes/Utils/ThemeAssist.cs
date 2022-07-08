@@ -34,7 +34,7 @@ namespace StickyNotes
 
             ProgramData.Instance.CurrentTheme=themeName;
 
-            ThemeManager.Current.ChangeTheme(Application.Current, ProgramData.Instance.BaseTheme+"."+themeName);
+            //ThemeManager.Current.ChangeTheme(Application.Current, ProgramData.Instance.BaseTheme+"."+themeName);
             //var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
 
             //foreach (var merged in mergedDictionaries)

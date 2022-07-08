@@ -21,7 +21,7 @@ namespace StickyNotes.View
     /// <summary>
     /// ListWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class ListWindow :MetroWindow
+    public partial class ListWindow :HandyControl.Controls.Window
     {
       
 

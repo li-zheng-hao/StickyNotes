@@ -260,8 +260,7 @@ namespace StickyNotes
                 {
                     Logger.Log().Error(exception.StackTrace);
                     Logger.Log().Error(exception.Message);
-                    MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
-                    Application.Current.Shutdown();
+                    MessageBox.Show(exception.Message);
                 }
             }
             catch (Exception ex)
@@ -273,14 +272,12 @@ namespace StickyNotes
                     {
                         Logger.Log().Error(exception.StackTrace);
                         Logger.Log().Error(exception.Message);
-                        Application.Current.Shutdown();
                     }
                 }
                 catch (Exception exxxx)
                 {
                     Logger.Log().Error(exxxx.StackTrace);
                     Logger.Log().Error(exxxx.Message);
-                    Application.Current.Shutdown();
 
                 }
             }

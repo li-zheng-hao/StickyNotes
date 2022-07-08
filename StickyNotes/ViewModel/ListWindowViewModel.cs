@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using GalaSoft.MvvmLight;
@@ -19,6 +20,8 @@ namespace StickyNotes.ViewModel
         public RelayCommand<WindowsData> DeleteWindowCommand { get; set; }
         public RelayCommand<WindowsData> ChangeWindowVisibilityCommand { get; set; }
         public RelayCommand<TextChangedEventArgs> FilterTextChangedCommand { get; set; }
+
+        public RelayCommand OpenSettingViewCommand { get; set; }
         /// <summary>
         /// 搜索框内字符串
         /// </summary>
@@ -30,18 +33,41 @@ namespace StickyNotes.ViewModel
 
         public RelayCommand NewWindowCommand { get; set; }
         public ProgramData ProgramData { get; set; }
+        public RelayCommand<Window> MoveWindowCommand { get; private set; }
+
+        /// <summary>
+        /// 控制是显示列表还是显示设置
+        /// </summary>
+        public bool ShowListView { get; set; } = true;
+        public bool ShowSettingView { get; set; } = false;
         public ListWindowViewModel()
         {
             this.ProgramData = ProgramData.Instance;
+            MoveWindowCommand = new RelayCommand<Window>(MoveWindowMethod);
             DeleteWindowCommand = new RelayCommand<WindowsData>(DeleteWindowClick);
             ChangeWindowVisibilityCommand = new RelayCommand<WindowsData>(ChangeWindowVisibilityMethod);
             NewWindowCommand = new RelayCommand(NewWindowMethod);
+            OpenSettingViewCommand = new RelayCommand(OpenSettingViewMethod);
             FilterTextChangedCommand = new RelayCommand<TextChangedEventArgs>(FilterTextChangedMethod);
             ProgramData.Datas.ToList().ForEach(data => DisplayWindows.Add(data));
             ProgramData.HideWindowData.ToList().ForEach(data=>DisplayWindows.Add(data));
 
             ProgramData.Datas.CollectionChanged += Datas_CollectionChanged;
             ProgramData.HideWindowData.CollectionChanged += Datas_CollectionChanged;
+        }
+
+        private void MoveWindowMethod(Window window)
+        {
+            window.DragMove();
+        }
+
+        /// <summary>
+        /// 切换列表和设置界面
+        /// </summary>
+        private void OpenSettingViewMethod()
+        {
+            this.ShowListView = !this.ShowListView;
+            this.ShowSettingView = !this.ShowSettingView;
         }
 
         private void Datas_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

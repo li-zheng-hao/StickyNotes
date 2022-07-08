@@ -1,6 +1,7 @@
-﻿<Controls:MetroWindow x:Class="StickyNotes.View.ListWindow"
+﻿<hc:Window x:Class="StickyNotes.View.ListWindow"
   xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,104 +11,402 @@
                       xmlns:cmd="http://www.galasoft.ch/mvvmlight" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
                       d:DataContext="{d:DesignInstance Type=viewmodel:ListWindowViewModel}"
         mc:Ignorable="d"
-        ShowTitleBar="False"
+        ResizeMode="NoResize"
+           xmlns:command="http://www.galasoft.ch/mvvmlight"
+           ShowNonClientArea="False"
                       Name="listWindow"
                       Title="便签列表"
-                       GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
                       Background="White"
-                      TitleBarHeight="0"
-        Height="500" Width="300">
+        Height="630" Width="330">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=listWindow}"/>
+        </i:EventTrigger>
 
+    </i:Interaction.Triggers>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
+        <Grid  Visibility="{Binding ShowListView,Converter={StaticResource Boolean2VisibilityConverter}}">
+            <hc:TransitioningContentControl TransitionMode="Right2LeftWithFade" >
+                <Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid Height="40" VerticalAlignment="Center" Background="LightBlue">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button
                 Name="AddButton"
+                Height="40"
+                Width="40"
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 Command="{Binding NewWindowCommand}"
                 Style="{StaticResource Button_Menu}"
                 ToolTip="新增一条便签">
-                <materialDesign:PackIcon
-                    Width="18"
-                    Height="18"
-                    Kind="LibraryAdd" />
-            </Button>
-         
-            <Button
-                Name="ExitButton"
+                            <materialDesign:PackIcon
+                    Width="24"
+                    Height="24"
+                    Kind="Add" />
+                        </Button>
+                        <StackPanel Grid.Column="1"  VerticalAlignment="Center">
+                            <Label  FontSize="20" Margin="50 0 0 0"  HorizontalAlignment="Center" FontFamily="Bell MT" >
+                                StickyNotes
+                            </Label>
+                        </StackPanel>
+                        <Button
+                Name="SettingButton"
                 Grid.Column="2"
+                Width="40"
+                Height="40"
                 HorizontalAlignment="Right"
-                Click="ExitButton_Click"
+                Command="{Binding OpenSettingViewCommand}"
                 Style="{StaticResource Button_Menu}"
                 ToolTip="关闭">
-                <materialDesign:PackIcon
-                    Width="18"
-                    Height="18"
+                            <materialDesign:PackIcon
+                    Width="24"
+                    Height="24"
+                    Kind="MoreHoriz" />
+                        </Button>
+                        <Button
+                Name="ExitButton"
+                Grid.Column="3"
+                HorizontalAlignment="Right"
+                Click="ExitButton_Click"
+                Width="40"
+                Height="40"
+                Style="{StaticResource Button_Menu}"
+                ToolTip="关闭">
+                            <materialDesign:PackIcon
+                    Width="24"
+                    Height="24"
                     Kind="Close" />
-            </Button>
+                        </Button>
 
-        </Grid>
-        <Label Grid.Row="1" FontSize="24">StickyNotes</Label>
-        <TextBox Grid.Column="2"  Grid.Row="2" Margin="10 5 10 5"
-                     Text="{Binding FilterText,Mode=TwoWay}"
-               
-                             Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                             Controls:TextBoxHelper.ClearTextButton="True"
-                             Controls:TextBoxHelper.UseFloatingWatermark="False"
-                             Controls:TextBoxHelper.Watermark="Search...">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="TextChanged">
-                    <cmd:EventToCommand Command="{Binding FilterTextChangedCommand}" PassEventArgsToCommand="True"></cmd:EventToCommand>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <TextBox.Style>
-                <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search}" TargetType="{x:Type TextBox}">
-                    <Style.Triggers>
-                        <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
-                            <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
-                            <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBox.Style>
-        </TextBox>
-        <Grid Grid.Row="3">
-            <ScrollViewer VerticalScrollBarVisibility="Hidden"   >
-                <ItemsControl Name="CardsItems" Margin="10 5 10 5" ItemsSource="{Binding DisplayWindows}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <usercontrol:CardItem 
-                                x:Name="CardItem" Margin="0 5 0 5" IsShowOnScreen="{Binding IsShowed,Mode=TwoWay}"
+                    </Grid>
+                    <hc:SearchBar Grid.Row="1" Margin="15 16 15 8" Height="40" Style="{StaticResource SearchBarPlus}"  Background="{DynamicResource GrayBackground}" hc:InfoElement.Placeholder="搜索..." />
+
+                    <Grid Grid.Row="3">
+                        <hc:ScrollViewer>
+                            <ItemsControl Name="CardsItems" Margin="15 0 15 0" ItemsSource="{Binding DisplayWindows}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <usercontrol:CardItem 
+                                x:Name="CardItem" Margin="0 8 0 8" IsShowOnScreen="{Binding IsShowed,Mode=TwoWay}"
                                                   >
-                                <i:Interaction.Triggers>
-                                 
-                                    <i:EventTrigger EventName="MouseDoubleClick" >
-                                        <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-AncestorType={x:Type Window}}, Path=DataContext.ChangeWindowVisibilityCommand}"  CommandParameter="{Binding .}" />
-                                    </i:EventTrigger>
+                                            <i:Interaction.Triggers>
 
-                                    <i:EventTrigger EventName="DeleteNoteClick" >
-                                        <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                                <i:EventTrigger EventName="MouseDoubleClick" >
+                                                    <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+AncestorType={x:Type Window}}, Path=DataContext.ChangeWindowVisibilityCommand}"  CommandParameter="{Binding .}" />
+                                                </i:EventTrigger>
+
+                                                <i:EventTrigger EventName="DeleteNoteClick" >
+                                                    <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource FindAncestor, 
 AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandParameter="{Binding .}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </usercontrol:CardItem>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </usercontrol:CardItem>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </hc:ScrollViewer>
+
+
+
+                    </Grid>
+                </Grid>
+            </hc:TransitioningContentControl>
+        </Grid>
+    
+
+        <Grid Visibility="{Binding ShowSettingView,Converter={StaticResource Boolean2VisibilityConverter}}">
+            <hc:TransitioningContentControl TransitionMode="Right2LeftWithFade"  >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Grid Height="40" VerticalAlignment="Center" Background="LightBlue">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button
+                Name="AddButton2"
+                Height="40"
+                Width="40"
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Command="{Binding OpenSettingViewCommand}"
+                Style="{StaticResource Button_Menu}"
+                ToolTip="返回">
+                            <materialDesign:PackIcon
+                    Width="24"
+                    Height="24"
+                    Kind="ArrowBack" />
+                        </Button>
+                        <StackPanel Grid.Column="1"  VerticalAlignment="Center">
+                            <Label  FontSize="20" Margin="0 0 0 0"  HorizontalAlignment="Center"  >
+                                设置
+                            </Label>
+                        </StackPanel>
+                     
+                        <Button
+                Name="ExitButton2"
+                Grid.Column="3"
+                HorizontalAlignment="Right"
+                Click="ExitButton_Click"
+                Width="40"
+                Height="40"
+                Style="{StaticResource Button_Menu}"
+                ToolTip="关闭">
+                            <materialDesign:PackIcon
+                    Width="24"
+                    Height="24"
+                    Kind="Close" />
+                        </Button>
+
+                    </Grid>
+                    <hc:ScrollViewer Grid.Row="1"  VerticalScrollBarVisibility="Visible">
+                        <!--设置的主要列表-->
+                        <StackPanel >
+                            <ItemsControl Margin="10">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.Template>
+                                        <ControlTemplate TargetType="ItemsControl">
+                                        <hc:ScrollViewer Orientation="Horizontal"  HorizontalScrollBarVisibility="Hidden">
+                                                <ItemsPresenter/>
+                                        </hc:ScrollViewer>
+
+                                    </ControlTemplate>
+                                    </ItemsControl.Template>
+                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                    <hc:Card.Style>
+                                        <Style TargetType="hc:Card">
+                                            <Setter Property="Cursor" Value="Hand"></Setter>
+
+                                        </Style>
+                                    </hc:Card.Style>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="BlueViolet">
+                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">Red</Label>
+
+                                    </Border>
+                                </hc:Card>
+                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                    <hc:Card.Style>
+                                        <Style TargetType="hc:Card">
+                                            <Setter Property="Cursor" Value="Hand"></Setter>
+
+                                        </Style>
+                                    </hc:Card.Style>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="OrangeRed">
+                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">OrangeRed</Label>
+
+                                    </Border>
+                                </hc:Card>
+                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                    <hc:Card.Style>
+                                        <Style TargetType="hc:Card">
+                                            <Setter Property="Cursor" Value="Hand"></Setter>
+
+                                        </Style>
+                                    </hc:Card.Style>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="ForestGreen">
+                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">ForestGreen</Label>
+
+                                    </Border>
+                                </hc:Card>
+                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                    <hc:Card.Style>
+                                        <Style TargetType="hc:Card">
+                                            <Setter Property="Cursor" Value="Hand"></Setter>
+
+                                        </Style>
+                                    </hc:Card.Style>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="Ivory">
+                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">Ivory</Label>
+
+                                    </Border>
+                                </hc:Card>
+                                <hc:Card MaxWidth="240" Margin="2"  MinHeight="100" Width="60" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                    <hc:Card.Style>
+                                        <Style TargetType="hc:Card">
+                                            <Setter Property="Cursor" Value="Hand"></Setter>
+
+                                        </Style>
+                                    </hc:Card.Style>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="Ivory">
+                                        <Label FontFamily="Bell MT" FontSize="16" FontWeight="Bold">Ivory</Label>
+
+                                    </Border>
+                                </hc:Card>
+
+                            </ItemsControl>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <Label VerticalAlignment="Center">主题自定义</Label>
+                                <Button
+                Name="MoreThemeBtn"
+                Height="20"
+                Width="20"
+                                    Margin="0 0 10 0"
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Command="{Binding NewWindowCommand}"
+                Style="{StaticResource Button_Menu}"
+                ToolTip="更多主题颜色">
+                                    <materialDesign:PackIcon
+                    Width="20"
+                    Height="20"
+                    Kind="MoreHoriz" />
+                                </Button>
+                            </StackPanel>
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                                <Border CornerRadius="4" Style="{StaticResource BorderClip}">
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border CornerRadius="5" Background="LightGray" Width="40" Height="40" >
+                                            <materialDesign:PackIcon
+                    Width="30"
+                    Height="30"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Kind="Ring" />
+                                        </Border>
+                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                            开机自启动
+                                        </Label>
+                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                    </Grid>
+
+
+                                </Border>
+                            </hc:Card>
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                                <Border CornerRadius="4" Style="{StaticResource BorderClip}">
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border CornerRadius="5" Background="LightGray" Width="40" Height="40" >
+                                            <materialDesign:PackIcon
+                    Width="30"
+                    Height="30"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Kind="Pin" />
+                                        </Border>
+                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                            所有窗体置顶
+                                        </Label>
+                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                    </Grid>
+
+
+                                </Border>
+                            </hc:Card>
+
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                                <Border CornerRadius="4" Style="{StaticResource BorderClip}">
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border CornerRadius="5" Background="LightGray" Width="40" Height="40" >
+                                            <materialDesign:PackIcon
+                    Width="30"
+                    Height="30"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Kind="Update" />
+                                        </Border>
+                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                            自动检查更新
+                                        </Label>
+                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                    </Grid>
+
+
+                                </Border>
+                            </hc:Card>
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                                <Border CornerRadius="4" Style="{StaticResource BorderClip}">
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border CornerRadius="5" Background="LightGray" Width="40" Height="40" >
+                                            <materialDesign:PackIcon
+                    Width="30"
+                    Height="30"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Kind="Show" />
+                                        </Border>
+                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                            显示/隐藏所有便签
+                                        </Label>
+                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                    </Grid>
+
+
+                                </Border>
+                            </hc:Card>
+                            <hc:Card  BorderThickness="1" Effect="{StaticResource EffectShadow2}" Background="#EEEEEE" Margin="10" >
+                                <Border CornerRadius="4" Style="{StaticResource BorderClip}">
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border CornerRadius="5" Background="LightGray" Width="40" Height="40" >
+                                            <materialDesign:PackIcon
+                    Width="30"
+                    Height="30"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Kind="Language" />
+                                        </Border>
+                                        <Label Grid.Column="1" VerticalAlignment="Center" Margin="10 0 0 0">
+                                            语言设置
+                                        </Label>
+                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                    </Grid>
+
+
+                                </Border>
+                            </hc:Card>
+                        </StackPanel>
+                    </hc:ScrollViewer>
+                
+                </Grid>
+            </hc:TransitioningContentControl>
         </Grid>
     </Grid>
-</Controls:MetroWindow>
+</hc:Window>
