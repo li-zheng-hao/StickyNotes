@@ -22,7 +22,14 @@
     <!-- <Color x:Key="Primary400">#ffa726</Color> -->
 
     <!-- <Color x:Key="Primary800Foreground">#FFFFFFFF</Color> -->
-
-
+    <Color x:Key="ForgroundColorDefault">#dadbed</Color>
+    <Color x:Key="ForgroundColorDefault100">#dadbed</Color>
+    <Color x:Key="ForgroundColorDefault200">#dadbed</Color>
+    <Color x:Key="BackgroundColorGrayDefault">#EEEEEE</Color>
+    <Color x:Key="TitleColorGrayDefault">#DDDDDD</Color>
+    <SolidColorBrush x:Key="GrayBackgroundDefault" Color="{StaticResource BackgroundColorGray}"></SolidColorBrush>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="Red"></SolidColorBrush>
+    <SolidColorBrush x:Key="GrayTitleDefault" Color="{StaticResource TitleColorGrayDefault}"></SolidColorBrush>
+    
 
 </ResourceDictionary>

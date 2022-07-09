@@ -4,12 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StickyNotes.UserControl"
-               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:converter="clr-namespace:StickyNotes.Converter"
              mc:Ignorable="d" 
              MinHeight="100"
+            xmlns:hc="https://handyorg.github.io/handycontrol"
+             
              MaxHeight="300"
              d:DesignHeight="300" d:DesignWidth="800">
     <UserControl.Resources>
+        <converter:DateTimeToVisibilityConverter x:Key="DateTimeConverter"></converter:DateTimeToVisibilityConverter>
         <Style x:Key="HeaderColor" TargetType="{x:Type StackPanel}">
             <Setter Property="Cursor" Value="Hand"></Setter>
             <Style.Triggers>
@@ -22,32 +25,51 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+    <!--解决border圆角内部clip的问题 https://stackoverflow.com/questions/14825436/how-do-i-create-a-wpf-rounded-container-that-clips-children-->
+    <Border BorderThickness="1" BorderBrush="#283C3C3C" CornerRadius="5" Padding="0"    >
+        <Border.Effect>
+            <DropShadowEffect  BlurRadius="5" ShadowDepth="3"  Opacity="0.3"/>
+        </Border.Effect>
+            <Grid>
+            <!-- Rounded mask (stretches to fill Grid) -->
+            <Border Name="mask" Background="White" CornerRadius="5"/>
+            <!-- Main content container -->
+            <Grid  >
+                <Grid.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=mask}"/>
+                </Grid.OpacityMask>
+                    <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-    
-    <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent2}" BorderThickness="1" Cursor="Hand"  >
-        <Grid  >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="6"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Style="{DynamicResource HeaderColor}" ></StackPanel>
-            <StackPanel Grid.Row="1" Background="{DynamicResource MahApps.Brushes.Gray9}"></StackPanel>
-            <TextBlock Name="CardTextBlock" MaxHeight="100" TextWrapping="Wrap" Margin="10 5 0 10" Grid.Row="1" FontSize="24" Text="{Binding RichTextBoxContent}"
-                       ></TextBlock>
-            <Button
+                <StackPanel Grid.Row="0" Background="{DynamicResource PrimaryBrush}" Opacity="0.3"  >
+                    
+                </StackPanel>
+                <Button Grid.Row="0"
+                    Width="20"
+                    Height="20"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
                 Name="deleteBtn"
-            Grid.Row="1"
                 Click="DeleteWindowOnClick"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="设置该便签">
-            <materialDesign:PackIcon
-                    Width="18"
-                    Height="18"
-                    Kind="Delete" />
-        </Button>
-           
-    </Grid>
+                ToolTip="删除该便签">
+                    <materialDesign:PackIcon
+                    Width="20"
+                    Height="20"
+                         Foreground="DimGray"
+                    Kind="DeleteOutline" />
+                </Button>
+                <StackPanel Grid.Row="1" Background="{DynamicResource GrayBackground}"></StackPanel>
+                <TextBlock Name="CardTextBlock" MaxHeight="150" MinHeight="100"  TextWrapping="Wrap" Margin="10 5 0 15" Grid.Row="1" FontSize="14" Text="{Binding DisplayRichTextBoxContent}"
+                       ></TextBlock>
+                <TextBlock Grid.Row="1" Foreground="DimGray" Margin="0 0 5 0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Text="{Binding ModifiedTime,Converter={StaticResource DateTimeConverter}}"> </TextBlock>
+
+
+            </Grid>
+        </Grid>
+
     </Border>
+   
 </UserControl>

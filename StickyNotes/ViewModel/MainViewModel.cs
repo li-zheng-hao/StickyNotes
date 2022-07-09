@@ -15,6 +15,11 @@ using StickyNotes.View;
 using StickyNotes.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro.Controls.Dialogs;
+using MaterialDesignThemes.Wpf;
+using System.Threading;
+using System.Threading.Tasks;
+using StickyNotes.UserControl;
+using System.Text;
 
 namespace StickyNotes
 {
@@ -35,7 +40,7 @@ namespace StickyNotes
 
         public RelayCommand<object> DropDownMenuClickCommand { get; set; }
 
-        public List<string> Commands { get;set; } =new List<string>() { LanguageManager.Translate("menuList"), LanguageManager.Translate("menuSetting"), LanguageManager.Translate("menuAbout") };
+        public List<string> Commands { get;set; } =new List<string>() { LanguageManager.Translate("menuList"), LanguageManager.Translate("menuAbout") };
         /// <summary>
         /// 窗体数据
         /// </summary>
@@ -66,6 +71,7 @@ namespace StickyNotes
 
         public RelayCommand<WindowsData> CloseWindowButNotDeleteDataCommand { get; private set; }
         public RelayCommand OpenListCommand { get; set; }
+        public CustomDialog CustomDeleteDialog { get; private set; }
         #endregion
 
         #region 快捷键数据
@@ -76,7 +82,7 @@ namespace StickyNotes
         /// <summary>
         /// 记录快捷键注册项的唯一标识符
         /// </summary>
-        private Dictionary<EHotKeySetting, int> m_HotKeySettings = new Dictionary<EHotKeySetting, int>();
+        //private Dictionary<EHotKeySetting, int> m_HotKeySettings = new Dictionary<EHotKeySetting, int>();
         #endregion
 
 
@@ -100,7 +106,6 @@ namespace StickyNotes
             AddFontSizeCommand = new RelayCommand(AddFontSizeMethod);
             ReduceFontSizeCommand = new RelayCommand(ReduceFontSizeMethod);
             OnContentRenderedCommand = new RelayCommand(OnContentRenderedMethod);
-            OnSourceInitializedCommand = new RelayCommand<MainWindow>(OnSourceInitializedMethod);
             ChangeIsFocusedPropertyCommand = new RelayCommand<object>(ChangeIsFocusedPropertyMethod);
             OpenListCommand=new RelayCommand(OpenListMethod);
             CloseWindowButNotDeleteDataCommand = new RelayCommand<WindowsData>(CloseWindowButNotDeleteDataMethod);
@@ -120,10 +125,6 @@ namespace StickyNotes
             {
                 OpenListCommand.Execute(null);
             }else if(command==Commands[1])
-            {
-                OpenSettingCommand.Execute(null);
-
-            }else if(command==Commands[2])
             {
                 OpenAboutCommand.Execute(null);
 
@@ -234,102 +235,40 @@ namespace StickyNotes
         /// <param name="datasDocumentFilePath"></param>
         private void SaveDocument(FlowDocument document, string datasDocumentFilePath)
         {
-            TextRange range;
-            FileStream fileStream;
-            range = new TextRange(document.ContentStart,
-                document.ContentEnd);
-            //获取当前文件夹路径
-            string currPath = System.Windows.Forms.Application.StartupPath;
-            //检查是否存在文件夹
-            string subPath = currPath + "/Datas/";
-            if (false == System.IO.Directory.Exists(subPath))
+            var range= new TextRange(document.ContentStart, document.ContentEnd);
+            using (MemoryStream ms=new MemoryStream())
             {
-                //创建Datas文件夹
-                System.IO.Directory.CreateDirectory(subPath);
+                range.Save(ms, DataFormats.Rtf);
+                ms.Seek(0, SeekOrigin.Begin);
+                var sr=new StreamReader(ms);
+                var dataString = sr.ReadToEnd();
+                Datas.RichTextBoxContent = dataString;
+                Datas.DisplayRichTextBoxContent = range.Text;
             }
-            fileStream = new FileStream(subPath + datasDocumentFilePath, FileMode.Create);
-            range.Save(fileStream, DataFormats.XamlPackage);
-            Datas.RichTextBoxContent = new TextRange(document.ContentStart, document.ContentEnd).Text;
-            fileStream.Close();
         }
 
         public void RestoreData(FlowDocument document, string fileName)
         {
+            if (string.IsNullOrWhiteSpace(Datas.RichTextBoxContent))
+                return;
             TextRange range;
-            FileStream fileStream;
-
             range = new TextRange(document.ContentStart,
                 document.ContentEnd);
-
-            string currPath = System.Windows.Forms.Application.StartupPath;
-            //Environment.CurrentDirectory;
-            string subPath = currPath + "/Datas/";
-            fileStream = new FileStream(subPath + fileName, FileMode.Open);
-            range.Load(fileStream, DataFormats.XamlPackage);
-            fileStream.Close();
+            var ms=GetMemoryStreamFromString(Datas.RichTextBoxContent);
+            range.Load(ms, DataFormats.Rtf);
+            Datas.DisplayRichTextBoxContent = range.Text;
+            
         }
-        private void OnSourceInitializedMethod(MainWindow window)
+        private MemoryStream GetMemoryStreamFromString(string s)
         {
-            HotKeySettingsManager.Instance.RegisterGlobalHotKeyEvent += Instance_RegisterGlobalHotKeyEvent;
-
-            // 获取窗体句柄
-            m_Hwnd = new WindowInteropHelper(window).Handle;
-            HwndSource hWndSource = HwndSource.FromHwnd(m_Hwnd);
-            // 添加处理程序
-            if (hWndSource != null) hWndSource.AddHook(WndProc);
+            if (s == null || s.Length == 0)
+                return null;
+            MemoryStream m = new MemoryStream();
+            StreamWriter sw = new StreamWriter(m);
+            sw.Write(s);
+            sw.Flush();
+            return m;
         }
-
-        /// <summary>
-        /// 窗体回调函数，接收所有窗体消息的事件处理函数
-        /// </summary>
-        /// <param name="hWnd">窗口句柄</param>
-        /// <param name="msg">消息</param>
-        /// <param name="wideParam">附加参数1</param>
-        /// <param name="longParam">附加参数2</param>
-        /// <param name="handled">是否处理</param>
-        /// <returns>返回句柄</returns>
-        private IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wideParam, IntPtr longParam, ref bool handled)
-        {
-            switch (msg)
-            {
-                case HotKeyManager.WM_HOTKEY:
-                    int sid = wideParam.ToInt32();
-                    // 按下了显示所有窗体的快捷键,执行相应逻辑
-                    if (sid == m_HotKeySettings[EHotKeySetting.ShowAllWindow])
-                    {
-                        ActivateOrHideAllNotTopMostWindow();
-                        // WindowHideManager.GetInstance().StopAllHideAction(2000);
-                    }
-                    handled = true;
-                    break;
-            }
-            return IntPtr.Zero;
-        }
-        /// <summary>
-        /// 显示所有窗体或者隐藏所有窗体
-        /// </summary>
-        private void ActivateOrHideAllNotTopMostWindow()
-        {
-            foreach (var window in WindowsManager.Instance.Windows)
-            {
-                if (window.viewModel.Datas.IsCurrentWindowTopMost == false)
-                {
-                    if (ProgramData.Instance.IsWindowVisible)
-                        window.Visibility = Visibility.Hidden;
-                    else
-                    {
-                        Console.WriteLine("A");
-                        window.Visibility = Visibility.Visible;
-                        window.Activate();
-                    }
-
-                }
-            }
-
-            ProgramData.Instance.IsWindowVisible = !ProgramData.Instance.IsWindowVisible;
-
-        }
-
 
         private void OnContentRenderedMethod()
         {
@@ -337,43 +276,37 @@ namespace StickyNotes
             InitHotKey();
         }
 
-        /// <summary>
-        /// 通知注册系统快捷键事件处理函数
-        /// </summary>
-        /// <param name="hotKeyModelList"></param>
-        /// <returns></returns>
-        private bool Instance_RegisterGlobalHotKeyEvent(ObservableCollection<HotKeyModel> hotKeyModelList)
-        {
-            return InitHotKey(hotKeyModelList);
-        }
+        ///// <summary>
+        ///// 通知注册系统快捷键事件处理函数
+        ///// </summary>
+        ///// <param name="hotKeyModelList"></param>
+        ///// <returns></returns>
+        //private bool Instance_RegisterGlobalHotKeyEvent(ObservableCollection<HotKey> hotKeyModelList)
+        //{
+        //    return InitHotKey(hotKeyModelList);
+        //}
 
         /// <summary>
         /// 初始化注册快捷键
         /// </summary>
         /// <param name="hotKeyModelList">待注册热键的项</param>
         /// <returns>true:保存快捷键的值；false:弹出设置窗体</returns>
-        private bool InitHotKey(ObservableCollection<HotKeyModel> hotKeyModelList = null)
+        private bool InitHotKey()
         {
-            if (HotKeySettingsManager.Instance.IsShowAllWindowHotKeyRegistered == false ||
-                HotKeySettingsManager.Instance.IsShowAllWindowHotKeyNeedChanged == true)
-            {
-                HotKeySettingsManager.Instance.IsShowAllWindowHotKeyRegistered = true;
-                HotKeySettingsManager.Instance.IsShowAllWindowHotKeyNeedChanged = false;
-                var list = hotKeyModelList ?? HotKeySettingsManager.Instance.LoadDefaultHotKey();
-                // 注册全局快捷键
-                string failList = HotKeyHelper.RegisterGlobalHotKey(list, m_Hwnd, out m_HotKeySettings);
-                if (string.IsNullOrEmpty(failList))
-                    return true;
-                System.Windows.MessageBox.Show(string.Format("无法注册下列快捷键\n\r{0}", failList), "提示", MessageBoxButton.OK);
-                return false;
-            }
-            else
-            {
+           
+                try
+                {
+                ProgramData.ShowAllHotKey.Pressed -= HotKeyHandler.HandlePress;
+                ProgramData.ShowAllHotKey.Pressed += HotKeyHandler.HandlePress;
+                    HotkeyManager.GetHotkeyManager().TryAddHotkey(ProgramData.ShowAllHotKey);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"注册快捷键{ProgramData.ShowAllHotKey.ToString()}失败");
+                }
+                   
                 return true;
-            }
-
         }
-
 
 
         private void HideWindowDetect(object sender, EventArgs e)
@@ -415,10 +348,13 @@ namespace StickyNotes
         /// <summary>
         /// 打开设置窗口
         /// </summary>
-        private void OpenSettingMethod()
+        private async void OpenSettingMethod()
         {
-            var win = new SettingWindow();
-            win.Show();
+           
+
+            
+            var win2 = new SettingWindow();
+            win2.Show();
         }
 
         /// <summary>
@@ -465,17 +401,69 @@ namespace StickyNotes
                     break;
                 }
             }
-            MetroDialogSettings dialogSettings = new MetroDialogSettings();
-            dialogSettings.AffirmativeButtonText = LanguageManager.Translate("main-confirm");
-            dialogSettings.NegativeButtonText = LanguageManager.Translate("main-cancel");
+            var dialog = win.Resources["customWarningDialog"] as CustomWarningDialog;
+            CustomDeleteDialog = new CustomDialog(win) { Content = dialog, Title = LanguageManager.Translate("main-warning") };
+            CustomDeleteDialog.DialogContentMargin = new GridLength(20);
+            //CustomDeleteDialog.DialogContentWidth = new GridLength(100);
+            dialog.CloseButtonClicked -= CancelDelete;
+            dialog.CloseButtonClicked += CancelDelete;
+            dialog.ConfirmButtonClicked -= DeleteWindow;
+            dialog.ConfirmButtonClicked += DeleteWindow;
+            await win.ShowMetroDialogAsync(CustomDeleteDialog);
+        }
+        
 
-            MessageDialogResult result=await win?.ShowMessageAsync(LanguageManager.Translate("main-warning")
-                , LanguageManager.Translate("main-confirmDelLabel"), MessageDialogStyle.AffirmativeAndNegative,dialogSettings);
-            if (result!=null&& result==MessageDialogResult.Affirmative)
+        public MainWindow GetCurrentWindow()
+        {
+            MainWindow win = null;
+            var datas = Datas;
+            foreach (Window item in Application.Current.Windows)
             {
-                DeleteWindowCommand.Execute(win);
+                if (item.DataContext == this)
+                {
+                    win = item as MainWindow;
+                    break;
+                }
+            }
+            return win;
+        }
+        private async void DeleteWindow(object sender, RoutedEventArgs e)
+        {
+            MainWindow win = GetCurrentWindow();
+            foreach (Window item in Application.Current.Windows)
+            {
+                if (item.DataContext == this)
+                {
+                    win = item as MainWindow;
+                    break;
+                }
+            }
+            await win.HideMetroDialogAsync(CustomDeleteDialog);
+            DeleteWindowMethod(win);
+        }
+
+        private void CancelDelete(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MainWindow win = null;
+                var datas = Datas;
+                foreach (Window item in Application.Current.Windows)
+                {
+                    if (item.DataContext == this)
+                    {
+                        win = item as MainWindow;
+                        break;
+                    }
+                }
+                win.HideMetroDialogAsync(CustomDeleteDialog);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log().Error(ex.Message);
             }
         }
+
         /// <summary>
         /// 删除已经不需要的文档数据
         /// </summary>

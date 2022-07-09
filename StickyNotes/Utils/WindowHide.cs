@@ -160,13 +160,21 @@ namespace StickyNotes.Utils
         }
         private Win32.POINT CheckDPI(Win32.POINT point)
         {
-            Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
-            double dx = m.M11; // notice it's divided by 96 already
-            double dy = m.M22; // notice it's divided by 96 already
-            point.X = (int)(point.X / dx);
-            point.Y = (int)(point.Y / dy);
-            // Console.WriteLine("鼠标修改后 " + point.X + ":" + point.Y);
-            return point;
+            try
+            {
+                Matrix m = PresentationSource.FromVisual(Application.Current.MainWindow).CompositionTarget.TransformToDevice;
+                double dx = m.M11; // notice it's divided by 96 already
+                double dy = m.M22; // notice it's divided by 96 already
+                point.X = (int)(point.X / dx);
+                point.Y = (int)(point.Y / dy);
+                // Console.WriteLine("鼠标修改后 " + point.X + ":" + point.Y);
+                return point;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+         
         }
 
         /// <summary>

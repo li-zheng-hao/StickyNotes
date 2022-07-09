@@ -11,40 +11,51 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--  加上自己的一些Style  -->
-                <ResourceDictionary Source="Style/Color.xaml" />
-                <ResourceDictionary Source="Style/Font.xaml" />
-                <ResourceDictionary Source="Style/Control.xaml" />
-                <ResourceDictionary Source="Style/Window.xaml" />
-                <ResourceDictionary Source="Style/Label.xaml" />
-                <ResourceDictionary Source="Style/Themes/Blue.xaml" />
+             
                 <!--<ResourceDictionary Source="Style/Languages/Lan-cn.xaml" />-->
                 <!--<ResourceDictionary Source="Style/Languages/Lan-en.xaml" />-->
 
 
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />-->
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />-->
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />-->
+                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />-->
 
+                <!--handycontrol-->
+               
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
-
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+                <!--  加上自己的一些Style  放下面的优先级更高-->
+                <ResourceDictionary Source="Style/Color.xaml" />
+                <ResourceDictionary Source="Style/Font.xaml" />
+                <ResourceDictionary Source="Style/Control.xaml" />
+                <ResourceDictionary Source="Style/Window.xaml" />
+                <ResourceDictionary Source="Style/Label.xaml" />
+                <ResourceDictionary Source="Style/Themes/冷灰.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator
                 xmlns:vm="clr-namespace:StickyNotes.ViewModel"
                 x:Key="Locator"
                 d:IsDataSource="True" />
-            <ContextMenu x:Key="NotifyIconMenu" StaysOpen="False">
+            <ContextMenu x:Key="NotifyIconMenu" HorizontalAlignment="Center" Width="100" StaysOpen="False">
                 <MenuItem
+                    Width="100"
+                    Padding="10 5"
+                    HorizontalAlignment="Center"
                     Name="MenuOpen"
                     Click="MenuOpen_Click"
-                    Header="新建" />
+                    Header="{DynamicResource global-new}" />
                 <MenuItem
+                    HorizontalAlignment="Center"
+                    Width="100"
+                    Padding="10 5"
+                    
                     Name="MenuExit"
                     Click="MenuExit_Click"
-                    Header="退出" />
+                    Header="{DynamicResource global-exit}" />
             </ContextMenu>
         </ResourceDictionary>
     </Application.Resources>

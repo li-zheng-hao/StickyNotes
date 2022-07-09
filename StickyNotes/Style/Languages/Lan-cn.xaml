@@ -10,7 +10,7 @@
     <sys:String x:Key="setting-AutoCheckUpdate">自动检查更新</sys:String>
     <sys:String x:Key="setting-Theme">主题颜色</sys:String>
     <sys:String x:Key="setting-ShortCut">快捷键</sys:String>
-    <sys:String x:Key="setting-ShortCutExplain">显示/隐藏所有便签</sys:String>
+    <sys:String x:Key="setting-ShowOrHide">显示/隐藏所有便签</sys:String>
 
     <sys:String x:Key="about-about">关于</sys:String>
     <sys:String x:Key="about-projectAddress">项目地址</sys:String>
@@ -30,6 +30,20 @@
     <sys:String x:Key="main-warning">警告</sys:String>
 
     <sys:String x:Key="setting-Language">语言</sys:String>
+    <sys:String x:Key="list-search">搜索...</sys:String>
+    <sys:String x:Key="list-coldgray">冷 灰</sys:String>
+    <sys:String x:Key="list-pastoralbrown">田园褐</sys:String>
+    <sys:String x:Key="list-stonegray">石材灰</sys:String>
+    <sys:String x:Key="list-darkcloudgrey">乌云灰</sys:String>
+    <sys:String x:Key="list-blue">甘蓝</sys:String>
+    <sys:String x:Key="list-themediy">主题自定义</sys:String>
+    <sys:String x:Key="setting-langsetting">语言设置</sys:String>
+    <sys:String x:Key="setting-more">更多</sys:String>
+    <sys:String x:Key="setting-close">关闭</sys:String>
+    <sys:String x:Key="setting-back">返回</sys:String>
+    <sys:String x:Key="main-topmost">置顶</sys:String>
+    <sys:String x:Key="global-new">新建</sys:String>
+    <sys:String x:Key="global-exit">退出</sys:String>
 
 
 </ResourceDictionary>

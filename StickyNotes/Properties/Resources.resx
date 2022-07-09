@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ServerUrl" xml:space="preserve">
+    <value>http://stickynotes.lizhenghao.site/api</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
   <data name="Version" xml:space="preserve">
-    <value>v4.7.5</value>
+    <value>v4.8.0</value>
     <comment>程序版本</comment>
+  </data>
+  <data name="VersionFileName" xml:space="preserve">
+    <value>version.json</value>
   </data>
 </root>

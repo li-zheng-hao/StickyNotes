@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>StickyNotes</RootNamespace>
     <AssemblyName>StickyNotes</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -17,7 +17,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>D:\WebSite\</PublishUrl>
+    <PublishUrl>C:\Users\lizhenghao\Downloads\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -27,18 +27,19 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,7 +48,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -102,6 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\DateTimeToVisibilityConverter.cs" />
     <Compile Include="Converter\boolToVisibilityConverter.cs" />
     <Compile Include="Converter\DeleteWindowMessageConverter.cs" />
     <Compile Include="Converter\LanguageConverter.cs" />
@@ -112,17 +114,22 @@
     <Compile Include="UserControl\CardItem.xaml.cs">
       <DependentUpon>CardItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\HotKeyUtil\EHotKeySetting.cs" />
-    <Compile Include="Utils\HotKeyUtil\EKey.cs" />
-    <Compile Include="Utils\HotKeyUtil\HotKeyHelper.cs" />
-    <Compile Include="Utils\HotKeyUtil\HotKeyMananger.cs" />
-    <Compile Include="Utils\HotKeyUtil\HotKeyModel.cs" />
-    <Compile Include="Utils\HotKeyUtil\HotKeySettingManager.cs" />
+    <Compile Include="UserControl\CustomWarningDialog.xaml.cs">
+      <DependentUpon>CustomWarningDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\DataHelper.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKey.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotkeyEventArgs.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeyHandler.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeyManager.cs" />
+    <Compile Include="Utils\HotKeyUtil\HotKeySetting.cs" />
+    <Compile Include="Utils\HotKeyUtil\NativeMethods.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\Messages\ChangeWindowMessage.cs" />
     <Compile Include="Utils\LanguageManager.cs" />
     <Compile Include="Utils\ThemeAssist.cs" />
     <Compile Include="Utils\TimerUtil.cs" />
+    <Compile Include="Utils\UpdateHelper.cs" />
     <Compile Include="Utils\WindowHide.cs" />
     <Compile Include="ViewModel\ListWindowViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
@@ -134,7 +141,6 @@
     <Compile Include="Utils\SystemTray.cs" />
     <Compile Include="Data\WindowsData.cs" />
     <Compile Include="Utils\WindowsManager.cs" />
-    <Compile Include="Utils\XMLHelper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\ListWindow.xaml.cs">
       <DependentUpon>ListWindow.xaml</DependentUpon>
@@ -151,21 +157,33 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Style\Themes\Blue.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Style\Themes\Orange.xaml">
+    <Page Include="Style\Themes\甘蓝.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Style\Themes\Gray.xaml">
+    <Page Include="Style\Themes\冷灰.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Themes\乌云灰.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Style\Themes\石材灰.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Style\Themes\田园褐.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\CardItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\CustomWarningDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ListWindow.xaml">
       <SubType>Designer</SubType>
@@ -261,7 +279,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6 %28x86 和 x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -293,6 +311,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="HandyControl">
+      <Version>3.3.0</Version>
+    </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.14</Version>
     </PackageReference>
@@ -314,10 +335,32 @@
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
     <PackageReference Include="PropertyChanged.Fody">
       <Version>2.6.0</Version>
     </PackageReference>
+    <PackageReference Include="SqlSugar">
+      <Version>5.0.9.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite">
+      <Version>1.0.116</Version>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{EB437726-8891-46DE-9D88-271242DB82BC}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contract\Contract.csproj">
+      <Project>{5CB7E208-C6E8-4593-BAF9-B8D396FBFE41}</Project>
+      <Name>Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DB\DB.csproj">
+      <Project>{0E9DA473-F7C4-401B-B1AE-455313699794}</Project>
+      <Name>DB</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

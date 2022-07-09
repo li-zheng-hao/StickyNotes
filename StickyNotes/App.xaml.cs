@@ -1,4 +1,7 @@
-﻿using MahApps.Metro.Controls;
+﻿using Common;
+using Common.Lang;
+using DB;
+using MahApps.Metro.Controls;
 using StickyNotes.Utils;
 using System;
 using System.Diagnostics;
@@ -20,7 +23,7 @@ namespace StickyNotes
     public partial class App : Application
     {
 
-        #region 已经写好
+        #region 主程序
         System.Threading.Mutex mutex;
 
         public bool IsInited { get; set; } = true;
@@ -51,11 +54,15 @@ namespace StickyNotes
             Current.DispatcherUnhandledException += App_OnDispatcherUnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //Messenger.Default.Register<SaveMessage>(this, SaveDataMessage);
+            // 初始化数据库
+            DBInit.InitDB();
+            // 删除3小时前的旧数据
+            new ProgramDataService().DeleteByDate(DateTime.Now.AddHours(3));
             var systemtray = SystemTray.Instance;
-            var programData = XMLHelper.DecodeXML<ProgramData>(ConstData.SaveSettingDataName);
+            var programData = DataHelper.RestoreData<ProgramData>();
             if (programData == null)
             {
-                LanguageManager.ChangeLanguage(Language.English);
+                LanguageManager.ChangeLanguage(Language.Chinese);
 
             }
             else
@@ -95,6 +102,8 @@ namespace StickyNotes
             }
             IsInited = false;
             TimerUtil = new TimerUtil(SaveDataAction);
+            HttpHelper.BaseUrl = StickyNotes.Properties.Resources.ServerUrl;
+            
             new Task(CheckUpdate).Start();
 
         }
@@ -104,66 +113,24 @@ namespace StickyNotes
         private void CheckUpdate()
         {
             ProgramData p = ProgramData.Instance;
-            if (!p.IsAutoCheckUpdate)
-                return;
+            //if (p.IsAutoCheckUpdate == false)
+            //    return;
             try
             {
-                string version = StickyNotes.Properties.Resources.Version;
-                var process = new Process();
-                var arguments = version;
-                arguments += " " + Assembly.GetExecutingAssembly().Location;
-                process.StartInfo.FileName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+"\\AutoUpdateTool.exe"; // "iexplore.exe";   //IE
-                process.StartInfo.Arguments = arguments;
-                process.Start();
-                #region
-                //                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12; //加上这一句
-                //                System.Net.WebClient client = new WebClient();
-                //                byte[] page = client.DownloadData("https://github.com/li-zheng-hao/StickyNotes/releases/");
-                //                string content = System.Text.Encoding.UTF8.GetString(page);
-                //                string regex = @"v[0-9]\.[0-9]\.[0-9]";
-                //                Regex re = new Regex(regex);
-                //                MatchCollection matches = re.Matches(content);
-                //                System.Collections.IEnumerator enu = matches.GetEnumerator();
-                //                bool needUpdate = false;
-                //                while (enu.MoveNext() && enu.Current != null)
-                //                {
-                //                    Match match = (Match)(enu.Current);
-
-                //                    Console.Write(match.Value + "\r\n");
-                //                    string result = match.Value;
-                //                    Console.WriteLine(match.Value);
-                //                    if (Convert.ToInt32(match.Value[1]) > Convert.ToInt32(version[1]))
-                //                    {
-                //                        needUpdate = true;
-                //                    }
-                //                    else if (Convert.ToInt32(match.Value[1]) == Convert.ToInt32(version[1]) && Convert.ToInt32(match.Value[3]) > Convert.ToInt32(version[3]))
-                //                    {
-                //                        needUpdate = true;
-                //                    }
-                //                    else if (Convert.ToInt32(match.Value[1]) == Convert.ToInt32(version[1]) && Convert.ToInt32(match.Value[3]) == Convert.ToInt32(version[3]) && Convert.ToInt32(match.Value[5]) > Convert.ToInt32(version[5]))
-                //                    {
-                //                        needUpdate = true;
-
-                //                    }
-
-                //                    if (needUpdate)
-                //                    {
-                //                        new Thread(() =>
-                //                        {
-                //                            this.Invoke(new Action(() =>
-                //                            {
-                //                                MessageBox.Show("发现新版本，建议去Github更新");
-                //                            }));
-                //                        }).Start();
-                //                        break;
-                //                    }
-                //                }
-                #endregion
-
+                var updateHelper=new UpdateHelper();
+                updateHelper.UpdateToolCompleted += () => {
+                   var res=updateHelper.CheckSelfNeedUpdate();
+                   if(res)
+                   {
+                        updateHelper.OpenUpdateTool();
+                   }
+                };
+               
+                updateHelper.UpdateUpdateTool();
             }
             catch (Exception ex)
             {
-                Logger.Log().Debug("无法连接项目github官网");
+                Logger.Log().Debug($"无法更新 {ex.Message}");
             }
         }
 
@@ -196,7 +163,7 @@ namespace StickyNotes
         protected override void OnExit(ExitEventArgs e)
         {
             Logger.Log().Info("程序退出");
-            XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
+            DataHelper.SaveData(ProgramData.Instance);
             SystemTray.Instance.DisposeNotifyIcon();
             base.OnExit(e);
         }
@@ -227,29 +194,10 @@ namespace StickyNotes
         {
             if (!IsInited)
             {
-                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.SaveSettingDataName);
-                BackupDataAction();
+                DataHelper.SaveData(ProgramData.Instance);
             }
         }
-        public void BackupDataAction()
-        {
-            if (File.Exists(ConstData.BackUpDataName))
-            {
-                FileInfo newestData = new FileInfo(ConstData.SaveSettingDataName);
-                FileInfo backupData = new FileInfo(ConstData.BackUpDataName);
-                TimeSpan ts1 = new TimeSpan(newestData.CreationTime.Ticks);
-                TimeSpan ts2 = new TimeSpan(backupData.CreationTime.Ticks);
-                TimeSpan ts = ts1.Subtract(ts2).Duration();
-                if (ts.Hours >= 2)
-                {
-                    XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.BackUpDataName);
-                }
-            }
-            else
-            {
-                XMLHelper.SaveObjAsXml(ProgramData.Instance, ConstData.BackUpDataName);
-            }
-        }
+        
         /// <summary>
         /// 打开一个空的窗体
         /// </summary>
@@ -289,15 +237,13 @@ namespace StickyNotes
             {
                 Logger.Log().Error(e.Exception.StackTrace);
                 Logger.Log().Error(e.Exception.Message);
-                MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
-                Application.Current.Shutdown();
+                MessageBox.Show(e.Exception.Message);
 
             }
             catch (Exception ex)
             {
                 Logger.Log().Error(ex.StackTrace);
                 Logger.Log().Error(ex.Message);
-                Application.Current.Shutdown();
             }
         }
 
@@ -315,8 +261,7 @@ namespace StickyNotes
                 {
                     Logger.Log().Error(exception.StackTrace);
                     Logger.Log().Error(exception.Message);
-                    MessageBox.Show("应用程序发生不可恢复的异常，将要退出！");
-                    Application.Current.Shutdown();
+                    MessageBox.Show(exception.Message);
                 }
             }
             catch (Exception ex)
@@ -328,14 +273,12 @@ namespace StickyNotes
                     {
                         Logger.Log().Error(exception.StackTrace);
                         Logger.Log().Error(exception.Message);
-                        Application.Current.Shutdown();
                     }
                 }
                 catch (Exception exxxx)
                 {
                     Logger.Log().Error(exxxx.StackTrace);
                     Logger.Log().Error(exxxx.Message);
-                    Application.Current.Shutdown();
 
                 }
             }

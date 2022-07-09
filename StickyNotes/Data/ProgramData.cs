@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Common.Lang;
+using GalaSoft.MvvmLight.Messaging;
 using StickyNotes.Annotations;
 using StickyNotes.Utils;
 using StickyNotes.Utils.HotKeyUtil;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace StickyNotes
 {
@@ -37,7 +39,7 @@ namespace StickyNotes
         /// <summary>
         /// 显示所有窗体的快捷键
         /// </summary>
-        public HotKeyModel ShowAllHotKey { get; set; }
+        public HotKey ShowAllHotKey { get; set; }
 
 
         /// <summary>
@@ -67,13 +69,12 @@ namespace StickyNotes
             IsAutoCheckUpdate = false;
             Datas.CollectionChanged += Datas_CollectionChanged;
             BaseTheme = "Light";
-            Language = Language.English;
-            CurrentTheme = "Blue";
-            ShowAllHotKey = new HotKeyModel()
-            { IsSelectAlt = false, IsSelectCtrl = true, IsSelectShift = false, IsUsable = true, SelectKey = EKey.Q, Name = EHotKeySetting.ShowAllWindow.ToString() };
+            Language = Language.Chinese;
+            CurrentTheme = "冷灰";
+            ShowAllHotKey = new HotKey(Key.Q, ModifierKeys.Control,HotKeyHandler.HandlePress,HotKeyType.ShowOrHideAllWindow);
         }
 
-
+        
 
         private void Datas_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

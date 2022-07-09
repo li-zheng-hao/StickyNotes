@@ -8,7 +8,6 @@ using GalaSoft.MvvmLight.Messaging;
 
 namespace StickyNotes
 {
-    [XmlRoot]
     public class WindowsData : INotifyPropertyChanged
     {
         /// <summary>
@@ -41,9 +40,14 @@ namespace StickyNotes
         public int WindowsHeight { get; set; }
 
         /// <summary>
-        /// 文本框内容
+        /// 文本框内容 用于存储到数据库使用的字符串 显示会乱码
         /// </summary>
         public string RichTextBoxContent { get; set; }
+
+        /// <summary>
+        /// 用于在界面上展示的便签内容
+        /// </summary>
+        public string DisplayRichTextBoxContent { get; set; }
         /// <summary>
         /// 窗体是否置顶
         /// </summary>
@@ -58,6 +62,11 @@ namespace StickyNotes
         /// 窗体是否已经显示
         /// </summary>
         public bool IsShowed { get; set; }
+
+        /// <summary>
+        /// 最后修改时间
+        /// </summary>
+        public DateTime ModifiedTime { get; set; }
         /// <summary>
         /// 默认初始化数据
         /// </summary>
@@ -76,9 +85,11 @@ namespace StickyNotes
             StartUpPositionLeft = (screenWidth - WindowsWidth) / 2;
             StartUpPositionTop = (screenHeight - WindowsHeight) / 2;
             RichTextBoxContent = string.Empty;
+            DisplayRichTextBoxContent = string.Empty;
             IsCurrentWindowTopMost = false;
             IsFocused = true;
             IsShowed = true;
+            ModifiedTime = DateTime.Now;
         }
 
 

@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
+using Common;
 using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 
@@ -11,13 +13,16 @@ namespace StickyNotes.View
     /// </summary>
     public partial class AboutWindow : MetroWindow
     {
+
+        public string Version { get; set; }
         public AboutWindow()
         {
             InitializeComponent();
             ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
             ThemeManager.Current.SyncTheme();
             this.DataContext = this;
-
+            var ver= JsonHelper.ReadVersionFromFile(Environment.CurrentDirectory,StickyNotes.Properties.Resources.VersionFileName);
+            Version = $"{ver.StickyNotesVersion.MajorVersionNumber}.{ver.StickyNotesVersion.MinorVersionNumber}.{ver.StickyNotesVersion.RevisionNumebr}";
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e)
