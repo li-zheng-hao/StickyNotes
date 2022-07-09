@@ -60,11 +60,7 @@
 
         <usercontrol:CustomWarningDialog x:Key="customWarningDialog"></usercontrol:CustomWarningDialog>
     </Window.Resources>
-    <Window.CommandBindings>
-        <CommandBinding Command="cmds:CStrikeCommand.StrikeCommand"
-                    Executed="StrikeCommand_Executed"
-                    CanExecute="StrikeCommand_CanExecute" />
-    </Window.CommandBindings>
+  
     <!--<i:Interaction.Behaviors>-->
     <!--<utils:WndHideBehavior />-->
     <!--</i:Interaction.Behaviors>-->
