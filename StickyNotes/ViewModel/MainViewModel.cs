@@ -18,6 +18,7 @@ using MaterialDesignThemes.Wpf;
 using System.Threading;
 using System.Threading.Tasks;
 using StickyNotes.UserControl;
+using System.Text;
 
 namespace StickyNotes
 {
@@ -38,7 +39,7 @@ namespace StickyNotes
 
         public RelayCommand<object> DropDownMenuClickCommand { get; set; }
 
-        public List<string> Commands { get;set; } =new List<string>() { LanguageManager.Translate("menuList"), LanguageManager.Translate("menuSetting"), LanguageManager.Translate("menuAbout") };
+        public List<string> Commands { get;set; } =new List<string>() { LanguageManager.Translate("menuList"), LanguageManager.Translate("menuAbout") };
         /// <summary>
         /// 窗体数据
         /// </summary>
@@ -123,10 +124,6 @@ namespace StickyNotes
             {
                 OpenListCommand.Execute(null);
             }else if(command==Commands[1])
-            {
-                OpenSettingCommand.Execute(null);
-
-            }else if(command==Commands[2])
             {
                 OpenAboutCommand.Execute(null);
 
@@ -237,20 +234,40 @@ namespace StickyNotes
         /// <param name="datasDocumentFilePath"></param>
         private void SaveDocument(FlowDocument document, string datasDocumentFilePath)
         {
-            Datas.RichTextBoxContent = new TextRange(document.ContentStart, document.ContentEnd).Text;
+            var range= new TextRange(document.ContentStart, document.ContentEnd);
+            using (MemoryStream ms=new MemoryStream())
+            {
+                range.Save(ms, DataFormats.Rtf);
+                ms.Seek(0, SeekOrigin.Begin);
+                var sr=new StreamReader(ms);
+                var dataString = sr.ReadToEnd();
+                Datas.RichTextBoxContent = dataString;
+                Datas.DisplayRichTextBoxContent = range.Text;
+            }
         }
 
         public void RestoreData(FlowDocument document, string fileName)
         {
+            if (string.IsNullOrWhiteSpace(Datas.RichTextBoxContent))
+                return;
             TextRange range;
             range = new TextRange(document.ContentStart,
                 document.ContentEnd);
-            range.Text = Datas.RichTextBoxContent;
+            var ms=GetMemoryStreamFromString(Datas.RichTextBoxContent);
+            range.Load(ms, DataFormats.Rtf);
+            Datas.DisplayRichTextBoxContent = range.Text;
+            
         }
-
-
-
-
+        private MemoryStream GetMemoryStreamFromString(string s)
+        {
+            if (s == null || s.Length == 0)
+                return null;
+            MemoryStream m = new MemoryStream();
+            StreamWriter sw = new StreamWriter(m);
+            sw.Write(s);
+            sw.Flush();
+            return m;
+        }
 
         private void OnContentRenderedMethod()
         {
@@ -289,7 +306,6 @@ namespace StickyNotes
                    
                 return true;
         }
-
 
 
         private void HideWindowDetect(object sender, EventArgs e)

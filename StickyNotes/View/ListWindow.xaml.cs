@@ -41,6 +41,9 @@ namespace StickyNotes.View
             this.Close();
         }
 
-     
+        private void 冷灰_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("a");
+        }
     }
 }

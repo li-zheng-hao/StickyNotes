@@ -10,7 +10,7 @@
     <sys:String x:Key="setting-AutoCheckUpdate">Auto Check Update</sys:String>
     <sys:String x:Key="setting-Theme">Theme</sys:String>
     <sys:String x:Key="setting-ShortCut">Shortcut</sys:String>
-    <sys:String x:Key="setting-ShortCutExplain">Show/Hidden All Notes</sys:String>
+    <sys:String x:Key="setting-ShowOrHide">Show/Hidden All Notes</sys:String>
 
     <sys:String x:Key="about-about">About</sys:String>
     <sys:String x:Key="about-projectAddress">Project Address</sys:String>
@@ -19,11 +19,11 @@
     <sys:String x:Key="about-aboutContent">If there are any bugs or good suggestions during use, please let me know on github</sys:String>
     <sys:String x:Key="about-addressContent">Subsequent updates will be released at the above address. If it is useful, please give me a star~</sys:String>
 
-    <sys:String x:Key="tooltip-addNote">add note</sys:String>
-    <sys:String x:Key="tooltip-menu">menu</sys:String>
+    <sys:String x:Key="tooltip-addNote">Add note</sys:String>
+    <sys:String x:Key="tooltip-menu">Menu</sys:String>
 
-    <sys:String x:Key="tooltip-delNote">delete note</sys:String>
-    <sys:String x:Key="tooltip-hideNote">hide note</sys:String>
+    <sys:String x:Key="tooltip-delNote">Delete Note</sys:String>
+    <sys:String x:Key="tooltip-hideNote">Hide Note</sys:String>
     <sys:String x:Key="main-confirmDelLabel">Are you sure you to delete?</sys:String>
     <sys:String x:Key="main-confirm">Yes</sys:String>
     <sys:String x:Key="main-cancel">Cancel</sys:String>
@@ -31,7 +31,18 @@
 
     <sys:String x:Key="setting-Language">Language</sys:String>
 
-
-
-
+    <sys:String x:Key="list-search">Search...</sys:String>
+    <sys:String x:Key="list-coldgray">ColdGray</sys:String>
+    <sys:String x:Key="list-pastoralbrown">Brown</sys:String>
+    <sys:String x:Key="list-stonegray">StoneGray</sys:String>
+    <sys:String x:Key="list-darkcloudgrey">CloudGray</sys:String>
+    <sys:String x:Key="list-blue">Blue</sys:String>
+    <sys:String x:Key="list-themediy">Theme Custom</sys:String>
+    <sys:String x:Key="setting-langsetting">Language Setting</sys:String>
+    <sys:String x:Key="setting-more">More</sys:String>
+    <sys:String x:Key="setting-close">Close</sys:String>
+    <sys:String x:Key="setting-back">Back</sys:String>
+    <sys:String x:Key="main-topmost">Topmost</sys:String>
+    <sys:String x:Key="global-new">New</sys:String>
+    <sys:String x:Key="global-exit">Quit</sys:String>
 </ResourceDictionary>

@@ -16,5 +16,12 @@ namespace Common
         {
             return Guid.NewGuid().ToString();
         }
+
+        // 获取目录的上一级
+        public static string GetParentDirectory(string path)
+        {
+            return System.IO.Path.GetDirectoryName(path);
+        }
+
     }
 }

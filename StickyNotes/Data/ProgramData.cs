@@ -69,8 +69,8 @@ namespace StickyNotes
             IsAutoCheckUpdate = false;
             Datas.CollectionChanged += Datas_CollectionChanged;
             BaseTheme = "Light";
-            Language = Language.English;
-            CurrentTheme = "Blue";
+            Language = Language.Chinese;
+            CurrentTheme = "冷灰";
             ShowAllHotKey = new HotKey(Key.Q, ModifierKeys.Control,HotKeyHandler.HandlePress,HotKeyType.ShowOrHideAllWindow);
         }
 

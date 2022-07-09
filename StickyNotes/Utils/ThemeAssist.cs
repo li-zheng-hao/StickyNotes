@@ -23,7 +23,7 @@ namespace StickyNotes
         };
         public static readonly List<string> Themes = new List<string>()
         {
-            "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt", "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
+            "冷灰","田园褐","石材灰","乌云黑","甘蓝"
         };
         /// <summary>
         /// 改变主题颜色
@@ -35,20 +35,28 @@ namespace StickyNotes
             ProgramData.Instance.CurrentTheme=themeName;
 
             //ThemeManager.Current.ChangeTheme(Application.Current, ProgramData.Instance.BaseTheme+"."+themeName);
-            //var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            var mergedDictionaries = Application.Current.Resources.MergedDictionaries;
 
-            //foreach (var merged in mergedDictionaries)
-            //{
-            //    if (merged.Source.ToString().Contains(nameof(Themes.Orange)) 
-            //        || merged.Source.ToString().Contains(nameof(Themes.Gray))
-            //        || merged.Source.ToString().Contains(nameof(Themes.Blue)))
-            //    {
-            //        mergedDictionaries.Remove(merged);
+            foreach (var merged in mergedDictionaries)
+            {
+                var exist=Themes.Any(it => merged.Source.ToString().Contains(it));
+                if (exist)
+                {
+                    mergedDictionaries.Remove(merged);
+                    break;
+                }
+            }
+            try
+            {
+                mergedDictionaries.Add(new ResourceDictionary { Source = new Uri($"pack://application:,,,/StickyNotes;component/Style/Themes/{themeName.ToString()}.xaml") });
 
-            //        break;
-            //    }
-            //}
-            //mergedDictionaries.Add(new ResourceDictionary { Source = new Uri($"pack://application:,,,/StickyNotes;component/Style/Themes/{themeName.ToString()}.xaml") });
+            }
+            catch (Exception)
+            {
+
+                mergedDictionaries.Add(new ResourceDictionary { Source = new Uri($"pack://application:,,,/StickyNotes;component/Style/Themes/{Themes.First()}.xaml") });
+
+            }
         }
 
         public static void ChangeBaseTheme(string baseTheme)

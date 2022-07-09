@@ -20,7 +20,7 @@
     MaxWidth="800"
     MaxHeight="800"
     BorderThickness="1"
-    GlowBrush="{DynamicResource MahApps.Brushes.Accent2}"
+    GlowBrush="{DynamicResource PrimaryBrush}"
     Left="{Binding Datas.StartUpPositionLeft, Mode=TwoWay}"
     ShowInTaskbar="False"
     ShowTitleBar="False"
@@ -76,7 +76,7 @@
                 Height="40"
             Name="Menu"
             Grid.Row="0"
-                Background="#add8e6"
+                Background="{DynamicResource PrimaryBrush}"
             >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -105,7 +105,7 @@
                 Cursor="Hand"
                 IsChecked="{Binding Datas.IsCurrentWindowTopMost, Mode=TwoWay}"
                 Style="{DynamicResource MahApps.Styles.ToggleButton.WindowCommands}"
-                ToolTip="置顶">
+                ToolTip="{DynamicResource main-topmost}">
                     <materialDesign:PackIcon
                     Width="16"
                         Foreground="Black"
@@ -145,6 +145,9 @@
                             <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
                                 <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type metro:DropDownButton}}, Path=DataContext.DropDownMenuClickCommand}" />
                                 <Setter Property="CommandParameter" Value="{Binding .}" />
+                                <Setter Property="Width" Value="100"> </Setter>
+                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                <Setter Property="Padding" Value="3"> </Setter>
                             </Style>
                         </metro:DropDownButton.ItemContainerStyle>
 
@@ -183,40 +186,7 @@
                         Height="14"
                         Kind="Delete" />
                     </Button>
-                    <materialDesign:DialogHost DialogTheme="Inherit">
-                        <materialDesign:DialogHost.DialogContent>
-                            <StackPanel Margin="16">
-                                <TextBlock Text="Add a new fruit." />
-
-                                <TextBox
-                                x:Name="FruitTextBox"
-                                Margin="0,8,0,0"
-                                HorizontalAlignment="Stretch" />
-
-                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                                    <Button
-                                    Margin="0,8,8,0"
-                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                    Content="ACCEPT"
-                                    IsDefault="True">
-                                        <Button.CommandParameter>
-                                            <system:Boolean>True</system:Boolean>
-                                        </Button.CommandParameter>
-                                    </Button>
-
-                                    <Button
-                                    Margin="0,8,8,0"
-                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                    Content="CANCEL"
-                                    IsCancel="True">
-                                        <Button.CommandParameter>
-                                            <system:Boolean>False</system:Boolean>
-                                        </Button.CommandParameter>
-                                    </Button>
-                                </StackPanel>
-                            </StackPanel>
-                        </materialDesign:DialogHost.DialogContent>
-                    </materialDesign:DialogHost>
+              
                 </StackPanel>
             </Grid>
 
@@ -256,7 +226,7 @@
             Height="30"
             Opacity="0.6"
             HorizontalAlignment="Left"
-            Background="#D5ADD8E6"
+            Background="{DynamicResource PrimaryBrush100}"
             IsActive="{Binding Path=Datas.IsFocused, Mode=OneWay}">
             <materialDesign:SnackbarMessage>
                 <materialDesign:SnackbarMessage.Content>

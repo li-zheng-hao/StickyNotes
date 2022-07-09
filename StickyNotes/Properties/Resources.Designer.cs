@@ -61,11 +61,20 @@ namespace StickyNotes.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://127.0.0.1:5001.
+        ///   Looks up a localized string similar to http://stickynotes.lizhenghao.site/api.
         /// </summary>
         public static string ServerUrl {
             get {
                 return ResourceManager.GetString("ServerUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

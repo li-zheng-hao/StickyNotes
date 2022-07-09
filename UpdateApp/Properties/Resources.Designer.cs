@@ -88,6 +88,15 @@ namespace UpdateApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://stickynotes.lizhenghao.site/api.
+        /// </summary>
+        internal static string ServerUrl {
+            get {
+                return ResourceManager.GetString("ServerUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to version.json.
         /// </summary>
         internal static string VersionFileName {

@@ -12,16 +12,19 @@
                       d:DataContext="{d:DesignInstance Type=viewmodel:ListWindowViewModel}"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-           xmlns:command="http://www.galasoft.ch/mvvmlight"
+           xmlns:command="http://www.galasoft.ch/mvvmlight" xmlns:local1="clr-namespace:StickyNotes"
            ShowNonClientArea="False"
                       Name="listWindow"
-                      Title="便签列表"
+                      Title="{DynamicResource menuList}"
                       Background="White"
         Height="630" Width="330">
+    <Window.Resources>
+        <local1:LanguageConverter x:Key="LangConverter" />
+    </Window.Resources>
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseLeftButtonDown">
+        <!--<i:EventTrigger EventName="MouseLeftButtonDown">
             <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=listWindow}"/>
-        </i:EventTrigger>
+        </i:EventTrigger>-->
 
     </i:Interaction.Triggers>
     <Grid>
@@ -36,7 +39,7 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Grid Height="40" VerticalAlignment="Center" Background="LightBlue">
+                    <Grid Height="40" VerticalAlignment="Center" Background="{DynamicResource PrimaryBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -51,14 +54,21 @@
                 HorizontalAlignment="Left"
                 Command="{Binding NewWindowCommand}"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="新增一条便签">
+                ToolTip="{DynamicResource tooltip-addNote}">
                             <materialDesign:PackIcon
                     Width="24"
                     Height="24"
                     Kind="Add" />
                         </Button>
                         <StackPanel Grid.Column="1"  VerticalAlignment="Center">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=listWindow}"/>
+                                </i:EventTrigger>
+
+                            </i:Interaction.Triggers>
                             <TextBlock  FontSize="20" Margin="50 0 0 0"  HorizontalAlignment="Center" FontFamily="Bell MT" >
+
                                 StickyNotes
                             </TextBlock>
                         </StackPanel>
@@ -70,7 +80,7 @@
                 HorizontalAlignment="Right"
                 Command="{Binding OpenSettingViewCommand}"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="更多">
+                ToolTip="{DynamicResource menuSetting}">
                             <materialDesign:PackIcon
                     Width="24"
                     Height="24"
@@ -84,7 +94,7 @@
                 Width="40"
                 Height="40"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="关闭">
+                ToolTip="{DynamicResource setting-close}">
                             <materialDesign:PackIcon
                     Width="24"
                     Height="24"
@@ -92,11 +102,17 @@
                         </Button>
 
                     </Grid>
-                    <hc:SearchBar Grid.Row="1" Margin="15 16 15 8" Height="40" Style="{StaticResource SearchBarPlus}"  Background="{DynamicResource GrayBackground}" hc:InfoElement.Placeholder="搜索..." />
+                    <hc:SearchBar Name="searchBar" IsRealTime="True" Grid.Row="1" Text="{Binding FilterText,Mode=TwoWay}" Margin="15 16 15 8" Height="40" Style="{StaticResource SearchBarPlus}"  Background="{DynamicResource GrayBackground}" hc:InfoElement.Placeholder="{DynamicResource list-search}" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SearchStarted" >
+                                <cmd:EventToCommand Command="{Binding FilterTextChangedCommand}" CommandParameter="{Binding Path=Text,ElementName=searchBar}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </hc:SearchBar>
 
                     <Grid Grid.Row="3">
                         <hc:ScrollViewer>
-                            <ItemsControl Name="CardsItems" Margin="15 0 15 0" ItemsSource="{Binding DisplayWindows}">
+                            <ItemsControl Name="CardsItems" Margin="15 0 15 0" ItemsSource="{Binding CollectionViewSource.View}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <usercontrol:CardItem 
@@ -136,7 +152,7 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
 
-                    <Grid Height="40"  VerticalAlignment="Center" Background="LightBlue">
+                    <Grid Height="40"  VerticalAlignment="Center" Background="{DynamicResource PrimaryBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -151,15 +167,21 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                 HorizontalAlignment="Left"
                 Command="{Binding OpenSettingViewCommand}"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="返回">
+                ToolTip="{DynamicResource setting-back}">
                             <materialDesign:PackIcon
                     Width="24"
                     Height="24"
                     Kind="ArrowBack" />
                         </Button>
-                        <StackPanel Grid.Column="1"  VerticalAlignment="Center">
-                            <TextBlock  FontSize="20" Margin="0 0 0 0"  HorizontalAlignment="Center"  >
-                                设置
+                        <StackPanel Grid.Column="1"  VerticalAlignment="Center" Background="Transparent">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+            <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=listWindow}"/>
+        </i:EventTrigger>
+
+                            </i:Interaction.Triggers>
+                            <TextBlock  Text="{DynamicResource menuSetting}" FontSize="20" Margin="0 0 0 0"  HorizontalAlignment="Center"  >
+                                
                             </TextBlock>
                         </StackPanel>
                      
@@ -171,7 +193,7 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                 Width="40"
                 Height="40"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="关闭">
+                ToolTip="{DynamicResource setting-close}">
                             <materialDesign:PackIcon
                     Width="24"
                     Height="24"
@@ -191,70 +213,100 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                     <ColumnDefinition ></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                
-                                <hc:Card MaxWidth="240" Grid.Column="0"  Margin="2"  MinHeight="100"  BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card x:Name="冷灰"
+ MaxWidth="240" Grid.Column="0"  Margin="2"  MinHeight="100"  BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
-
                                         </Style>
                                     </hc:Card.Style>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <command:EventToCommand Command="{Binding ThemeChangeCommand}"   CommandParameterValue="冷灰"/>
+                                        </i:EventTrigger>
+                                        
+                                    </i:Interaction.Triggers>
                                     <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#d5d5d5">
-                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">冷 灰</TextBlock>
+                                        <TextBlock Margin="5 5 0 0"   FontSize="12" FontWeight="Bold" Foreground="White" Text="{DynamicResource list-coldgray}"></TextBlock>
 
                                     </Border>
                                 </hc:Card>
-                                <hc:Card MaxWidth="240" Grid.Column="1"  Margin="2"  MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card x:Name="田园褐" MaxWidth="240" Grid.Column="1"  Margin="2"  MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <command:EventToCommand Command="{Binding ThemeChangeCommand}" CommandParameterValue="田园褐" />
+                                        </i:EventTrigger>
+
+                                    </i:Interaction.Triggers>
                                     <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#d1bfac">
-                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">田园褐</TextBlock>
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White" Text="{DynamicResource list-pastoralbrown}"></TextBlock>
 
                                     </Border>
                                 </hc:Card>
-                                <hc:Card MaxWidth="240" Margin="2" Grid.Column="2"   MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card MaxWidth="240" Name="石材灰" Margin="2" Grid.Column="2"   MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <command:EventToCommand Command="{Binding ThemeChangeCommand}" CommandParameterValue="石材灰" />
+                                        </i:EventTrigger>
+
+                                    </i:Interaction.Triggers>
                                     <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#a59b95">
-                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">石材灰</TextBlock>
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White" Text="{DynamicResource list-stonegray}"></TextBlock>
 
                                     </Border>
                                 </hc:Card>
-                                <hc:Card MaxWidth="240" Margin="2" Grid.Column="3"   MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card MaxWidth="240" Name="乌云灰" Margin="2" Grid.Column="3"   MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <command:EventToCommand Command="{Binding ThemeChangeCommand}" CommandParameterValue="乌云灰" />
+                                        </i:EventTrigger>
+
+                                    </i:Interaction.Triggers>
                                     <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#7a7b79">
-                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">乌云灰</TextBlock>
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White" Text="{DynamicResource list-darkcloudgrey}"></TextBlock>
 
                                     </Border>
                                 </hc:Card>
-                                <hc:Card MaxWidth="240" Margin="2"  Grid.Column="4"  MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
+                                <hc:Card MaxWidth="240" Name="甘蓝" Margin="2"  Grid.Column="4"  MinHeight="100" BorderThickness="1"  Effect="{StaticResource EffectShadow1}">
                                     <hc:Card.Style>
                                         <Style TargetType="hc:Card">
                                             <Setter Property="Cursor" Value="Hand"></Setter>
 
                                         </Style>
                                     </hc:Card.Style>
-                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#7d90a5">
-                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White">甘 蓝</TextBlock>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <command:EventToCommand Command="{Binding ThemeChangeCommand}" CommandParameterValue="甘蓝"/>
+                                        </i:EventTrigger>
+
+                                    </i:Interaction.Triggers>
+                                    <Border CornerRadius="4,4,4,4" Style="{StaticResource BorderClip}" Background="#aad6e6">
+                                        <TextBlock Margin="5 5 0 0" FontSize="12" FontWeight="Bold" Foreground="White" Text="{DynamicResource list-blue}"></TextBlock>
 
                                     </Border>
                                 </hc:Card>
 
                             </Grid>
                             <StackPanel Margin="0 5 0 -5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                <TextBlock VerticalAlignment="Center" FontSize="12">主题自定义</TextBlock>
+                                <TextBlock VerticalAlignment="Center" FontSize="12" Text="{DynamicResource list-themediy}"></TextBlock>
                                 <Button
                 Name="MoreThemeBtn"
                 Height="20"
@@ -262,9 +314,8 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                     Margin="0 0 10 0"
                 Grid.Column="0"
                 HorizontalAlignment="Left"
-                Command="{Binding NewWindowCommand}"
                 Style="{StaticResource Button_Menu}"
-                ToolTip="更多主题颜色">
+                ToolTip="{DynamicResource list-themediy}">
                                     <materialDesign:PackIcon
                     Width="20"
                     Height="20"
@@ -288,10 +339,20 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Ring" />
                                         </Border>
-                                        <TextBlock Grid.Column="1" FontSize="14" VerticalAlignment="Center" Margin="10 0 0 0">
-                                            开机自启动
+                                        <TextBlock Text="{DynamicResource setting-AutoStartUp}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" Margin="10 0 0 0">
+                                            
                                         </TextBlock>
-                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                        <ToggleButton 
+                                            IsChecked="{Binding Datas.IsStartUpWithSystem, Mode=TwoWay}" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Checked">
+                                                    <command:EventToCommand Command="{Binding IsStartUpWithSystemChangedCommand}" CommandParameter="{Binding  Datas.IsStartUpWithSystem}" />
+                                                </i:EventTrigger>
+                                                <i:EventTrigger EventName="Unchecked">
+                                                    <command:EventToCommand Command="{Binding IsStartUpWithSystemChangedCommand}" CommandParameter="{Binding  Datas.IsStartUpWithSystem}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </ToggleButton>
                                     </Grid>
 
 
@@ -313,10 +374,21 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Pin" />
                                         </Border>
-                                        <TextBlock Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
-                                            所有窗体置顶
+                                        <TextBlock Text="{DynamicResource setting-AllWindowTop}" Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
+                                            
                                         </TextBlock>
-                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                        <ToggleButton 
+                                            IsChecked="{Binding IsTopMost, Mode=TwoWay}"
+                                            Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Checked">
+                                                    <command:EventToCommand Command="{Binding IsTopMostChangedCommand}" CommandParameter="{Binding  IsTopMost}" />
+                                                </i:EventTrigger>
+                                                <i:EventTrigger EventName="Unchecked">
+                                                    <command:EventToCommand Command="{Binding IsTopMostChangedCommand}" CommandParameter="{Binding  IsTopMost}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </ToggleButton>
                                     </Grid>
 
 
@@ -339,10 +411,9 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Update" />
                                         </Border>
-                                        <TextBlock Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
-                                            自动检查更新
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource setting-AutoCheckUpdate}" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
                                         </TextBlock>
-                                        <ToggleButton Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
+                                        <ToggleButton Grid.Column="3" IsChecked="{Binding Datas.IsAutoCheckUpdate, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonSwitch}"  ></ToggleButton>
                                     </Grid>
 
 
@@ -364,10 +435,16 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Show" />
                                         </Border>
-                                        <TextBlock Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
-                                            显示/隐藏所有便签
+                                        <TextBlock Grid.Column="1" FontSize="14" Text="{DynamicResource setting-ShowOrHide}" VerticalAlignment="Center" Margin="10 0 0 0">
+                                            
                                         </TextBlock>
-                                        <TextBox Grid.Column="3" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"  ></TextBox>
+                                        <TextBox Grid.Column="3" Width="100" VerticalAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding HotKeyStr, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"  >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PreviewKeyDown">
+                                                    <command:EventToCommand Command="{Binding ShowAllHotKeyChangedCommand}" PassEventArgsToCommand="True" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBox>
                                     </Grid>
 
 
@@ -389,14 +466,15 @@ AncestorType={x:Type Window}}, Path=DataContext.DeleteWindowCommand}"  CommandPa
                                                 HorizontalAlignment="Center" VerticalAlignment="Center"
                     Kind="Language" />
                                         </Border>
-                                        <TextBlock Grid.Column="1" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
-                                            语言设置
+                                        <TextBlock Grid.Column="1" Text="{DynamicResource setting-langsetting}" FontSize="14"  VerticalAlignment="Center" Margin="10 0 0 0">
+                                            
                                         </TextBlock>
-                                        <ComboBox Grid.Column="2" Width="100" HorizontalAlignment="Right" Height="25" >
-                                            <ComboBoxItem>1</ComboBoxItem>
-                                            <ComboBoxItem>1</ComboBoxItem>
-                                            <ComboBoxItem>1</ComboBoxItem>
-                                            <ComboBoxItem>1</ComboBoxItem>
+                                        <ComboBox Grid.Column="2" Padding="15 0 0 0" HorizontalContentAlignment="Center" ItemsSource="{Binding Languages}" SelectedItem="{Binding Datas.Language, Mode=OneWay, Converter={StaticResource LangConverter}}" Width="100" HorizontalAlignment="Right" Height="25" >
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <command:EventToCommand Command="{Binding LanguageChangeCommand}" PassEventArgsToCommand="True" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </ComboBox>
                                     </Grid>
 

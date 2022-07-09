@@ -26,16 +26,16 @@ namespace Common
     }
     public class JsonHelper
     {
-        public static Version ReadVersionFromFile(string versionFileName)
+        public static Version ReadVersionFromFile(string fileDir, string versionFileName)
         {
-            var filePath = Path.Combine(Environment.CurrentDirectory, versionFileName);
+            var filePath = Path.Combine(fileDir, versionFileName);
             var json = File.ReadAllText(filePath);
             var version = Newtonsoft.Json.JsonConvert.DeserializeObject<Version>(json);
             return version;
         }
-        public  static void WriteVersionToFile(Version version,string versionFileName)
+        public  static void WriteVersionToFile(Version version,string fileDir,string versionFileName)
         {
-            var filePath = Path.Combine(Environment.CurrentDirectory, versionFileName);
+            var filePath = Path.Combine(fileDir, versionFileName);
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(version);
             File.WriteAllText(filePath, json);
         }

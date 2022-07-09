@@ -22,6 +22,7 @@ namespace UpdateApp
                 MessageBox.Show(LangHelper.Instance.Lang.StartUpArgsError);
                 Environment.Exit(0);
             }
+            HttpHelper.BaseUrl = UpdateApp.Properties.Resources.ServerUrl;
             int majorVersionNumber=Convert.ToInt32( e.Args[0]);
             int minorVersionNumber=Convert.ToInt32( e.Args[1]);
             int revisionNumebr=Convert.ToInt32( e.Args[2]);

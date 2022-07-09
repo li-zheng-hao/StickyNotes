@@ -1,0 +1,7 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:StickyNotes">
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#d5d5d5" />
+    <SolidColorBrush x:Key="PrimaryBrush100" Color="#88d5d5d5" />
+</ResourceDictionary>

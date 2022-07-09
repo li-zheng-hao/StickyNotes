@@ -1,4 +1,5 @@
-﻿using Common.Lang;
+﻿using Common;
+using Common.Lang;
 using DB;
 using MahApps.Metro.Controls;
 using StickyNotes.Utils;
@@ -61,7 +62,7 @@ namespace StickyNotes
             var programData = DataHelper.RestoreData<ProgramData>();
             if (programData == null)
             {
-                LanguageManager.ChangeLanguage(Language.English);
+                LanguageManager.ChangeLanguage(Language.Chinese);
 
             }
             else
@@ -101,6 +102,8 @@ namespace StickyNotes
             }
             IsInited = false;
             TimerUtil = new TimerUtil(SaveDataAction);
+            HttpHelper.BaseUrl = StickyNotes.Properties.Resources.ServerUrl;
+            
             new Task(CheckUpdate).Start();
 
         }
@@ -110,12 +113,12 @@ namespace StickyNotes
         private void CheckUpdate()
         {
             ProgramData p = ProgramData.Instance;
+            //if (p.IsAutoCheckUpdate == false)
+            //    return;
             try
             {
                 var updateHelper=new UpdateHelper();
                 updateHelper.UpdateToolCompleted += () => {
-                    if (p.IsAutoCheckUpdate == false)
-                        return;
                    var res=updateHelper.CheckSelfNeedUpdate();
                    if(res)
                    {

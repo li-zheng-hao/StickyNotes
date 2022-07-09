@@ -110,17 +110,20 @@ namespace UpdateApp
                 this.ProgressValue = 100;
                 this.ProgressLabel = "100%";
                 // 直接覆盖解压
-                Common.FileHelper.Decompress(UpdatePatchFilePath, Environment.CurrentDirectory);
+                
+                Common.FileHelper.Decompress(UpdatePatchFilePath,ComUtil.GetParentDirectory(Environment.CurrentDirectory));
                 if (File.Exists(this.UpdatePatchFilePath))
                     File.Delete(this.UpdatePatchFilePath);
                 this.UpdatePatchFilePath = string.Empty;
-                var version = JsonHelper.ReadVersionFromFile(UpdateApp.Properties.Resources.VersionFileName);
+                 var dir=Common.ComUtil.GetParentDirectory(Environment.CurrentDirectory);
+                var version = JsonHelper.ReadVersionFromFile(dir,UpdateApp.Properties.Resources.VersionFileName);
                 var software=SoftwareInfoList.FirstOrDefault();
                 version.StickyNotesVersion.MajorVersionNumber = software.major_version_number;
                 version.StickyNotesVersion.MinorVersionNumber = software.minor_version_number;
                 version.StickyNotesVersion.RevisionNumebr = software.revision_number;
-                JsonHelper.WriteVersionToFile(version, UpdateApp.Properties.Resources.VersionFileName);
-                Process.Start(Path.Combine(Environment.CurrentDirectory, "StickyNotes.exe"));
+                JsonHelper.WriteVersionToFile(version,dir, UpdateApp.Properties.Resources.VersionFileName);
+                var parentPath=ComUtil.GetParentDirectory(Environment.CurrentDirectory);
+                Process.Start(Path.Combine(parentPath, "StickyNotes.exe"));
                 Environment.Exit(0);
             }
             catch (Exception ex)
@@ -158,7 +161,7 @@ namespace UpdateApp
             var res = HttpHelper.HttpGet("api/Software/GetLastedVersionByVersion",
                new string[] { "softwarename", "majorVersionNumber", "minorVersionNumber", "revisionNumebr" },
                new object[] { "stickynotes", majorVersionNumber, minorVersionNumber, revisionNumebr });
-            if (res.success)
+            if (res!=null&&res.success)
             {
                 List<SoftwareUpdate> software = HttpHelper.DynamicToObject<List<SoftwareUpdate>>(res.data);
                 software.ForEach(it => this.SoftwareInfoList.Add(it));
@@ -167,14 +170,8 @@ namespace UpdateApp
             }
             else
             {
-                if (string.IsNullOrEmpty(res.message))
-                {
-                    (window as MainWindow).ShowModalMessageExternal("提示", $"检查更新失败,请稍后再试");
-                }
-                else
-                {
-                    (window as MainWindow).ShowModalMessageExternal("提示", $"检查更新失败,失败原因:{res.message}");
-                }
+                
+                (window as MainWindow).ShowModalMessageExternal("提示", $"检查更新失败,请稍后再试");
             }
         }
 

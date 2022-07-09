@@ -11,7 +11,7 @@ namespace Common
 {
     public class HttpHelper
     {
-        public static string BaseUrl = "http://localhost:50000";
+        public static string BaseUrl ;
         public static ResponseResult HttpGet(string url, string[] paramsName=null, object[]paramsVal=null)
         {
             var client = new RestClient(BaseUrl);
