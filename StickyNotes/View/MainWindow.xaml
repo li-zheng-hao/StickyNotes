@@ -54,6 +54,11 @@
         </i:EventTrigger>
 
     </i:Interaction.Triggers>
+    <Window.CommandBindings>
+        <CommandBinding Command="cmds:CStrikeCommand.StrikeCommand"
+                    Executed="StrikeCommand_Executed"
+                    CanExecute="StrikeCommand_CanExecute" />
+    </Window.CommandBindings>
     <Window.Resources>
         <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converter:DeleteWindowMessageConverter x:Key="DeleteWindowMessageConverter" />
