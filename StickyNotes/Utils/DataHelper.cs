@@ -29,8 +29,8 @@ namespace StickyNotes
                 var str=JsonConvert.SerializeObject(obj);
                 var service=new ProgramDataService();
                 var db=new ProgramDB();
-                db.CreateTime = DateTime.Now;
-                db.Data = str;
+                //db.CreateTime = DateTime.Now;
+                //db.Data = str;
                 service.Insert(db);
                 return true;
             }
@@ -56,7 +56,8 @@ namespace StickyNotes
                 var db=service.GetNewestDb();
                 if (db == null)
                     return default(T);
-                var obj=JsonConvert.DeserializeObject<T>(db.Data);
+                //var obj=JsonConvert.DeserializeObject<T>(db.Data);
+                var obj = default(T);
                 return obj;
             }
             catch (Exception ex)

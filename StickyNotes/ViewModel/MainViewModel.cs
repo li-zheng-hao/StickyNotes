@@ -271,10 +271,12 @@ namespace StickyNotes
         {
             if (s == null || s.Length == 0)
                 return null;
-            MemoryStream m = new MemoryStream();
-            StreamWriter sw = new StreamWriter(m);
-            sw.Write(s);
-            sw.Flush();
+            var bytes = Encoding.UTF8.GetBytes(s);
+            
+            MemoryStream m = new MemoryStream(bytes);
+            //StreamWriter sw = new StreamWriter(m);
+            //sw.Write(s);
+            //sw.Flush();
             return m;
         }
 
