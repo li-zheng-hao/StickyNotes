@@ -3,6 +3,7 @@ using Common.Lang;
 using DB;
 using MahApps.Metro.Controls;
 using StickyNotes.Utils;
+using StickyNotes.View;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -286,5 +287,17 @@ namespace StickyNotes
 
         #endregion
 
+        private void ListOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowsManager.ListWindow == null || WindowsManager.ListWindow.IsActive == false)
+            {
+                WindowsManager.ListWindow = new ListWindow();
+                WindowsManager.ListWindow.Show();
+            }
+            else
+            {
+                WindowsManager.ListWindow.Activate();
+            }
+        }
     }
 }

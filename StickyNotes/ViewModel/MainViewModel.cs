@@ -156,10 +156,10 @@ namespace StickyNotes
         {
 
             // 关闭但是不删除
-            if(WindowsManager.Instance.Windows.Count==1)
-            {
-                return;
-            }
+            //if(WindowsManager.Instance.Windows.Count==1)
+            //{
+            //    return;
+            //}
             foreach (Window item in Application.Current.Windows)
             {
                 var main = item as MainWindow;
@@ -184,14 +184,14 @@ namespace StickyNotes
         /// </summary>
         private void OpenListMethod()
         {
-            if (WindowsManager.ListWindow == null)
+            if (WindowsManager.ListWindow == null||WindowsManager.ListWindow.IsActive==false)
             {
                 WindowsManager.ListWindow = new ListWindow();
                 WindowsManager.ListWindow.Show();
             }
             else
             {
-                WindowsManager.ListWindow.Show();
+                WindowsManager.ListWindow.Activate();
             }
 
 

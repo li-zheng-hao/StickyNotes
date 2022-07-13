@@ -6,6 +6,7 @@
     xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:StickyNotes"
     d1p1:Ignorable="d"
+    ShutdownMode="OnExplicitShutdown"
     Startup="Application_Startup">
     <!--  Startup="Application_Startup"  -->
     <Application.Resources>
@@ -48,6 +49,13 @@
                     Name="MenuOpen"
                     Click="MenuOpen_Click"
                     Header="{DynamicResource global-new}" />
+                <MenuItem
+                    Width="100"
+                    Padding="5 5"
+                    HorizontalAlignment="Center"
+                    Name="ListOpen"
+                    Click="ListOpen_Click"
+                    Header="{DynamicResource menuList}" />
                 <MenuItem
                     HorizontalAlignment="Center"
                     Width="100"
