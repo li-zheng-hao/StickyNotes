@@ -184,9 +184,17 @@ namespace StickyNotes
         /// </summary>
         private void OpenListMethod()
         {
-            ListWindow listWindow=new ListWindow();
-            listWindow.Show();
-            
+            if (WindowsManager.ListWindow == null)
+            {
+                WindowsManager.ListWindow = new ListWindow();
+                WindowsManager.ListWindow.Show();
+            }
+            else
+            {
+                WindowsManager.ListWindow.Show();
+            }
+
+
         }
 
         private void DeleteWindowMethod(object window)
@@ -320,8 +328,15 @@ namespace StickyNotes
         /// </summary>
         private void OpenAboutMethod()
         {
-            var win = new AboutWindow();
-            win.Show();
+            if (WindowsManager.AboutWindow == null)
+            {
+                WindowsManager.AboutWindow = new AboutWindow();
+                WindowsManager.AboutWindow.Show();
+            }
+            else
+            {
+                WindowsManager.AboutWindow.Show();
+            }
         }
 
         /// <summary>
@@ -351,10 +366,6 @@ namespace StickyNotes
         private async void OpenSettingMethod()
         {
            
-
-            
-            var win2 = new SettingWindow();
-            win2.Show();
         }
 
         /// <summary>

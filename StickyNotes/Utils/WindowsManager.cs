@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using StickyNotes.View;
+using System.Collections.Generic;
 
 namespace StickyNotes
 {
@@ -7,6 +8,10 @@ namespace StickyNotes
         public List<MainWindow> Windows { get; set; }
 
         public static WindowsManager Instance = null;
+
+        public static ListWindow ListWindow{ get; set; }
+        public static AboutWindow AboutWindow { get; set; }
+
         static WindowsManager()
         {
             Instance = new WindowsManager();
