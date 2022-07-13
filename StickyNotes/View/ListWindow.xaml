@@ -60,7 +60,7 @@
                     Height="24"
                     Kind="Add" />
                         </Button>
-                        <StackPanel Grid.Column="1"  VerticalAlignment="Center">
+                        <StackPanel Background="Transparent" Grid.Column="1"  VerticalAlignment="Center">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
                                     <command:EventToCommand Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=listWindow}"/>
