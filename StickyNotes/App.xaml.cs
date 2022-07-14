@@ -37,6 +37,7 @@ namespace StickyNotes
         /// <param name="e"></param>
         protected override async void OnStartup(StartupEventArgs e)
         {
+
             #region 是否只能运行一个APP
 
             bool ret;
@@ -44,11 +45,12 @@ namespace StickyNotes
 
             if (!ret)
             {
-                MessageBox.Show("程序已经运行了");
-                Environment.Exit(0);
+                AdministratorUtil.KillProcess("StickyNotes");
             }
             #endregion
-
+            #region 检测管理员权限
+            AdministratorUtil.RunAsAdmin();
+            #endregion
 
             Logger.Log().Info("程序启动");
             /// 将全局异常保存到文件目录下
@@ -114,8 +116,8 @@ namespace StickyNotes
         private void CheckUpdate()
         {
             ProgramData p = ProgramData.Instance;
-            //if (p.IsAutoCheckUpdate == false)
-            //    return;
+            if (p.IsAutoCheckUpdate == false)
+                return;
             try
             {
                 var updateHelper=new UpdateHelper();

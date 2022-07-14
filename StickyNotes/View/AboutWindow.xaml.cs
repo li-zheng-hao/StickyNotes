@@ -21,7 +21,7 @@ namespace StickyNotes.View
             ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
             ThemeManager.Current.SyncTheme();
             this.DataContext = this;
-            var ver= JsonHelper.ReadVersionFromFile(Environment.CurrentDirectory,StickyNotes.Properties.Resources.VersionFileName);
+            var ver= JsonHelper.ReadVersionFromFile(ComUtil.GetCurrentExecDirectory(),StickyNotes.Properties.Resources.VersionFileName);
             Version = $"{ver.StickyNotesVersion.MajorVersionNumber}.{ver.StickyNotesVersion.MinorVersionNumber}.{ver.StickyNotesVersion.RevisionNumebr}";
         }
 

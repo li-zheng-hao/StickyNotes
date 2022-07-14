@@ -16,6 +16,8 @@ namespace UpdateApp
     {
         protected  override void OnStartup(StartupEventArgs e)
         {
+            var args= string.Join(" ",e.Args);
+            AdministratorUtil.RunAsAdmin(args);
             LangHelper.Instance.SetLang(Common.Lang.Language.Chinese);
             if (e.Args.Length != 3)
             {

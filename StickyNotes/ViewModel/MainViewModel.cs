@@ -20,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using StickyNotes.UserControl;
 using System.Text;
+using Common;
 
 namespace StickyNotes
 {
@@ -475,7 +476,7 @@ namespace StickyNotes
         private void RemoveDocumentFile(string fileName)
         {
 
-            string currPath = Environment.CurrentDirectory;
+            string currPath = ComUtil.GetCurrentExecDirectory();
             string subPath = currPath + "/Datas/";
             if (System.IO.File.Exists(subPath + fileName))
             {

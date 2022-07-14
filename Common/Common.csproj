@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministratorUtil.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="ComUtil.cs" />
     <Compile Include="DownloadFileHelper.cs" />

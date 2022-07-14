@@ -98,7 +98,8 @@ namespace UpdateApp
             }
           
             var fileName = Common.FileHelper.GetFileName(this.DownloadFileUrl);
-            var fileDir = Environment.CurrentDirectory;
+            var fileDir = ComUtil.GetCurrentExecDirectory();
+            fileDir=ComUtil.GetParentDirectory(fileDir); 
             UpdatePatchFilePath = Path.Combine(fileDir, fileName);
             this.DownloadFileHelper = new DownloadFileHelper(this.DownloadFileUrl, UpdatePatchFilePath);
             this.DownloadFileHelper.ProgressChanged += DownloadFileHelper_ProgressChanged;
@@ -118,7 +119,7 @@ namespace UpdateApp
                 this.ProgressValue = 100;
                 this.ProgressLabel = "100%";
                 // 直接覆盖解压
-                var parentPath= ComUtil.GetParentDirectory(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location));
+                var parentPath= ComUtil.GetParentDirectory(ComUtil.GetCurrentExecDirectory());
 
                 Common.FileHelper.Decompress(UpdatePatchFilePath, parentPath);
                 if (File.Exists(this.UpdatePatchFilePath))

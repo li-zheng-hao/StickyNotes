@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DB
 {
@@ -14,7 +16,8 @@ namespace DB
 
             get
             {
-                return System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location).Replace(@"\bin\Debug", "");//获取具体路径
+               var str= ComUtil.GetCurrentExecDirectory();
+                return str;
             }
         }
         public static string ConnectionString = @"DataSource=" + GetCurrentProjectPath + @"\data.sqlite";

@@ -38,7 +38,7 @@ namespace StickyNotes.Utils
         /// <param name="revisionNumebr"></param>
         public void UpdateUpdateTool()
         {
-            Common.Version version = JsonHelper.ReadVersionFromFile(Environment.CurrentDirectory,StickyNotes.Properties.Resources.VersionFileName);
+            Common.Version version = JsonHelper.ReadVersionFromFile(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), StickyNotes.Properties.Resources.VersionFileName);
             var res = HttpHelper.HttpGet("api/Software/GetLastedVersion",
                new string[] { "softwarename", "majorVersionNumber", "minorVersionNumber", "revisionNumebr" },
                new object[] { "updateapp", version.UpdateAppVersion.MajorVersionNumber, version.UpdateAppVersion.MinorVersionNumber, version.UpdateAppVersion.RevisionNumebr });
@@ -71,15 +71,16 @@ namespace StickyNotes.Utils
 
         private  void DownloadFileHelper_ProcessCompleted()
         {
-            Common.FileHelper.Decompress(UpdatePatchFilePath, Environment.CurrentDirectory+"update");
+            var curDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            Common.FileHelper.Decompress(UpdatePatchFilePath, Path.Combine(curDir, "update"));
             if (File.Exists(UpdatePatchFilePath))
                 File.Delete(UpdatePatchFilePath);
             UpdateToolUpdated = true;
-            var version=JsonHelper.ReadVersionFromFile(Environment.CurrentDirectory,StickyNotes.Properties.Resources.VersionFileName);
+            var version=JsonHelper.ReadVersionFromFile(curDir, StickyNotes.Properties.Resources.VersionFileName);
             version.UpdateAppVersion.MajorVersionNumber = LatestUpdateToolVersion.major_version_number;
             version.UpdateAppVersion.MinorVersionNumber = LatestUpdateToolVersion.minor_version_number;
             version.UpdateAppVersion.RevisionNumebr = LatestUpdateToolVersion.revision_number;
-            JsonHelper.WriteVersionToFile(version, Environment.CurrentDirectory,StickyNotes.Properties.Resources.VersionFileName);
+            JsonHelper.WriteVersionToFile(version, curDir, StickyNotes.Properties.Resources.VersionFileName);
             UpdateToolCompleted?.Invoke();
             
         }
@@ -94,7 +95,7 @@ namespace StickyNotes.Utils
         /// <returns></returns>
         public  bool CheckSelfNeedUpdate()
         {
-            version = JsonHelper.ReadVersionFromFile(Environment.CurrentDirectory,StickyNotes.Properties.Resources.VersionFileName);
+            version = JsonHelper.ReadVersionFromFile(ComUtil.GetCurrentExecDirectory(),StickyNotes.Properties.Resources.VersionFileName);
             HttpHelper.BaseUrl = ServerUrl;
             var res=HttpHelper.HttpGet("api/Software/GetLastedVersion", new string[] { "softwarename" }, new object[] { "stickynotes" });
             if (res!=null&&res.success)
@@ -118,7 +119,7 @@ namespace StickyNotes.Utils
             {
                 if (UpdateToolUpdated == false) 
                     return;
-                var path = Path.Combine(Environment.CurrentDirectory, "update\\UpdateApp.exe");
+                var path = Path.Combine(ComUtil.GetCurrentExecDirectory(), "update\\UpdateApp.exe");
                 string args = version.StickyNotesVersion.MajorVersionNumber.ToString() + " " + version.StickyNotesVersion.MinorVersionNumber.ToString() + " " + version.StickyNotesVersion.RevisionNumebr.ToString();
                 Process.Start(path,args);
             }

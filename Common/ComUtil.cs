@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Common
 {
@@ -22,6 +25,9 @@ namespace Common
         {
             return System.IO.Path.GetDirectoryName(path);
         }
-
+        public static string GetCurrentExecDirectory()
+        {
+            return Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+        }
     }
 }
