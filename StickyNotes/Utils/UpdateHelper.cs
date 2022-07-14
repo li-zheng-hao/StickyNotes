@@ -55,7 +55,7 @@ namespace StickyNotes.Utils
                 LatestUpdateToolVersion = software;
                 DownloadFileUrl = software.patch_file_url;
                 var fileName = Common.FileHelper.GetFileName(DownloadFileUrl);
-                var fileDir = Environment.CurrentDirectory;
+                var fileDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
                 UpdatePatchFilePath = Path.Combine(fileDir, fileName);
                 DownloadFileHelper = new DownloadFileHelper(DownloadFileUrl, UpdatePatchFilePath);
                 DownloadFileHelper.ProgressChanged += DownloadFileHelper_ProgressChanged;
@@ -65,6 +65,7 @@ namespace StickyNotes.Utils
             else
             {
                 UpdateToolUpdated = true;
+                UpdateToolCompleted?.Invoke();
             }
         }
 

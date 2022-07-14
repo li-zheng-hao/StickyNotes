@@ -70,7 +70,8 @@ namespace StickyNotes
                 foreach(var item in programData.Datas)
                 {
                     var data = windowsDataDBs.Find(it => it.WindowId == item.WindowID);
-                    item.RichTextBoxContent = data.Data;
+                    if(data != null)
+                        item.RichTextBoxContent = data.Data;
                 }
                 return programData;
             }

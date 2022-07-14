@@ -84,11 +84,19 @@ namespace UpdateApp
         private void ClickUpdateMethod()
         {
 
-            Process[] proc=Process.GetProcessesByName("StickyNotes");
-            if (proc.Length > 0)
+            try
             {
-                proc[0].Kill();
-            } 
+                Process[] proc = Process.GetProcessesByName("StickyNotes");
+                if (proc.Length > 0)
+                {
+                    proc[0].Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+          
             var fileName = Common.FileHelper.GetFileName(this.DownloadFileUrl);
             var fileDir = Environment.CurrentDirectory;
             UpdatePatchFilePath = Path.Combine(fileDir, fileName);
@@ -110,19 +118,18 @@ namespace UpdateApp
                 this.ProgressValue = 100;
                 this.ProgressLabel = "100%";
                 // 直接覆盖解压
-                
-                Common.FileHelper.Decompress(UpdatePatchFilePath,ComUtil.GetParentDirectory(Environment.CurrentDirectory));
+                var parentPath= ComUtil.GetParentDirectory(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location));
+
+                Common.FileHelper.Decompress(UpdatePatchFilePath, parentPath);
                 if (File.Exists(this.UpdatePatchFilePath))
                     File.Delete(this.UpdatePatchFilePath);
                 this.UpdatePatchFilePath = string.Empty;
-                 var dir=Common.ComUtil.GetParentDirectory(Environment.CurrentDirectory);
-                var version = JsonHelper.ReadVersionFromFile(dir,UpdateApp.Properties.Resources.VersionFileName);
+                var version = JsonHelper.ReadVersionFromFile(parentPath,UpdateApp.Properties.Resources.VersionFileName);
                 var software=SoftwareInfoList.FirstOrDefault();
                 version.StickyNotesVersion.MajorVersionNumber = software.major_version_number;
                 version.StickyNotesVersion.MinorVersionNumber = software.minor_version_number;
                 version.StickyNotesVersion.RevisionNumebr = software.revision_number;
-                JsonHelper.WriteVersionToFile(version,dir, UpdateApp.Properties.Resources.VersionFileName);
-                var parentPath=ComUtil.GetParentDirectory(Environment.CurrentDirectory);
+                JsonHelper.WriteVersionToFile(version,parentPath, UpdateApp.Properties.Resources.VersionFileName);
                 Process.Start(Path.Combine(parentPath, "StickyNotes.exe"));
                 Environment.Exit(0);
             }
