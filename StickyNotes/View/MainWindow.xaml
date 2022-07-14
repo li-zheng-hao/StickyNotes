@@ -209,16 +209,20 @@
             VerticalScrollBarVisibility="Hidden">
             <RichTextBox
                 Name="RichTextBox"
+                PreviewKeyDown="RichTextBox_PreviewKeyDown"
                 Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}"
                 Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
                 BorderThickness="0"
                 FontFamily="Microsoft YaHei"
                 FontSize="16"
+                AcceptsReturn="True"
                 VerticalScrollBarVisibility="Hidden">
                 <FlowDocument
                     Name="Document"
                     LineHeight="5"
-                    PagePadding="10" />
+                    PagePadding="10" >
+                   
+                </FlowDocument>
             </RichTextBox>
         </ScrollViewer>
         <!--  simplest form  -->

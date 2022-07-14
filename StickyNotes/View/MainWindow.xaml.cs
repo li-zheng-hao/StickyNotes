@@ -26,6 +26,7 @@ namespace StickyNotes
             ThemeManager.Current.SyncTheme();
             viewModel = new MainViewModel();
             this.DataContext = viewModel;
+            viewModel.ThisWindow = this;
             WindowHide windowHide = new WindowHide(this);
             WindowHideManager.GetInstance().windowHideList.Add(windowHide);
 
@@ -53,5 +54,23 @@ namespace StickyNotes
             e.CanExecute = true;
         }
 
+        private void RichTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Tab )
+                return;
+
+            var richTextBox = sender as RichTextBox;
+            if (richTextBox == null) return;
+
+            if (richTextBox.Selection.Text != string.Empty)
+                richTextBox.Selection.Text = string.Empty;
+
+            var caretPosition = richTextBox.CaretPosition.GetPositionAtOffset(0,
+                                  LogicalDirection.Forward);
+
+            richTextBox.CaretPosition.InsertTextInRun("  ");
+            richTextBox.CaretPosition = caretPosition;
+            e.Handled = true;
+        }
     }
 }

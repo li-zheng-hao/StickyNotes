@@ -74,6 +74,8 @@ namespace StickyNotes
         public CustomDialog CustomDeleteDialog { get; private set; }
         #endregion
 
+
+        public MainWindow ThisWindow { get; set; }
         #region 快捷键数据
         /// <summary>
         /// 当前窗口句柄
@@ -265,7 +267,7 @@ namespace StickyNotes
             var ms=GetMemoryStreamFromString(Datas.RichTextBoxContent);
             range.Load(ms, DataFormats.Rtf);
             Datas.DisplayRichTextBoxContent = range.Text;
-            
+
         }
         private MemoryStream GetMemoryStreamFromString(string s)
         {

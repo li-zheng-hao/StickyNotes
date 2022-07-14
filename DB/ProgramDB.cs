@@ -1,4 +1,5 @@
 ﻿using log4net;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,7 @@ namespace DB
         }
        
     }
+    [SugarIndex("index_programdb_createtime", nameof(ProgramDB.CreateTime), OrderByType.Asc)]
     public class ProgramDB
     {
         [SqlSugar.SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
