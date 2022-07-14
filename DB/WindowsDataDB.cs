@@ -8,7 +8,10 @@ namespace DB
 {
     public class WindowsDataService:Repository<WindowsDataDB>
     {
-        
+        public async Task<List<WindowsDataDB>> GetWindowsDataByProgramDataId(int programDataId)
+        {
+            return await base.AsSugarClient().Queryable<WindowsDataDB>().Where(it => it.ProgramDataId == programDataId).ToListAsync();
+        }
     }
     public class WindowsDataDB
     {
@@ -21,5 +24,7 @@ namespace DB
         public byte[] Data { get; set; }
 
         public int ProgramDataId { get; set; }
+
+        public string WindowId { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace StickyNotes
         /// <summary>
         /// 文本框内容 用于存储到数据库使用的字符串 显示会乱码
         /// </summary>
-        public string RichTextBoxContent { get; set; }
+        public byte[] RichTextBoxContent { get; set; }
 
         /// <summary>
         /// 用于在界面上展示的便签内容
@@ -84,7 +84,6 @@ namespace StickyNotes
             double screenWidth = SystemParameters.FullPrimaryScreenWidth;
             StartUpPositionLeft = (screenWidth - WindowsWidth) / 2;
             StartUpPositionTop = (screenHeight - WindowsHeight) / 2;
-            RichTextBoxContent = string.Empty;
             DisplayRichTextBoxContent = string.Empty;
             IsCurrentWindowTopMost = false;
             IsFocused = true;

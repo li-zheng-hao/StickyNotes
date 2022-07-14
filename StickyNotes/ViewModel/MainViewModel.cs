@@ -248,38 +248,24 @@ namespace StickyNotes
             var range= new TextRange(document.ContentStart, document.ContentEnd);
             using (MemoryStream ms=new MemoryStream())
             {
-                range.Save(ms, DataFormats.Rtf);
+                range.Save(ms, DataFormats.XamlPackage);
                 ms.Seek(0, SeekOrigin.Begin);
-                var sr=new StreamReader(ms);
-                var dataString = sr.ReadToEnd();
-                Datas.RichTextBoxContent = dataString;
+                Datas.RichTextBoxContent = ms.ToArray();
                 Datas.DisplayRichTextBoxContent = range.Text;
             }
         }
 
         public void RestoreData(FlowDocument document, string fileName)
         {
-            if (string.IsNullOrWhiteSpace(Datas.RichTextBoxContent))
+            if (Datas.RichTextBoxContent==null||Datas.RichTextBoxContent.Length<=0)
                 return;
             TextRange range;
             range = new TextRange(document.ContentStart,
                 document.ContentEnd);
-            var ms=GetMemoryStreamFromString(Datas.RichTextBoxContent);
-            range.Load(ms, DataFormats.Rtf);
+            MemoryStream ms = new MemoryStream(Datas.RichTextBoxContent);
+            range.Load(ms, DataFormats.XamlPackage);
             Datas.DisplayRichTextBoxContent = range.Text;
 
-        }
-        private MemoryStream GetMemoryStreamFromString(string s)
-        {
-            if (s == null || s.Length == 0)
-                return null;
-            var bytes = Encoding.UTF8.GetBytes(s);
-            
-            MemoryStream m = new MemoryStream(bytes);
-            //StreamWriter sw = new StreamWriter(m);
-            //sw.Write(s);
-            //sw.Flush();
-            return m;
         }
 
         private void OnContentRenderedMethod()

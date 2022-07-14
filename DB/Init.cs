@@ -15,6 +15,7 @@ namespace DB
             programDataService.AsSugarClient().DbMaintenance.CreateDatabase();
             //建表
             programDataService.AsSugarClient().CodeFirst.InitTables<ProgramDB>();
+            programDataService.AsSugarClient().CodeFirst.InitTables<WindowsDataDB>();
             programDataService.AsSugarClient().CodeFirst.InitTables<Versions>();            
         }
     }

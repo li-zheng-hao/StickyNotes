@@ -54,11 +54,10 @@ namespace DB
         /// <summary>
         /// ProgramData序列化之后的值 
         /// </summary>
-        [SugarColumn(ColumnDataType = "blob")]
-        public byte[] Data { get; set; }
+        public string Data { get; set; }
 
 
-        public string CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 
    

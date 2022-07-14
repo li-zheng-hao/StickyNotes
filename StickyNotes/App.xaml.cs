@@ -35,7 +35,7 @@ namespace StickyNotes
         /// 程序启动
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             #region 是否只能运行一个APP
 
@@ -60,7 +60,7 @@ namespace StickyNotes
             // 删除3小时前的旧数据
             new ProgramDataService().DeleteByDate(DateTime.Now.AddHours(3));
             var systemtray = SystemTray.Instance;
-            var programData = DataHelper.RestoreData<ProgramData>();
+            var programData = await DataHelper.RestoreDataAsync();
             if (programData == null)
             {
                 LanguageManager.ChangeLanguage(Language.Chinese);
@@ -161,10 +161,10 @@ namespace StickyNotes
         /// 程序退出事件
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnExit(ExitEventArgs e)
+        protected override async void OnExit(ExitEventArgs e)
         {
             Logger.Log().Info("程序退出");
-            DataHelper.SaveData(ProgramData.Instance);
+            await DataHelper.SaveDataAsync(ProgramData.Instance);
             SystemTray.Instance.DisposeNotifyIcon();
             base.OnExit(e);
         }
@@ -195,7 +195,7 @@ namespace StickyNotes
         {
             if (!IsInited)
             {
-                DataHelper.SaveData(ProgramData.Instance);
+                DataHelper.SaveDataAsync(ProgramData.Instance);
             }
         }
         
