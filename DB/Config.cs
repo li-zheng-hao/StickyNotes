@@ -14,7 +14,7 @@ namespace DB
 
             get
             {
-                return Environment.CurrentDirectory.Replace(@"\bin\Debug", "");//获取具体路径
+                return System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location).Replace(@"\bin\Debug", "");//获取具体路径
             }
         }
         public static string ConnectionString = @"DataSource=" + GetCurrentProjectPath + @"\data.sqlite";
