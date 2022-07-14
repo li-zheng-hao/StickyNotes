@@ -186,9 +186,10 @@ namespace StickyNotes
         /// </summary>
         private void OpenListMethod()
         {
-            if (WindowsManager.ListWindow == null||WindowsManager.ListWindow.IsActive==false)
+            if (WindowsManager.ListWindow == null)
             {
                 WindowsManager.ListWindow = new ListWindow();
+                WindowsManager.ListWindow.Closed += (a, b) => { WindowsManager.ListWindow = null; };
                 WindowsManager.ListWindow.Show();
             }
             else
@@ -321,6 +322,8 @@ namespace StickyNotes
             if (WindowsManager.AboutWindow == null)
             {
                 WindowsManager.AboutWindow = new AboutWindow();
+                WindowsManager.AboutWindow.Closed += (a, b) => { WindowsManager.AboutWindow = null; };
+
                 WindowsManager.AboutWindow.Show();
             }
             else
