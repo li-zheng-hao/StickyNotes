@@ -45,11 +45,13 @@ namespace StickyNotes
 
             if (!ret)
             {
-                AdministratorUtil.KillProcess("StickyNotes");
+                //AdministratorUtil.KillProcess("StickyNotes");
+                MessageBox.Show("已运行");
+                Environment.Exit(0);
             }
             #endregion
             #region 检测管理员权限
-            AdministratorUtil.RunAsAdmin();
+            //AdministratorUtil.RunAsAdmin();
             #endregion
 
             Logger.Log().Info("程序启动");
