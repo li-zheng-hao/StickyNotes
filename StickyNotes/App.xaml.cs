@@ -62,7 +62,7 @@ namespace StickyNotes
             // 初始化数据库
             DBInit.InitDB();
             // 删除3小时前的旧数据
-            new ProgramDataService().DeleteByDate(DateTime.Now.AddHours(3));
+            new ProgramDataService().DeleteByDate(DateTime.Now.AddHours(-3));
             var systemtray = SystemTray.Instance;
             var programData = await DataHelper.RestoreDataAsync();
             if (programData == null)
