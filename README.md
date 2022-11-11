@@ -12,8 +12,6 @@
 
 [http://stickynotes.lizhenghao.site](http://stickynotes.lizhenghao.site)
 
-[http://stickynotes.lizhenghao.site](http://stickynotes.lizhenghao.site)
-
 
 ## 安装 Installation
 
