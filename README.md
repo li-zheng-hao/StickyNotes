@@ -1,3 +1,5 @@
+**此项目已不再维护 2023年5月29日**
+
 # StikyNotes
 
 ![#](https://img.shields.io/badge/building-pass-brightgreen)
@@ -8,15 +10,9 @@
 
 一个简单清爽的的Windows桌面便利贴
 
-# 官网
-
-[http://stickynotes.lizhenghao.site](http://stickynotes.lizhenghao.site)
-
-
 ## 安装 Installation
 
 点击下载安装运行即可[点击此处打开下载页面](https://github.com/li-zheng-hao/StikyNotes/releases)
-
 
 ## 一些特性 Features
 
